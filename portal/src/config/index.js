@@ -1,0 +1,1 @@
+export { NAVBAR_MENUS } from './app.conf'
