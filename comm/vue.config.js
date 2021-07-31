@@ -13,11 +13,7 @@ module.exports = {
                 'plugins': '@/plugins',
                 'services': '@/services',
                 'utils': '@/utils',
-                'views': '@/views',
-                'sdc-core': '@tencent/sdc-core',
-                'sdc-vue': '@tencent/sdc-vue',
-                'sdc-webui': '@tencent/sdc-webui',
-                'sdc-theme': '@tencent/sdc-theme'
+                'views': '@/views'
             }
         },
         output: {
