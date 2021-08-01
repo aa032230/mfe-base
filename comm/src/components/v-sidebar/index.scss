@@ -1,0 +1,53 @@
+$timeout: 0.3s;
+
+/deep/ .el-menu {
+    border-right: none;
+}
+
+/deep/ .el-submenu__title:hover {
+    background-color: #1890ff !important;
+
+}
+
+/deep/.el-menu-item:hover {
+    background-color: #1890ff !important;
+
+}
+
+/deep/.el-menu-item.is-active {
+    background-color: #1890ff !important;
+}
+
+.app-scrollbar:not(.el-menu-collapse) {
+    width: 230px;
+    transition: width $timeout;
+}
+
+.app-scrollbar.el-menu-collapse {
+    width: 60px;
+    transition: width $timeout;
+}
+
+.menu-collapse:not(.el-menu--collapse) {
+    width: 100%;
+    transition: width $timeout;
+}
+
+.app-scrollbar {
+    height: 100%;
+    position: relative;
+    background-color: #001529;
+
+    /deep/.el-scrollbar__wrap {
+        overflow-x: hidden;
+    }
+
+    .is-collapse {
+        color: #fff;
+        font-size: 25px;
+        position: absolute;
+        bottom: 20px;
+        right: 10px;
+        cursor: pointer;
+    }
+}

@@ -46,39 +46,36 @@ axios.interceptors.response.use(result => {
 // 接口域名
 export const baseUrl = axios.defaults.baseURL;
 
-// POST 方法封装 (处理参数与文件上传)
-export const postRequest = (url, params) => {
-    return axios({
-        method: 'post',
-        url: url,
-        data: params
-    });
-}
+
+export const http = {
+    post(url, params) {
+        return axios({
+            method: 'post',
+            url: url,
+            data: params
+        });
+    },
+    get(url, params) {
+        return axios({
+            method: 'get',
+            url: url,
+            params: params
+        });
+    },
+    put(url, params) {
+        return axios({
+            method: 'put',
+            url: url,
+            data: params
+        });
+    },
+    delete(url, params) {
+        return axios({
+            method: 'delete',
+            url: url,
+            data: params
+        });
+    }
 
 
-//  GET 方法封装
-export const getRequest = (url, params) => {
-    return axios({
-        method: 'get',
-        url: url,
-        params: params
-    });
-}
-
-//  PUT 方法封装
-export const putRequest = (url, params) => {
-    return axios({
-        method: 'put',
-        url: url,
-        data: params
-    });
-}
-
-//  DELETE 方法封装
-export const deleteRequest = (url, params) => {
-    return axios({
-        method: 'delete',
-        url: url,
-        data: params
-    });
 }
