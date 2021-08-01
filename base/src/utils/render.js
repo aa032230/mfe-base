@@ -6,11 +6,13 @@ import { ele } from 'plugins'
 import 'plugins/styles'
 Vue.config.productionTip = false
 
-export default renderApp(Vue, App, {
-    router,
-    plugins: [ele],
-    el: '#app',
-    init: vm => {
-        // vm.use of vm.prototype.xxx =xxx
-    }
-})
+export default function () {
+    return renderApp(Vue, App, {
+        router,
+        plugins: [ele],
+        el: '#app',
+        init: vm => {
+            // vm.use of vm.prototype.xxx =xxx
+        }
+    })
+}
