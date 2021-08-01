@@ -6,8 +6,8 @@
     "serve": "vue-cli-service serve --mode dev",
     "start": "vue-cli-service serve --mode dev",
     "build:dev": "vue-cli-service build --mode dev",
-    "build:test": "tnpm run lint && vue-cli-service build --mode test",
-    "build:prd": "tnpm run lint && vue-cli-service build --mode prd",
+    "build:test": "npm run lint && vue-cli-service build --mode test",
+    "build:prd": "npm run lint && vue-cli-service build --mode prd",
     "lint": "vue-cli-service lint --fix"
   },
   "dependencies": {

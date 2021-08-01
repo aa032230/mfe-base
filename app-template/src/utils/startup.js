@@ -1,18 +1,18 @@
 
-import { renderApp } from 'comm/src/utils'
-import { ele } from 'plugins'
-import 'plugins/styles'
+import { renderApp } from '../../../base/src/utils/node_modules/comm/src/utils'
+import { ele } from '../../../base/src/utils/node_modules/plugins'
+import '../../../base/src/utils/node_modules/plugins/styles'
 // 应用配置
 import App from '../App.vue'
 import router from '../router'
-import Vue from 'vue'
+import Vue from '../../../base/src/utils/node_modules/vue'
 
 export default {
-    Render: renderApp,
+    render: renderApp,
     App,
     Vue,
-    Config: {
-        _install: { router },
+    config: {
+        router,
         el: '#app',
         plugins: [ele],
         init: Vue => {

@@ -7,7 +7,7 @@ import 'plugins/styles'
 Vue.config.productionTip = false
 
 export default renderApp(Vue, App, {
-    _install: { router },
+    router,
     plugins: [ele],
     el: '#app',
     init: vm => {

@@ -8,31 +8,31 @@ export function isLoadInSubAppContainer() {
     return window.__POWERED_BY_QIANKUN__
 }
 export function wrapStartup(startup) {
-    let { Render, App, Config, Vue } = startup
+    let { render, App, config, Vue } = startup
 
     let app = null
 
     return {
         async bootstrap() { },
         async mount(props) {
-            if (!Config.plugins) Config.plugins = []
+            if (!config.plugins) config.plugins = []
             window.__CONTEXT__ = {
                 $bus: props.bus,
                 $portal: props.portal,
                 $data: props.data,
                 $utils: Object.assign({}, props.utils)
             }
-            Config.plugins.push({
-                install: function (v, options) {
+            config.plugins.push({
+                install: function (v) {
                     v.prototype.__CONTEXT__ = window.__CONTEXT__
                 }
             })
             actions.setActions(props)
-            app = Render(Vue, App, Config, props)
+            app = render(Vue, App, config, props)
         },
         async unmount(props) {
             app && app.$destroy && app.$destroy()
-            Config.router = null
+            // app.$el.innerHTML = ''
             app = null
         },
         async update(props) { }

@@ -8,7 +8,7 @@ const { bootstrap, mount, unmount, update } = wrapStartup(startup)
 
 // 单独开发环境
 if (!isLoadInSubAppContainer()) {
-  startup.Render(startup.Vue, startup.App, startup.Config)
+  startup.render(startup.Vue, startup.App, startup.config)
 }
 
 export { bootstrap, mount, unmount, update }

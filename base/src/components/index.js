@@ -1,0 +1,1 @@
+export const vHeader = require('./v-header').default

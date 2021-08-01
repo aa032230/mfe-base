@@ -8,11 +8,11 @@ import router from '../router'
 import Vue from 'vue'
 
 export default {
-    Render: renderApp,
+    render: renderApp,
     App,
     Vue,
-    Config: {
-        _install: { router },
+    config: {
+        router,
         el: '#app',
         plugins: [ele],
         init: Vue => {

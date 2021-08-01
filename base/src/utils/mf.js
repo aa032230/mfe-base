@@ -45,20 +45,6 @@ export function registerAndStart(apps) {
 export function createDefaultAppConfig(vm) {
     return {
         props: {
-            bus: {
-                $on: (event, callback) => {
-                    vm.$bus.$on(event, callback)
-                }, // 暂时只暴露订阅
-                $off: (event, callback) => {
-                    vm.$bus.$off(event, callback)
-                }
-            },
-            portal: {
-                hideLayout() {
-                    vm.$bus.hideLayout()
-                },
-                getUser() { }
-            },
             data: {
                 msg: '测试一下'
             },

@@ -1,0 +1,68 @@
+.head-wrap {
+    background-color: #001529;
+    color: #fff;
+
+    /deep/.el-header {
+        padding: 0;
+    }
+
+    .head {
+        &-row {
+            height: 60px;
+            line-height: 60px;
+            box-sizing: border-box;
+
+            &-left {
+                display: flex;
+                align-items: center;
+
+                &-logo {
+                    flex: 1;
+                    text-align: center;
+                }
+
+                &-line {
+                    width: 1px;
+                    height: 35px;
+                    background-color: #3d484f;
+                    box-shadow: 0 2px 6px #000000;
+                    border-radius: 5px;
+                    margin-right: 10px;
+                }
+            }
+
+            &-right {
+                display: flex;
+                padding-right: 30px;
+                justify-content: flex-end;
+
+                &-user {
+                    display: flex;
+                    cursor: pointer;
+
+                    &-avatar {
+                        display: flex;
+                        align-items: center;
+                        padding-right: 10px;
+                    }
+
+                    &-name {
+                        .el-dropdown-link {
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/deep/.el-menu-item.is-active {
+    background-color: transparent !important;
+    border-bottom: 2px solid #409EFF !important;
+    color: #fff !important;
+}
+
+.el-menu-demo {
+    border: none !important;
+}

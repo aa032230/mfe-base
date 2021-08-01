@@ -1,13 +1,13 @@
 {
-  "name": "mfe",
+  "name": "base",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "start": "vue-cli-service serve",
     "build:dev": "vue-cli-service build --mode dev",
-    "build:test": "tnpm run lint && vue-cli-service build --mode test",
-    "build:prd": "tnpm run lint && vue-cli-service build --mode prd",
+    "build:test": "npm run lint && vue-cli-service build --mode test",
+    "build:prd": "npm run lint && vue-cli-service build --mode prd",
     "lint": "vue-cli-service lint --fix"
   },
   "dependencies": {
