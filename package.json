@@ -1,0 +1,35 @@
+{
+  "private": true,
+  "name": "microapp",
+  "version": "0.0.1",
+  "description": "qiankun app",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  },
+  "scripts": {
+    "install": "npm-run-all --serial install:*",
+    "install:comm": "cd comm && npm i",
+    "install:base": "cd base && npm i",
+    "install:app1": "cd app1 && npm i",
+    "install:app2": "cd app2 && npm i",
+    "installWin": "npm-run-all --serial installWin:*",
+    "start": "npm-run-all --parallel start:*",
+    "start:base": "cd base && npm run serve",
+    "start:app1": "cd app1 && npm run serve",
+    "start:app2": "cd app2 && npm run serve",
+    "build": "npm-run-all --parallel build:*",
+    "base": "cd base && npm run build:single",
+    "clear": "npm-run-all --parallel clear:*",
+    "clear:cur": "npm cache clean --force",
+    "clear:comm": "cd comm && npm cache clean --force",
+    "clear:base": "cd base && npm cache clean --force",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "qiankun"
+  ],
+  "license": "MIT",
+  "__npminstall_done": false
+}
