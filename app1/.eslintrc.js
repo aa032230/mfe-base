@@ -10,36 +10,12 @@ module.exports = {
     es6: true,
   },
   extends: ['plugin:vue/recommended', 'eslint:recommended', 'prettier'],
-
-  // add your custom rules here
-  // base on https://github.com/vuejs/eslint-config-vue
   rules: {
-    // 缩进为2个空格
-    'vue/html-indent': [
-      'error',
-      2,
-      {
-        attribute: 1,
-        alignAttributesVertically: true,
-        ignores: [],
-      },
-    ],
-    'vue/max-attributes-per-line': [
-      2,
-      {
-        singleline: 10,
-        multiline: {
-          max: 1,
-          allowFirstLine: false,
-        },
-      },
-    ],
-    'vue/html-self-closing': 'off',
-    'vue/name-property-casing': ['error', 'PascalCase'],
     // allow async-await
     'generator-star-spacing': 'off',
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // 关闭检测函数名称和调用它的左括号之间的空格
     // 'func-call-spacing': 'off',
     // 缩进为2个空格
@@ -56,7 +32,7 @@ module.exports = {
     'no-multiple-empty-lines': 'off',
     // 关闭模板字符串检测
     'no-template-curly-in-string': 'off',
-    'no-console': 'off',
+    
     //强制使用单引号
     quotes: ['error', 'single'],
     // 禁止添加分号

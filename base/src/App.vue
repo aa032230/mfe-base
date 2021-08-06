@@ -1,31 +1,29 @@
 <template>
   <div id="main-root">
-    <!-- loading -->
-    <!-- <div v-if="loading">loading</div> -->
-    {{ $route.path }}
-    <el-menu class="el-menu-demo" mode="horizontal" :default-active="currentMenu" router @select="selectMenu">
-      <el-menu-item index="/app1">
-        应用1
-      </el-menu-item>
-      <el-menu-item index="/app2">
-        应用2
-      </el-menu-item>
-      <el-menu-item index="/app3">
-        应用3
-      </el-menu-item>
-    </el-menu>
+    <!-- 头部 -->
+    <v-header
+      :navbar-menus="navbarMenus"
+      :current-menu="currentMenu"
+    />
     <router-view />
     <!-- 子应用盒子 -->
-    <div id="root-view" class="app-view-box"></div>
+    <div
+      id="root-view"
+      class="app-view-box"
+    />
   </div>
 </template>
 
 <script>
 import { NAVBAR_MENUS } from 'config'
 import { mf } from 'utils'
+import { vHeader } from 'components'
 const _subAppContainer = '#root-view'
 export default {
   name: 'App',
+  components: {
+    vHeader
+  },
   data () {
     return {
       currentMenu: '',

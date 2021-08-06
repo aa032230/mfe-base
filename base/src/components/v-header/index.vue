@@ -7,14 +7,25 @@
             <div class="head-row-left-logo">
               Logo
             </div>
-            <div class="head-row-left-line"></div>
+            <div class="head-row-left-line" />
           </div>
         </el-col>
         <el-col :span="18">
           <div class="head-row-center">
-            <el-menu class="el-menu-demo" mode="horizontal" :default-active="currentMenu" router background-color="#001529" text-color="#fff" @select="select">
+            <el-menu
+              class="el-menu-demo"
+              mode="horizontal"
+              :default-active="currentMenu"
+              router
+              background-color="#001529"
+              text-color="#fff"
+              @select="select"
+            >
               <template v-for="(item, index) in navbarMenus">
-                <el-menu-item :key="index" :index="`/${item.activeRule}`">
+                <el-menu-item
+                  :key="index"
+                  :index="`/${item.activeRule}`"
+                >
                   {{ item.menuName }}
                 </el-menu-item>
               </template>
@@ -39,19 +50,29 @@
                 </div> -->
               <!-- 用户名下拉菜单 -->
               <div class="head-row-right-user-avatar">
-                <el-avatar :size="35" :src="circleUrl"></el-avatar>
+                <el-avatar
+                  :size="35"
+                  :src="circleUrl"
+                />
               </div>
-              <el-dropdown class="head-row-right-user-name" trigger="click" @command="handleCommand">
+              <el-dropdown
+                class="head-row-right-user-name"
+                trigger="click"
+                @command="handleCommand"
+              >
                 <span class="el-dropdown-link">
                   {{ username }}
-                  <i class="el-icon-arrow-down"></i>
+                  <i class="el-icon-arrow-down" />
                 </span>
                 <template #dropdown>
                   <el-dropdown-menu>
                     <el-dropdown-item command="user">
                       个人中心
                     </el-dropdown-item>
-                    <el-dropdown-item divided command="loginout">
+                    <el-dropdown-item
+                      divided
+                      command="loginout"
+                    >
                       退出登录
                     </el-dropdown-item>
                   </el-dropdown-menu>
