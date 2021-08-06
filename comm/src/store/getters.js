@@ -1,5 +1,5 @@
 export default {
   test(state) {
-    return state.test
+    return state.test;
   },
-}
+};

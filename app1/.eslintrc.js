@@ -47,7 +47,7 @@ module.exports = {
     // 关闭检测未使用的变量
     'no-unused-vars': 'off',
     // 对象展开时总是要添加逗号，一行时行末不需要逗号
-    // 'comma-dangle': ['error', 'always-multiline'],
+    'comma-dangle': ['error', 'never'],
     // 定义函数时，函数括号之前允许添加空格
     'space-before-function-paren': ['error', 'always'],
     // 关闭禁用无效标签

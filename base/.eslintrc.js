@@ -10,9 +10,6 @@ module.exports = {
     es6: true,
   },
   extends: ['plugin:vue/recommended', 'eslint:recommended', 'prettier'],
-
-  // add your custom rules here
-  // base on https://github.com/vuejs/eslint-config-vue
   rules: {
     // 缩进为2个空格
     'vue/html-indent': [
@@ -47,7 +44,7 @@ module.exports = {
     // 关闭检测未使用的变量
     'no-unused-vars': 'off',
     // 对象展开时总是要添加逗号，一行时行末不需要逗号
-    // 'comma-dangle': ['error', 'always-multiline'],
+    'comma-dangle': ['error', 'never'],
     // 定义函数时，函数括号之前允许添加空格
     'space-before-function-paren': ['error', 'always'],
     // 关闭禁用无效标签
