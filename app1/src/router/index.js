@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/home'
 import { name } from '../../package'
-import { getBase } from "comm/src/utils";
+import { getBase } from 'comm/src/utils'
 
 Vue.use(VueRouter)
 const routes = [

@@ -95,15 +95,16 @@ export function getBase(name) {
  * @returns 
  */
 export function exportFile(file) {
-    let blob = new Blob([file], {
+  const { headers, data } = file
+    let blob = new Blob([data], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
     });
     let downloadElement = document.createElement('a');
     let href = window.URL.createObjectURL(blob); // 创建下载的链接
     downloadElement.href = href;
     //获取文件名
-    let fileName = decodeURI(response.headers['content-disposition'].split("=")[1]); //处理文件名乱码问题
-    downloadElement.download = fileName; // 下载后文件名
+    let fileName = decodeURI(headers['content-disposition'].split("=")[1]); //处理文件名乱码问题
+    downloadElement.download = fileName || Date.now(); // 下载后文件名
     document.body.appendChild(downloadElement);
     downloadElement.click(); // 点击下载
     document.body.removeChild(downloadElement); // 下载完成移除元素
@@ -127,4 +128,13 @@ export function flatArr([obj], key) {
     }
     // 清理输出内容中的二维
     return result.flat()
+}
+
+/**
+ * 路由文件导入
+ * @param {String} file 文件名 
+ * @returns  导入的文件实例
+ */
+export function _import (file) {
+  return require('@/views/' + file).default
 }

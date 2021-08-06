@@ -2,12 +2,14 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import requestError from './request-error'
-// 域名地址
-axios.defaults.baseURL = '';
 
+const service = axios.create({
+  baseURL: '', 
+  timeout: 10000 
+})
 
 //  REQUEST 请求异常拦截
-axios.interceptors.request.use(config => {
+service.interceptors.request.use(config => {
     const token = localStorage.getItem('token');
     // 将Token添加到请求头里面
     token && (config.headers.Token = token);
@@ -19,13 +21,16 @@ axios.interceptors.request.use(config => {
 });
 
 //  RESPONSE 响应异常拦截
-axios.interceptors.response.use(result => {
+service.interceptors.response.use(result => {
     if (result.data.code && result.data.code != 200) {
         Message.error({ message: result.data.msg });
         // 非法进入时直接跳到登录页
         window.location.href = '/';
         return;
     };
+    if (result.config.responseType === 'blob' || result.config.responseType === 'arraybuffer') { //下载excel类型
+      return downloadFile(result)
+    }
     return result;
 }, err => {
 
@@ -49,28 +54,28 @@ export const baseUrl = axios.defaults.baseURL;
 
 export const http = {
     post(url, params) {
-        return axios({
+        return service({
             method: 'post',
             url: url,
             data: params
         });
     },
     get(url, params) {
-        return axios({
+        return service({
             method: 'get',
             url: url,
             params: params
         });
     },
     put(url, params) {
-        return axios({
+        return service({
             method: 'put',
             url: url,
             data: params
         });
     },
     delete(url, params) {
-        return axios({
+        return service({
             method: 'delete',
             url: url,
             data: params

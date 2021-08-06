@@ -1,5 +1,5 @@
 {
-  "name": "app-template",
+  "name": "base",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -24,7 +24,6 @@
     "@vue/cli-service": "~4.5.0",
     "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.1.0",
-    "babel-plugin-component": "^1.1.1",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^6.2.2",

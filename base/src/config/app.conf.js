@@ -2,12 +2,12 @@
 export const NAVBAR_MENUS = [
     {
         name: "app1",
-        entry: "//localhost:8081",
+        entry: "//localhost:9992",
         activeRule: 'app1',
     },
     {
         name: "app2",
-        entry: "//localhost:8082",
+        entry: "//localhost:9993",
         activeRule: 'app2',
     }
 ]

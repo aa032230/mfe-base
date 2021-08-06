@@ -1,13 +1,15 @@
 <template>
-    <div class="home"><Test></Test></div>
+  <div class="home">
+    <Test></Test>
+  </div>
 </template>
 
 <script>
-import { Test } from '@/components';
+import { Test } from '@/components'
 export default {
-    name: 'Home',
-    components: { Test }
-};
+  name: 'Home',
+  components: { Test }
+}
 </script>
 
 <style>
