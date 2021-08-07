@@ -1,33 +1,32 @@
 <script>
 export default {
-  name: "VSidebar",
-  data: () => ({
-    collapse: false,
-  }),
+  name: 'VSidebar',
   props: {
     menuList: {
       type: Array,
-      dafault: () => [],
+      default() {
+        return []
+      }
     },
     router: {
       type: Boolean,
-      default: true,
+      default: true
     },
     textColor: {
       type: String,
-      default: "#FFF",
+      default: '#FFF'
     },
     bgColor: {
       type: String,
-      default: "#001529",
+      default: '#001529'
     },
     activeTextColor: {
       type: String,
-      default: "#FFF",
+      default: '#FFF'
     },
     mode: {
       type: String,
-      default: "vertical",
+      default: 'vertical'
     },
     defaultActive: {
       type: String,
@@ -35,14 +34,17 @@ export default {
     },
     uniqueOpened: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
+  data: () => ({
+    collapse: false
+  }),
   methods: {
     createMenu(arr) {
       return arr.map((item, index) => {
-        const { isHidden } = item.meta;
-        if (isHidden) return;
+        const { isHidden } = item.meta
+        if (isHidden) return
         // 如果存在子集
         if (Array.isArray(item.children)) {
           return (
@@ -53,7 +55,7 @@ export default {
               </template>
               {this.createMenu(item.children)}
             </el-submenu>
-          );
+          )
         } else {
           return (
             <el-menu-item index={item.index} key={index}>
@@ -62,23 +64,23 @@ export default {
                 {item.name}
               </span>
             </el-menu-item>
-          );
+          )
         }
-      });
+      })
     },
 
     open(index, indexPath) {
-      this.$emit("open", index, indexPath);
+      this.$emit('open', index, indexPath)
     },
     select(index, indexPath) {
-      this.$emit("select", index, indexPath);
+      this.$emit('select', index, indexPath)
     },
     close(index, indexPath) {
-      this.$emit("close", index, indexPath);
+      this.$emit('close', index, indexPath)
     },
     handleCollapse() {
-      this.collapse = !this.collapse;
-    },
+      this.collapse = !this.collapse
+    }
   },
   render() {
     const MenuAttribute = {
@@ -90,34 +92,27 @@ export default {
         mode: this.mode,
         collapse: this.collapse,
         defaultActive: this.defaultActive,
-        uniqueOpened: this.uniqueOpened,
+        uniqueOpened: this.uniqueOpened
       },
       on: {
         open: this.open,
-        select: this.select,
-      },
-    };
+        select: this.select
+      }
+    }
     return (
-      <el-scrollbar
-        width="initial"
-        class={["app-scrollbar", { "el-menu-collapse": this.collapse }]}
-      >
+      <el-scrollbar width="initial" class={['app-scrollbar', { 'el-menu-collapse': this.collapse }]}>
         <el-menu class="menu-collapse" style="width: 100%" {...MenuAttribute}>
-          {" "}
+          {' '}
           {this.createMenu(this.menuList)}
         </el-menu>
         <span
-          class={[
-            this.collapse ? "el-icon-s-unfold" : "el-icon-s-fold",
-            "is-collapse",
-          ]}
-          onClick={this.handleCollapse}
-        ></span>
+          class={[this.collapse ? 'el-icon-s-unfold' : 'el-icon-s-fold', 'is-collapse']}
+          onClick={this.handleCollapse}></span>
       </el-scrollbar>
-    );
-  },
-};
+    )
+  }
+}
 </script>
 <style lang="scss" scoped>
-@import "./index";
+@import './index';
 </style>

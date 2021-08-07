@@ -1,7 +1,7 @@
-import { TEST_MODULE } from "./types";
+import { TEST_MODULE } from './types'
 
 export default {
-  dispatchAction(context, payload) {
-    context.commit(TEST_MODULE.ACTIONS, payload);
-  },
-};
+  dispatchAction (context, payload) {
+    context.commit(TEST_MODULE.ACTIONS, payload)
+  }
+}

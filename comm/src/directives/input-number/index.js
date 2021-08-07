@@ -1,4 +1,4 @@
-import { onInput } from "../../utils";
+import { onInput } from '../../utils'
 /**
  *  限制只能输入纯数字
  *  v-input-number 纯数字
@@ -6,16 +6,16 @@ import { onInput } from "../../utils";
  *
  */
 export default {
-  update(el, binding, vnode) {
-    const ele = el.tagName === "INPUT" ? el : el.querySelector("input");
+  update (el, binding, vnode) {
+    const ele = el.tagName === 'INPUT' ? el : el.querySelector('input')
     if (ele) {
-      ele.addEventListener("input", onInput(ele, binding, vnode));
+      ele.addEventListener('input', onInput(ele, binding, vnode))
     }
   },
-  unbink(el, binding, vnode) {
-    const ele = el.tagName === "INPUT" ? el : el.querySelector("input");
+  unbink (el, binding, vnode) {
+    const ele = el.tagName === 'INPUT' ? el : el.querySelector('input')
     if (ele) {
-      ele.removeEventListener("input", onInput(ele, binding, vnode));
+      ele.removeEventListener('input', onInput(ele, binding, vnode))
     }
-  },
-};
+  }
+}

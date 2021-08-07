@@ -2,12 +2,12 @@ module.exports = {
   root: true,
   parserOptions: {
     parser: 'babel-eslint',
-    sourceType: 'module',
+    sourceType: 'module'
   },
   env: {
     browser: true,
     node: true,
-    es6: true,
+    es6: true
   },
   extends: ['plugin:vue/recommended', 'eslint:recommended', 'prettier'],
   rules: {
@@ -36,6 +36,6 @@ module.exports = {
     //强制使用单引号
     quotes: ['error', 'single'],
     // 禁止添加分号
-    semi: ['error', 'never'],
-  },
+    semi: ['error', 'never']
+  }
 }

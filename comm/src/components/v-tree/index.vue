@@ -1,23 +1,21 @@
 <script>
 // todo: 如需添加功能,请参考文档 https://github.com/tower1229/Vue-Giant-Tree
-import tree from "vue-giant-tree";
-import { cloneDeep } from "lodash";
-import { flatArr } from "../../utils";
+import tree from 'vue-giant-tree'
+import { cloneDeep } from 'lodash'
+import { flatArr } from '../../utils'
 export default {
   components: {
-    tree,
+    tree
   },
   props: {
     treeData: {
       require: true,
       type: Array,
-    },
-    treeType: {
-      type: String,
+      default: () => []
     },
     placeholder: {
       type: String,
-      default: "仪表编号",
+      default: '仪表编号'
     },
     treeConfig: {
       type: Object,
@@ -30,144 +28,136 @@ export default {
           data: {
             simpleData: {
               enable: true,
-              pIdKey: "pid",
-            },
-          },
-        };
-      },
+              pIdKey: 'pid'
+            }
+          }
+        }
+      }
     },
     width: {
       type: String,
-      default: "300",
-    },
+      default: '300'
+    }
   },
-  data() {
+  data () {
     return {
-      treeValue: "",
-    };
+      treeValue: ''
+    }
   },
   methods: {
     // 初始化tree
-    handleCreated(ztreeObj) {
-      this.ztreeObj = ztreeObj;
+    handleCreated (ztreeObj) {
+      this.ztreeObj = ztreeObj
       // 获取ztree对象
-      this.$emit("handleCreated", ztreeObj);
+      this.$emit('handleCreated', ztreeObj)
     },
     // 单击
-    onClick(evt, treeId, treeNode) {
+    onClick (evt, treeId, treeNode) {
       if (treeNode.isParent) {
         // 去除父级选中颜色
-        this.removeParentActiveColor(treeId);
+        this.removeParentActiveColor(treeId)
         // 点击父节点，只展开或收缩
-        this.ztreeObj.expandNode(treeNode, !treeNode.open);
-        return;
+        this.ztreeObj.expandNode(treeNode, !treeNode.open)
+        return
       }
-      this.$emit("diapatchTreeEvent", treeNode);
+      this.$emit('diapatchTreeEvent', treeNode)
     },
     // 搜索
-    handleSelect(node) {
-      const nodes = this.ztreeObj.getNodesByParamFuzzy("name", node.name, null);
-      this.ztreeObj.expandNode(nodes[0], true, true, true);
-      this.ztreeObj.selectNode(nodes[0]);
+    handleSelect (node) {
+      const nodes = this.ztreeObj.getNodesByParamFuzzy('name', node.name, null)
+      this.ztreeObj.expandNode(nodes[0], true, true, true)
+      this.ztreeObj.selectNode(nodes[0])
       if (nodes[0].isParent) {
         // 去除父级选中颜色
-        this.removeParentActiveColor(nodes[0].tId);
-        return;
+        this.removeParentActiveColor(nodes[0].tId)
+        return
       }
-      this.$emit("diapatchTreeEvent", node);
+      this.$emit('diapatchTreeEvent', node)
     },
     // 多选
-    onCheck(e, treeId, treeNode) {
-      const treeNodes = flatArr([treeNode], "children");
+    onCheck (e, treeId, treeNode) {
+      const treeNodes = flatArr([treeNode], 'children')
       // const checkNodes = this.ztreeObj.getCheckedNodes(true)
-      this.$emit("select", treeNodes);
+      this.$emit('select', treeNodes)
     },
 
     // 去除父节点active背景色
-    removeParentActiveColor(tid) {
-      const selectParentNode = document.querySelector(`#${tid}`);
-      const selectNode = selectParentNode.querySelector(".curSelectedNode");
-      selectNode.classList.remove("curSelectedNode");
+    removeParentActiveColor (tid) {
+      const selectParentNode = document.querySelector(`#${tid}`)
+      const selectNode = selectParentNode.querySelector('.curSelectedNode')
+      selectNode.classList.remove('curSelectedNode')
     },
 
     // 返回建议数据
-    querySearch(queryString, cb) {
-      const tree = cloneDeep(this.treeData);
-      let restaurants = void 0;
-      const result = flatArr(tree, "children");
+    querySearch (queryString, cb) {
+      const tree = cloneDeep(this.treeData)
+      // let restaurants = void 0
+      const restaurants = flatArr(tree, 'children')
       // 设备树只返回仪表
-      if (this.treeType === "equipment") {
-        restaurants = result.filter((t) => t.imei || t.fmAddress);
-      } else {
-        restaurants = result;
-      }
-      const results = queryString
-        ? restaurants.filter(this.createFilter(queryString))
-        : restaurants;
+      // if (this.treeType === 'equipment') {
+      //     restaurants = result.filter((t) => t.imei || t.fmAddress);
+      // } else {
+      //     restaurants = result;
+      // }
+      const results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
-      cb(results);
+      cb(results)
     },
     // 过滤
-    createFilter(queryString) {
+    createFilter (queryString) {
       return (restaurant) => {
-        return (
-          restaurant.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0
-        );
-      };
-    },
+        return restaurant.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+      }
+    }
   },
   // 渲染
-  render() {
+  render () {
     const searchAttribute = {
       props: {
         placeholder: this.placeholder,
         value: this.treeValue,
         clearable: true,
-        size: "small",
-        valueKey: "name",
-        prefixIcon: "el-icon-search",
+        size: 'small',
+        valueKey: 'name',
+        prefixIcon: 'el-icon-search'
       },
       on: {
         select: this.handleSelect,
         input: (value) => {
-          this.treeValue = value;
-        },
-      },
-    };
+          this.treeValue = value
+        }
+      }
+    }
     const treeAttribute = {
       props: {
         nodes: this.treeData,
-        setting: this.treeConfig,
+        setting: this.treeConfig
       },
       on: {
         onClick: this.onClick,
         onCheck: this.onCheck,
-        onCreated: this.handleCreated,
-      },
-    };
+        onCreated: this.handleCreated
+      }
+    }
     return (
-      <div class="tree-aside" style={{ width: this.width + "px" }}>
+      <div class="tree-aside" style={{ width: this.width + 'px' }}>
         <div class="tree-search">
           <el-autocomplete
             class="inline-input"
             fetch-suggestions={(q, cb) => this.querySearch(q, cb)}
-            {...searchAttribute}
-          ></el-autocomplete>
+            {...searchAttribute}></el-autocomplete>
         </div>
         <div class="tree-wrap">
-          <el-scrollbar
-            class="tree-node"
-            wrapStyle={[{ "overflow-x": "hidden" }]}
-          >
+          <el-scrollbar class="tree-node" wrapStyle={[{ 'overflow-x': 'hidden' }]}>
             <tree {...treeAttribute} />
           </el-scrollbar>
         </div>
       </div>
-    );
-  },
-};
+    )
+  }
+}
 </script>
 
 <style lang="scss" scoped>
-@import "./index";
+@import './index';
 </style>

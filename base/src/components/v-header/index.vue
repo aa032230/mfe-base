@@ -100,31 +100,32 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       username: '张三',
-      circleUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+      circleUrl:
+        'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
     }
   },
   methods: {
-    handleCommand (command) {
+    handleCommand(command) {
       switch (command) {
-      case 'user':
-        alert('功能正在开发中...')
-        break
-      case 'loginout':
-        this.loginout()
-        break
-      default:
-        break
+        case 'user':
+          alert('功能正在开发中...')
+          break
+        case 'loginout':
+          this.loginout()
+          break
+        default:
+          break
       }
     },
-    loginout () {
+    loginout() {
       sessionStorage.removeItem('token')
       localStorage.removeItem('vuexLocal')
       redirectApp('/login')
     },
-    select (index, indexPath) {
+    select(index, indexPath) {
       this.$emit('select', index)
     }
   }
