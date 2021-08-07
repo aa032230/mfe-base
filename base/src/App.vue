@@ -1,16 +1,10 @@
 <template>
   <div id="main-root">
     <!-- 头部 -->
-    <v-header
-      :navbar-menus="navbarMenus"
-      :current-menu="currentMenu"
-    />
+    <v-header :navbar-menus="navbarMenus" :current-menu="currentMenu" />
     <router-view />
     <!-- 子应用盒子 -->
-    <div
-      id="root-view"
-      class="app-view-box"
-    />
+    <div id="root-view" class="app-view-box" />
   </div>
 </template>
 
@@ -24,19 +18,19 @@ export default {
   components: {
     vHeader
   },
-  data () {
+  data() {
     return {
       currentMenu: '',
       navbarMenus: NAVBAR_MENUS
     }
   },
-  mounted () {
+  mounted() {
     this.setMenus()
   },
 
   methods: {
     // 菜单获取
-    setMenus () {
+    setMenus() {
       const apps = []
       this.navbarMenus.forEach((m) => {
         m.container = _subAppContainer
@@ -46,7 +40,7 @@ export default {
       mf.registerAndStart(apps)
       this.getCurrentMenu(apps[0])
     },
-    getCurrentMenu (current) {
+    getCurrentMenu(current) {
       // 获取当前页面 菜单刷新后能自动选中
       let currentUrl = window.location.href
       let currentPage = currentUrl.split('/')[3].replace('#', '')
@@ -55,9 +49,18 @@ export default {
       console.log(this.currentMenu)
     },
     // 选中激活
-    selectMenu (index, indexPath) {
+    selectMenu(index, indexPath) {
       this.currentMenu = index
     }
   }
 }
 </script>
+<style lang="scss">
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>

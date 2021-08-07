@@ -4,9 +4,7 @@
       <el-row class="head-row">
         <el-col :span="3">
           <div class="head-row-left">
-            <div class="head-row-left-logo">
-              Logo
-            </div>
+            <div class="head-row-left-logo">Logo</div>
             <div class="head-row-left-line" />
           </div>
         </el-col>
@@ -22,11 +20,8 @@
               @select="select"
             >
               <template v-for="(item, index) in navbarMenus">
-                <el-menu-item
-                  :key="index"
-                  :index="`/${item.activeRule}`"
-                >
-                  {{ item.menuName }}
+                <el-menu-item :key="index" :index="`/${item.activeRule}`">
+                  {{ item.title }}
                 </el-menu-item>
               </template>
             </el-menu>
@@ -50,10 +45,7 @@
                 </div> -->
               <!-- 用户名下拉菜单 -->
               <div class="head-row-right-user-avatar">
-                <el-avatar
-                  :size="35"
-                  :src="circleUrl"
-                />
+                <el-avatar :size="35" :src="circleUrl" />
               </div>
               <el-dropdown
                 class="head-row-right-user-name"
@@ -66,13 +58,8 @@
                 </span>
                 <template #dropdown>
                   <el-dropdown-menu>
-                    <el-dropdown-item command="user">
-                      个人中心
-                    </el-dropdown-item>
-                    <el-dropdown-item
-                      divided
-                      command="loginout"
-                    >
+                    <el-dropdown-item command="user">个人中心</el-dropdown-item>
+                    <el-dropdown-item divided command="loginout">
                       退出登录
                     </el-dropdown-item>
                   </el-dropdown-menu>
