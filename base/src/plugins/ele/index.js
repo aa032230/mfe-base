@@ -2,7 +2,7 @@ import {
   Autocomplete, Avatar, Button, Breadcrumb, BreadcrumbItem, Backtop,
   Checkbox, Dropdown, DropdownMenu, DropdownItem, Icon, Input, Loading,
   Menu, MenuItem, Submenu, Select, Option, Tooltip, Tag, Tree, MessageBox,
-  Notification, Message, Container, Header, Aside, Main, Row, Col
+  Notification, Message, Container, Header, Aside, Main, Row, Col, scrollbar
 } from 'element-ui'
 export default {
   components: [
@@ -32,7 +32,8 @@ export default {
     Aside,
     Main,
     Row,
-    Col
+    Col,
+    scrollbar
   ],
   install(Vue) {
     Vue.prototype.$alert = MessageBox.alert

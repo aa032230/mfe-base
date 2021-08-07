@@ -47,11 +47,7 @@
               <div class="head-row-right-user-avatar">
                 <el-avatar :size="35" :src="circleUrl" />
               </div>
-              <el-dropdown
-                class="head-row-right-user-name"
-                trigger="click"
-                @command="handleCommand"
-              >
+              <el-dropdown class="head-row-right-user-name" trigger="click" @command="handleCommand">
                 <span class="el-dropdown-link">
                   {{ username }}
                   <i class="el-icon-arrow-down" />
@@ -59,9 +55,7 @@
                 <template #dropdown>
                   <el-dropdown-menu>
                     <el-dropdown-item command="user">个人中心</el-dropdown-item>
-                    <el-dropdown-item divided command="loginout">
-                      退出登录
-                    </el-dropdown-item>
+                    <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
                   </el-dropdown-menu>
                 </template>
               </el-dropdown>
@@ -90,8 +84,7 @@ export default {
   data() {
     return {
       username: '张三',
-      circleUrl:
-        'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+      circleUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
     }
   },
   methods: {
@@ -113,7 +106,7 @@ export default {
       redirectApp('/login')
     },
     select(index, indexPath) {
-      this.$emit('select', index)
+      this.$emit('select', index, indexPath)
     }
   }
 }

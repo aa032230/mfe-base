@@ -42,9 +42,9 @@ export default {
   }),
   methods: {
     createMenu(arr) {
+      console.log(arr)
       return arr.map((item, index) => {
-        const { isHidden } = item.meta
-        if (isHidden) return
+        if (item?.meta?.isHidden) return
         // 如果存在子集
         if (Array.isArray(item.children)) {
           return (
@@ -83,6 +83,7 @@ export default {
     }
   },
   render() {
+    // console.log(this.defaultActive)
     const MenuAttribute = {
       props: {
         router: this.router,
@@ -102,12 +103,12 @@ export default {
     return (
       <el-scrollbar width="initial" class={['app-scrollbar', { 'el-menu-collapse': this.collapse }]}>
         <el-menu class="menu-collapse" style="width: 100%" {...MenuAttribute}>
-          {' '}
           {this.createMenu(this.menuList)}
         </el-menu>
         <span
           class={[this.collapse ? 'el-icon-s-unfold' : 'el-icon-s-fold', 'is-collapse']}
-          onClick={this.handleCollapse}></span>
+          onClick={this.handleCollapse}
+        ></span>
       </el-scrollbar>
     )
   }

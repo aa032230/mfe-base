@@ -7,9 +7,13 @@ import { getBase } from 'comm/src/utils'
 Vue.use(VueRouter)
 const routes = [
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/',
+    redirect: '/home'
   },
   {
     path: '/about',
