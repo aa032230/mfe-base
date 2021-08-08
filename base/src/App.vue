@@ -1,12 +1,15 @@
 <template>
   <div id="main-root">
     <!-- 头部 -->
-    <v-header :navbar-menus="navbarMenus" :current-menu="currentMenu" @select="selectMenu" />
+    <v-header :navbar-menus="navbarMenus" @select="selectMenu" />
     <router-view />
     <!-- 子应用盒子 -->
     <div class="subapp">
-      <v-sidebar :menu-list="sidebarMenu" :default-active="subActive" />
-      <div id="root-view" class="app-view-box" />
+      <v-sidebar :menu-list="sidebarMenu" />
+      <div class="app-view-warp">
+        <tag-views></tag-views>
+        <div id="root-view" class="app-view-box" />
+      </div>
     </div>
   </div>
 </template>
@@ -15,26 +18,27 @@
 import { NAVBAR_MENUS } from 'config'
 import { vSidebar } from 'comm/src/components'
 import { mf } from 'utils'
-import { vHeader } from 'components'
+import { vHeader, tagViews } from 'components'
 const _subAppContainer = '#root-view'
 export default {
   name: 'App',
   components: {
     vHeader,
-    vSidebar
+    vSidebar,
+    tagViews
   },
   data() {
     return {
-      currentMenu: '',
       navbarMenus: NAVBAR_MENUS,
-      sidebarMenu: [],
-      subActive: ''
+      sidebarMenu: []
     }
   },
   mounted() {
     this.setMenus()
   },
-
+  watch: {
+    $route: 'getSubMenu'
+  },
   methods: {
     // 菜单获取
     setMenus() {
@@ -45,24 +49,21 @@ export default {
       })
       // 注册子应用并启动微服务
       mf.registerAndStart(apps)
-      this.getCurrentMenu(apps[0])
-      this.sidebarMenu = apps[0].children
+      this.getSubMenu()
     },
-    getCurrentMenu(current) {
-      // 获取当前页面 菜单刷新后能自动选中
-      const currentUrl = window.location.href
-      const currentPage = currentUrl.split('/')
-      const currentActive = currentPage[3]
-      const _defaultActive = current.activeRule
-      this.currentMenu = currentActive ? '/' + currentActive : '/' + _defaultActive
-      this.subActive = currentPage[4] ? `${this.currentMenu}/${currentPage[4]}` : current.children[0].index
+
+    getSubMenu() {
+      const currentPath = this.$route.path.split('/')[1]
+      this.navbarMenus.forEach((m) => {
+        if (m.activeRule === currentPath) {
+          this.sidebarMenu = m.children
+        }
+      })
     },
     // 选中激活
     selectMenu(index, indexPath) {
       const parentMenu = this.navbarMenus.filter((item) => `/${item.activeRule}` === index)[0]
-      this.currentMenu = index
       this.sidebarMenu = parentMenu.children
-      this.subActive = parentMenu.children[0].index
     }
   }
 }
@@ -74,12 +75,15 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
+  a {
+    text-decoration: none;
+  }
   #main-root {
     height: 100%;
     .subapp {
-      height: 100%;
+      height: calc(100% - 60px);
       display: flex;
-      .app-view-box {
+      .app-view-warp {
         flex: 1;
       }
     }

@@ -28,21 +28,25 @@ export default {
       type: String,
       default: 'vertical'
     },
-    defaultActive: {
-      type: String,
-      default: ''
-    },
     uniqueOpened: {
       type: Boolean,
       default: false
     }
   },
   data: () => ({
-    collapse: false
+    collapse: false,
+    currentActive: ''
   }),
+  created() {
+    this.getCurrentActive()
+  },
+  watch: {
+    $route(to, from) {
+      this.currentActive = to.fullPath
+    }
+  },
   methods: {
     createMenu(arr) {
-      console.log(arr)
       return arr.map((item, index) => {
         if (item?.meta?.isHidden) return
         // 如果存在子集
@@ -68,12 +72,15 @@ export default {
         }
       })
     },
-
+    // 获取当前active
+    getCurrentActive() {
+      this.currentActive = this.$route.fullPath
+    },
     open(index, indexPath) {
       this.$emit('open', index, indexPath)
     },
     select(index, indexPath) {
-      this.$emit('select', index, indexPath)
+      this.currentActive = index
     },
     close(index, indexPath) {
       this.$emit('close', index, indexPath)
@@ -92,7 +99,7 @@ export default {
         activeTextColor: this.activeTextColor,
         mode: this.mode,
         collapse: this.collapse,
-        defaultActive: this.defaultActive,
+        defaultActive: this.currentActive,
         uniqueOpened: this.uniqueOpened
       },
       on: {

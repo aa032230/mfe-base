@@ -13,7 +13,7 @@
             <el-menu
               class="el-menu-demo"
               mode="horizontal"
-              :default-active="currentMenu"
+              :default-active="getCurrentActive()"
               router
               background-color="#001529"
               text-color="#fff"
@@ -75,10 +75,6 @@ export default {
     navbarMenus: {
       type: Array,
       default: () => []
-    },
-    currentMenu: {
-      type: String,
-      default: ''
     }
   },
   data() {
@@ -86,6 +82,9 @@ export default {
       username: '张三',
       circleUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
     }
+  },
+  mounted() {
+    this.getCurrentActive()
   },
   methods: {
     handleCommand(command) {
@@ -100,6 +99,11 @@ export default {
           break
       }
     },
+    //获取当前active
+    getCurrentActive() {
+      return '/' + this.$route.path.split('/')[1]
+    },
+    // 退出
     loginout() {
       sessionStorage.removeItem('token')
       localStorage.removeItem('vuexLocal')
