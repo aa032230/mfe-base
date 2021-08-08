@@ -45,6 +45,7 @@ export default {
     isActive(route) {
       return route.path === this.$route.path // || route.name === this.$route.name
     },
+    // 添加标签
     addViewTags() {
       const { path } = this.$route
       this.navbar_menus.forEach((item) => {
@@ -62,6 +63,7 @@ export default {
         })
       })
     },
+    // 关闭标签
     closeSelectedTag(view) {
       this.visitedViews = this.visitedViews.filter((item) => item.path !== view)
       if (this.visitedViews.length >= 1) {
