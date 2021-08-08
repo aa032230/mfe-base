@@ -1,7 +1,7 @@
 <template>
   <div id="main-root">
     <!-- 头部 -->
-    <v-header :navbar-menus="navbarMenus" @select="selectMenu" />
+    <v-header :navbar-menus="navbarMenus" />
     <router-view />
     <!-- 子应用盒子 -->
     <div class="subapp">
@@ -59,11 +59,6 @@ export default {
           this.sidebarMenu = m.children
         }
       })
-    },
-    // 选中激活
-    selectMenu(index, indexPath) {
-      const parentMenu = this.navbarMenus.filter((item) => `/${item.activeRule}` === index)[0]
-      this.sidebarMenu = parentMenu.children
     }
   }
 }
