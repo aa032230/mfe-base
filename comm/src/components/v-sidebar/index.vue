@@ -41,9 +41,7 @@ export default {
     this.getCurrentActive()
   },
   watch: {
-    $route(to, from) {
-      this.currentActive = to.fullPath
-    }
+    $route: 'getCurrentActive'
   },
   methods: {
     createMenu(arr) {
