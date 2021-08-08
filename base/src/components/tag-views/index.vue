@@ -17,11 +17,10 @@
 </template>
 
 <script>
-// import ScrollPane from './scroll-pane'
 import { NAVBAR_MENUS } from 'config'
 import { redirectApp } from 'comm/src/utils'
 export default {
-  // components: { ScrollPane },
+  name: 'TagViews',
   data() {
     return {
       visitedViews: [],

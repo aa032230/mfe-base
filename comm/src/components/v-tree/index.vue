@@ -4,6 +4,7 @@ import tree from 'vue-giant-tree'
 import { cloneDeep } from 'lodash'
 import { flatArr } from '../../utils'
 export default {
+  name: 'VTree',
   components: {
     tree
   },
@@ -39,20 +40,20 @@ export default {
       default: '300'
     }
   },
-  data () {
+  data() {
     return {
       treeValue: ''
     }
   },
   methods: {
     // 初始化tree
-    handleCreated (ztreeObj) {
+    handleCreated(ztreeObj) {
       this.ztreeObj = ztreeObj
       // 获取ztree对象
       this.$emit('handleCreated', ztreeObj)
     },
     // 单击
-    onClick (evt, treeId, treeNode) {
+    onClick(evt, treeId, treeNode) {
       if (treeNode.isParent) {
         // 去除父级选中颜色
         this.removeParentActiveColor(treeId)
@@ -63,7 +64,7 @@ export default {
       this.$emit('diapatchTreeEvent', treeNode)
     },
     // 搜索
-    handleSelect (node) {
+    handleSelect(node) {
       const nodes = this.ztreeObj.getNodesByParamFuzzy('name', node.name, null)
       this.ztreeObj.expandNode(nodes[0], true, true, true)
       this.ztreeObj.selectNode(nodes[0])
@@ -75,21 +76,21 @@ export default {
       this.$emit('diapatchTreeEvent', node)
     },
     // 多选
-    onCheck (e, treeId, treeNode) {
+    onCheck(e, treeId, treeNode) {
       const treeNodes = flatArr([treeNode], 'children')
       // const checkNodes = this.ztreeObj.getCheckedNodes(true)
       this.$emit('select', treeNodes)
     },
 
     // 去除父节点active背景色
-    removeParentActiveColor (tid) {
+    removeParentActiveColor(tid) {
       const selectParentNode = document.querySelector(`#${tid}`)
       const selectNode = selectParentNode.querySelector('.curSelectedNode')
       selectNode.classList.remove('curSelectedNode')
     },
 
     // 返回建议数据
-    querySearch (queryString, cb) {
+    querySearch(queryString, cb) {
       const tree = cloneDeep(this.treeData)
       // let restaurants = void 0
       const restaurants = flatArr(tree, 'children')
@@ -104,14 +105,14 @@ export default {
       cb(results)
     },
     // 过滤
-    createFilter (queryString) {
+    createFilter(queryString) {
       return (restaurant) => {
         return restaurant.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     }
   },
   // 渲染
-  render () {
+  render() {
     const searchAttribute = {
       props: {
         placeholder: this.placeholder,
@@ -145,7 +146,8 @@ export default {
           <el-autocomplete
             class="inline-input"
             fetch-suggestions={(q, cb) => this.querySearch(q, cb)}
-            {...searchAttribute}></el-autocomplete>
+            {...searchAttribute}
+          ></el-autocomplete>
         </div>
         <div class="tree-wrap">
           <el-scrollbar class="tree-node" wrapStyle={[{ 'overflow-x': 'hidden' }]}>

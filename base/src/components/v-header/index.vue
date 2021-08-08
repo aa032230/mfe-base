@@ -70,7 +70,7 @@
 <script>
 import { redirectApp } from 'comm/src/utils'
 export default {
-  name: 'AnsoHeader',
+  name: 'VHeader',
   props: {
     navbarMenus: {
       type: Array,
