@@ -24,10 +24,6 @@ export default {
   // components: { ScrollPane },
   data() {
     return {
-      visible: false,
-      top: 0,
-      left: 0,
-      selectedTag: {},
       visitedViews: [],
       navbar_menus: NAVBAR_MENUS
     }
