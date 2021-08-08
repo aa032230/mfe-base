@@ -4,21 +4,19 @@ if (isLoadInSubAppContainer()) {
   __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__
 }
 
-export function isLoadInSubAppContainer () {
+export function isLoadInSubAppContainer() {
   return window.__POWERED_BY_QIANKUN__
 }
-export function wrapStartup (startup) {
+export function wrapStartup(startup) {
   let { render, App, config, Vue } = startup
 
   let app = null
 
   return {
-    async bootstrap () {},
-    async mount (props) {
+    async bootstrap() { },
+    async mount(props) {
       if (!config.plugins) config.plugins = []
       window.__CONTEXT__ = {
-        $bus: props.bus,
-        $portal: props.portal,
         $data: props.data,
         $utils: Object.assign({}, props.utils)
       }
@@ -30,11 +28,11 @@ export function wrapStartup (startup) {
       actions.setActions(props)
       app = render(Vue, App, config, props)
     },
-    async unmount (props) {
+    async unmount(props) {
       app && app.$destroy && app.$destroy()
       // app.$el.innerHTML = ''
       app = null
     },
-    async update (props) {}
+    async update(props) { }
   }
 }
