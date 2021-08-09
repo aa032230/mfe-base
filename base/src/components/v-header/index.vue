@@ -4,9 +4,7 @@
       <el-row class="head-row">
         <el-col :span="3">
           <div class="head-row-left">
-            <div class="head-row-left-logo">
-              Logo
-            </div>
+            <div class="head-row-left-logo">Logo</div>
             <div class="head-row-left-line" />
           </div>
         </el-col>
@@ -15,18 +13,15 @@
             <el-menu
               class="el-menu-demo"
               mode="horizontal"
-              :default-active="currentMenu"
+              :default-active="getCurrentActive()"
               router
               background-color="#001529"
               text-color="#fff"
               @select="select"
             >
               <template v-for="(item, index) in navbarMenus">
-                <el-menu-item
-                  :key="index"
-                  :index="`/${item.activeRule}`"
-                >
-                  {{ item.menuName }}
+                <el-menu-item :key="index" :index="`/${item.activeRule}`">
+                  {{ item.title }}
                 </el-menu-item>
               </template>
             </el-menu>
@@ -50,31 +45,17 @@
                 </div> -->
               <!-- 用户名下拉菜单 -->
               <div class="head-row-right-user-avatar">
-                <el-avatar
-                  :size="35"
-                  :src="circleUrl"
-                />
+                <el-avatar :size="35" :src="circleUrl" />
               </div>
-              <el-dropdown
-                class="head-row-right-user-name"
-                trigger="click"
-                @command="handleCommand"
-              >
+              <el-dropdown class="head-row-right-user-name" trigger="click" @command="handleCommand">
                 <span class="el-dropdown-link">
                   {{ username }}
                   <i class="el-icon-arrow-down" />
                 </span>
                 <template #dropdown>
                   <el-dropdown-menu>
-                    <el-dropdown-item command="user">
-                      个人中心
-                    </el-dropdown-item>
-                    <el-dropdown-item
-                      divided
-                      command="loginout"
-                    >
-                      退出登录
-                    </el-dropdown-item>
+                    <el-dropdown-item command="user">个人中心</el-dropdown-item>
+                    <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
                   </el-dropdown-menu>
                 </template>
               </el-dropdown>
@@ -89,43 +70,47 @@
 <script>
 import { redirectApp } from 'comm/src/utils'
 export default {
-  name: 'AnsoHeader',
+  name: 'VHeader',
   props: {
     navbarMenus: {
       type: Array,
       default: () => []
-    },
-    currentMenu: {
-      type: String,
-      default: ''
     }
   },
-  data () {
+  data() {
     return {
       username: '张三',
       circleUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
     }
   },
+  mounted() {
+    this.getCurrentActive()
+  },
   methods: {
-    handleCommand (command) {
+    handleCommand(command) {
       switch (command) {
-      case 'user':
-        alert('功能正在开发中...')
-        break
-      case 'loginout':
-        this.loginout()
-        break
-      default:
-        break
+        case 'user':
+          alert('功能正在开发中...')
+          break
+        case 'loginout':
+          this.loginout()
+          break
+        default:
+          break
       }
     },
-    loginout () {
+    //获取当前active
+    getCurrentActive() {
+      return '/' + this.$route.path.split('/')[1]
+    },
+    // 退出
+    loginout() {
       sessionStorage.removeItem('token')
       localStorage.removeItem('vuexLocal')
       redirectApp('/login')
     },
-    select (index, indexPath) {
-      this.$emit('select', index)
+    select(index, indexPath) {
+      this.$emit('select', index, indexPath)
     }
   }
 }
