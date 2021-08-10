@@ -1,0 +1,32 @@
+.form-view-box{
+  padding: 0 10px;
+  justify-content: space-between;
+  background-color: #fff;
+  position: relative;
+  height: 52px;
+  overflow: hidden;
+  transition: all 0.3s;
+  .form-view{
+    width: calc(100% - 200px);
+    display: flex;
+    flex-wrap: wrap;
+    &-item{
+      display: flex;
+      align-items: center;
+      margin-right: 15px;
+      padding: 10px 0;
+      >span{
+        font-size: 14px;
+        color: #666;
+        display: inline-block;
+        white-space: nowrap;
+        padding-right: 5px;
+      }
+    }
+  }
+  .from-view-button-group{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+  }
+}

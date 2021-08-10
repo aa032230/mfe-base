@@ -5,7 +5,9 @@
     <router-view />
     <!-- 子应用盒子 -->
     <div class="subapp">
-      <v-sidebar :menu-list="sidebarMenu" />
+      <div class="sidebar">
+        <v-sidebar :menu-list="sidebarMenu" />
+      </div>
       <div class="app-view-warp">
         <tag-views></tag-views>
         <div id="root-view" class="app-view-box" />
@@ -34,6 +36,7 @@ export default {
     }
   },
   mounted() {
+    console.log(location.pathname)
     this.setMenus()
   },
   watch: {
@@ -74,12 +77,22 @@ body {
     text-decoration: none;
   }
   #main-root {
+    width: 100%;
     height: 100%;
+    min-width: 700px;
     .subapp {
+      width: 100%;
       height: calc(100% - 60px);
       display: flex;
       .app-view-warp {
         flex: 1;
+        overflow: hidden;
+        .app-view-box {
+          background-color: #eee;
+          height: calc(100% - 35px);
+          padding: 10px 20px;
+          box-sizing: border-box;
+        }
       }
     }
   }

@@ -27,6 +27,14 @@ module.exports = {
       }
     }
   },
+  css: {
+    loaderOptions: {
+      // 设置 scss 公用变量文件
+      sass: {
+        prependData: '@import \'~comm/src/assets/css/base.scss\';'
+      }
+    }
+  },
   // 设置common要参与编译打包（ES6 -> ES5）
   transpileDependencies: ['comm'],
   // 指定Runtime + Compile来编译组件

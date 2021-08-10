@@ -1,14 +1,11 @@
 <template>
   <el-container class="head-wrap">
     <el-header class="head">
-      <el-row class="head-row">
-        <el-col :span="3">
+      <div class="head-row">
           <div class="head-row-left">
             <div class="head-row-left-logo">Logo</div>
             <div class="head-row-left-line" />
           </div>
-        </el-col>
-        <el-col :span="18">
           <div class="head-row-center">
             <el-menu
               class="el-menu-demo"
@@ -26,8 +23,6 @@
               </template>
             </el-menu>
           </div>
-        </el-col>
-        <el-col :span="3">
           <div class="head-row-right">
             <div class="head-row-right-user">
               <!-- 消息中心 -->
@@ -61,8 +56,7 @@
               </el-dropdown>
             </div>
           </div>
-        </el-col>
-      </el-row>
+      </div>
     </el-header>
   </el-container>
 </template>

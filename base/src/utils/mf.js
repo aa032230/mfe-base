@@ -47,7 +47,9 @@ export function createDefaultAppConfig(vm) {
       data: {
         msg: '测试一下'
       },
-      utils: {}
+      utils: {
+        resize: window.onresize
+      }
     }
   }
 }
