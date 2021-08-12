@@ -1,8 +1,29 @@
 import {
-  Autocomplete, Avatar, Button, Breadcrumb, BreadcrumbItem, Backtop,
-  Checkbox, Dropdown, DropdownMenu, DropdownItem, Icon, Input, Loading,
-  Menu, MenuItem, Submenu, Select, Option, Tooltip, Tag, Tree, MessageBox,
-  Notification, Message
+  Autocomplete,
+  Avatar,
+  Button,
+  Breadcrumb,
+  BreadcrumbItem,
+  Backtop,
+  Checkbox,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
+  Icon,
+  Input,
+  Loading,
+  Menu,
+  MenuItem,
+  Submenu,
+  Select,
+  Option,
+  Tooltip,
+  Tag,
+  Tree,
+  MessageBox,
+  Notification,
+  Message,
+  Switch
 } from 'element-ui'
 export default {
   components: [
@@ -26,9 +47,10 @@ export default {
     Option,
     Tooltip,
     Tag,
-    Tree
+    Tree,
+    Switch
   ],
-  install (Vue) {
+  install(Vue) {
     Vue.prototype.$alert = MessageBox.alert
     Vue.prototype.$confirm = MessageBox.confirm
     Vue.prototype.$prompt = MessageBox.prompt

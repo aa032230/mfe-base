@@ -6,9 +6,7 @@
  */
 import { checkType } from './utils'
 export default function renderApp(Vue, App, options) {
-  const instance = new Vue(
-    Object.assign(usePlugins(Vue, options), { render: (h) => h(App) })
-  )
+  const instance = new Vue(Object.assign(usePlugins(Vue, options), { render: (h) => h(App) }))
   // window.__SetSubAppLoading__ = setSubAppLoading(instance)
   return instance
 }

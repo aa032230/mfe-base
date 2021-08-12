@@ -7,7 +7,7 @@
 <script>
 export default {
   name: 'Test',
-  data () {
+  data() {
     return {
       msg: '我是第二个子应用'
     }

@@ -1,6 +1,8 @@
 <script>
+import { myForm } from '../../mixins'
 export default {
   name: 'VForm',
+  mixins: [myForm],
   props: {
     formList: {
       type: Array,
@@ -60,28 +62,6 @@ export default {
           </div>
         )
       })
-    },
-
-    // 根据type渲染对应的from组件
-    checkTypeToFormElement(r) {
-      switch (r.type) {
-        case 'select':
-          return (
-            <el-select size="small" style={{ width: r.width ? r.width + 'px' : '150px' }} v-model={this.form[r.field]}>
-              {r.options.map((option) => (
-                <el-option key={option.value} label={option.label} value={option.value} />
-              ))}
-            </el-select>
-          )
-        default:
-          return (
-            <el-input
-              size="small"
-              style={{ width: r.width ? r.width + 'px' : '150px' }}
-              v-model={this.form[r.field]}
-            ></el-input>
-          )
-      }
     }
   },
 
@@ -100,7 +80,7 @@ export default {
           </el-button>
           {this.elHeight > 52 && (
             <span class="is-open" onClick={this.handleOpen}>
-              {this.isOpen ? '收起' : '展开'} 
+              {this.isOpen ? '收起' : '展开'}
               <em class={this.isOpen ? 'el-icon-arrow-up' : 'el-icon-arrow-down'}></em>
             </span>
           )}

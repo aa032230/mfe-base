@@ -6,13 +6,13 @@ import { onInput } from '../../utils'
  *
  */
 export default {
-  update (el, binding, vnode) {
+  update(el, binding, vnode) {
     const ele = el.tagName === 'INPUT' ? el : el.querySelector('input')
     if (ele) {
       ele.addEventListener('input', onInput(ele, binding, vnode))
     }
   },
-  unbink (el, binding, vnode) {
+  unbink(el, binding, vnode) {
     const ele = el.tagName === 'INPUT' ? el : el.querySelector('input')
     if (ele) {
       ele.removeEventListener('input', onInput(ele, binding, vnode))

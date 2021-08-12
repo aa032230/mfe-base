@@ -30,16 +30,23 @@ export default {
               value: 1,
               label: '叉烧包'
             }
-          ]
+          ],
+          change: (row) => {
+            console.log(row)
+          }
         },
         {
           name: '系统模块2',
           field: 'a3',
-          width: 220
+          width: 220,
+          type: 'switch'
         },
         {
           name: '系统模块3',
-          field: 'a4'
+          field: 'a4',
+          input: (row) => {
+            console.log(row)
+          }
         },
         {
           name: '系统模块4',

@@ -2,13 +2,9 @@
  * 获取当前传入参数类型
  * @param {Any} param
  */
-export function checkType (param) {
+export function checkType(param) {
   let _t = void 0
-  return (
-    (_t = typeof param) == 'object'
-      ? Object.prototype.toString.call(param).slice(8, -1)
-      : _t
-  ).toLowerCase()
+  return ((_t = typeof param) == 'object' ? Object.prototype.toString.call(param).slice(8, -1) : _t).toLowerCase()
 }
 
 /**
@@ -17,8 +13,8 @@ export function checkType (param) {
  * @param {*} binding 指令对象
  * @param {*} vnode vue DIFF 生成的虚拟节点
  */
-export function onInput (el, binding, vnode) {
-  function handle () {
+export function onInput(el, binding, vnode) {
+  function handle() {
     // 手动触发数据的双向绑定,解决表单验证问题
     if (vnode.componentInstance) {
       vnode.componentInstance.$emit('input', el.value)
@@ -37,10 +33,7 @@ export function onInput (el, binding, vnode) {
       if (typeof binding.value !== 'undefined') {
         // 期望保留的最大小数位数
         let pointKeep = 0
-        if (
-          typeof binding.value === 'string' ||
-          typeof binding.value === 'number'
-        ) {
+        if (typeof binding.value === 'string' || typeof binding.value === 'number') {
           pointKeep = parseInt(binding.value)
         }
         if (!isNaN(pointKeep)) {
@@ -74,11 +67,9 @@ export function onInput (el, binding, vnode) {
  * @param {Object} data 传递数据
  * @param {String} title 当前页面的标题
  */
-export function redirectApp (url) {
-  const data =
-    arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {}
-  const title =
-    arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : ''
+export function redirectApp(url) {
+  const data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {}
+  const title = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : ''
   window.history.pushState(data, title, url)
 }
 
@@ -86,7 +77,7 @@ export function redirectApp (url) {
  * 修改路由base
  * @param {String} 微应用名称
  */
-export function getBase (name) {
+export function getBase(name) {
   const mfc = window.__MF_CONFIG__
   const base = mfc && mfc[name] ? mfc[name].activeBase : process.env.BASE_URL
   return base
@@ -97,7 +88,7 @@ export function getBase (name) {
  * @param {*} file 文件流
  * @returns
  */
-export function downloadFile (file) {
+export function downloadFile(file) {
   const { headers, data } = file
   let blob = new Blob([data], {
     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
@@ -120,7 +111,7 @@ export function downloadFile (file) {
  * @param {Array} [obj], 期望转换的数组对象
  * @param {String} key, 关键字
  */
-export function flatArr ([obj], key) {
+export function flatArr([obj], key) {
   let temp = obj[key]
   let result = [obj]
 
@@ -138,6 +129,6 @@ export function flatArr ([obj], key) {
  * @param {String} file 文件名
  * @returns  导入的文件实例
  */
-export function _import (file) {
+export function _import(file) {
   return require('@/views/' + file).default
 }

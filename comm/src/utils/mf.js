@@ -13,7 +13,7 @@ export function wrapStartup(startup) {
   let app = null
 
   return {
-    async bootstrap() { },
+    async bootstrap() {},
     async mount(props) {
       if (!config.plugins) config.plugins = []
       window.__CONTEXT__ = {
@@ -33,6 +33,6 @@ export function wrapStartup(startup) {
       // app.$el.innerHTML = ''
       app = null
     },
-    async update(props) { }
+    async update(props) {}
   }
 }

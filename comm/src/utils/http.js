@@ -31,10 +31,7 @@ service.interceptors.response.use(
       window.location.href = '/'
       return
     }
-    if (
-      result.config.responseType === 'blob' ||
-      result.config.responseType === 'arraybuffer'
-    ) {
+    if (result.config.responseType === 'blob' || result.config.responseType === 'arraybuffer') {
       //下载excel类型
       return downloadFile(result)
     }
@@ -60,28 +57,28 @@ service.interceptors.response.use(
 export const baseUrl = axios.defaults.baseURL
 
 export const http = {
-  post (url, params) {
+  post(url, params) {
     return service({
       method: 'post',
       url: url,
       data: params
     })
   },
-  get (url, params) {
+  get(url, params) {
     return service({
       method: 'get',
       url: url,
       params: params
     })
   },
-  put (url, params) {
+  put(url, params) {
     return service({
       method: 'put',
       url: url,
       data: params
     })
   },
-  delete (url, params) {
+  delete(url, params) {
     return service({
       method: 'delete',
       url: url,

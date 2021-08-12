@@ -12,5 +12,5 @@ module.exports = {
   arrowParens: 'always',
   htmlWhitespaceSensitivity: 'ignore',
   vueIndentScriptAndStyle: false, // script、style标签不缩进
-  endOfLine: 'lf',
+  endOfLine: 'lf'
 }

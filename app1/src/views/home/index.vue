@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <Test />111111111111111111111
+    <Test />
+    111111111111111111111
   </div>
 </template>
 
@@ -9,7 +10,7 @@ import { Test } from '@/components'
 export default {
   name: 'Home',
   components: { Test },
-  created () {
+  created() {
     // console.log(this['__CONTEXT__']);
   }
 }
@@ -17,6 +18,6 @@ export default {
 
 <style>
 .home {
-    font-size: 23px;
+  font-size: 23px;
 }
-</style>  
+</style>

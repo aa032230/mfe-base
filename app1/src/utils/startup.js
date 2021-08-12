@@ -1,4 +1,3 @@
-
 import { renderApp } from 'comm/src/utils'
 import { ele } from 'plugins'
 import 'plugins/styles'
@@ -15,7 +14,7 @@ export default {
     router,
     el: '#app',
     plugins: [ele],
-    init: Vue => {
+    init: (Vue) => {
       // Vue.prototype.$echarts = echarts
     }
   }

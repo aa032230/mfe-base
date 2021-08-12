@@ -3,7 +3,7 @@ module.exports = {
   env: {
     node: true
   },
-  'extends': [
+  extends: [
     'plugin:vue/essential',
     'eslint:recommended'
   ],
@@ -17,6 +17,6 @@ module.exports = {
     quotes: ['error', 'single'],
     //强制不使用分号结尾
     semi: ['error', 'never'],
-    'no-unused-vars': 'off',
+    'no-unused-vars': 'off'
   }
 }
