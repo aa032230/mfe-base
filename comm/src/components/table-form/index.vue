@@ -65,22 +65,23 @@ export default {
   },
 
   render() {
+    const { formList, form, isOpen, socureElHeight, handleReset, handleQuery, handleOpen, elHeight } = this
     return (
-      <div class="form-view-box" style={{ height: this.socureElHeight + 'px' }}>
+      <div class="form-view-box" style={{ height: socureElHeight + 'px' }}>
         <section class="form-view" ref="formGroup">
-          <v-form class={['v-form', { isopen: this.isOpen }]} formList={this.formList} v-model={this.form} />
+          <v-form class={['v-form', { isopen: isOpen }]} formList={formList} v-model={form} />
         </section>
         <div class="from-view-button-group">
-          <el-button size="small" onClick={this.handleReset}>
+          <el-button size="small" onClick={handleReset}>
             重置
           </el-button>
-          <el-button type="primary" size="small" onClick={this.handleQuery}>
+          <el-button type="primary" size="small" onClick={handleQuery}>
             查询
           </el-button>
-          {this.elHeight > 52 && (
-            <span class="is-open" onClick={this.handleOpen}>
-              {this.isOpen ? '收起' : '展开'}
-              <em class={this.isOpen ? 'el-icon-arrow-up' : 'el-icon-arrow-down'}></em>
+          {elHeight > 52 && (
+            <span class="is-open" onClick={handleOpen}>
+              {isOpen ? '收起' : '展开'}
+              <em class={isOpen ? 'el-icon-arrow-up' : 'el-icon-arrow-down'}></em>
             </span>
           )}
         </div>

@@ -105,15 +105,13 @@ export default {
         select: this.select
       }
     }
+    const { collapse, menuList, handleCollapse, createMenu } = this
     return (
-      <el-scrollbar width="initial" class={['app-scrollbar', { 'el-menu-collapse': this.collapse }]}>
+      <el-scrollbar width="initial" class={['app-scrollbar', { 'el-menu-collapse': collapse }]}>
         <el-menu class="menu-collapse" style="width: 100%" {...MenuAttribute}>
-          {this.createMenu(this.menuList)}
+          {createMenu(menuList)}
         </el-menu>
-        <span
-          class={[this.collapse ? 'el-icon-s-unfold' : 'el-icon-s-fold', 'is-collapse']}
-          onClick={this.handleCollapse}
-        ></span>
+        <span class={[collapse ? 'el-icon-s-unfold' : 'el-icon-s-fold', 'is-collapse']} onClick={handleCollapse}></span>
       </el-scrollbar>
     )
   }
