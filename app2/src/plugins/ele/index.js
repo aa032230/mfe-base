@@ -23,7 +23,9 @@ import {
   MessageBox,
   Notification,
   Message,
-  Switch
+  Switch,
+  Form,
+  FormItem
 } from 'element-ui'
 export default {
   components: [
@@ -48,7 +50,9 @@ export default {
     Tooltip,
     Tag,
     Tree,
-    Switch
+    Switch,
+    Form,
+    FormItem
   ],
   install(Vue) {
     Vue.prototype.$alert = MessageBox.alert

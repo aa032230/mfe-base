@@ -1,91 +1,145 @@
 <script>
-import { myForm } from '../../mixins'
+// 表单组件
 export default {
   name: 'VForm',
-  mixins: [myForm],
   props: {
     formList: {
       type: Array,
-      default: () => []
-    }
-  },
-  data() {
-    return {
-      isOpen: false,
-      socureElHeight: 52,
-      elHeight: 0,
-      form: {}
-    }
-  },
-  mounted() {
-    this.init()
-  },
-  methods: {
-    init() {
-      window.addEventListener('resize', () => {
-        const elHeight = this.$refs.formGroup.offsetHeight || 0
-        this.elHeight = elHeight
-        if (elHeight <= 52) {
-          this.socureElHeight = 52
-        }
-      })
-    },
-
-    // 是否展开
-    handleOpen() {
-      this.isOpen = !this.isOpen
-      if (this.isOpen) {
-        this.socureElHeight = this.elHeight
-      } else {
-        this.socureElHeight = 52
+      default() {
+        return []
       }
     },
-
-    // 查询
-    handleQuery() {
-      this.$emit('query', this.form)
+    value: {
+      type: Object,
+      default: () => ({})
     },
-
-    // 重置
-    handleReset() {
-      this.form = this.$options.data().form
-      this.$emit('reset')
-    },
-
-    // formItem构建
-    createFormItem(form) {
-      return form.map((f) => {
-        return (
-          <div class="form-view-item" key={f.field}>
-            <span>{f.name}:</span>
-            {this.checkTypeToFormElement(f)}
-          </div>
-        )
-      })
+    rules: {
+      type: Object,
+      default: () => ({})
     }
   },
-
+  methods: {
+    // 表单元素构建
+    createFormItem(formList) {
+      return formList.map((f) => {
+        return (
+          <el-form-item label={`${f.name}:`} prop="field" key={f.field}>
+            {this.checkTypeToFormElement(f)}
+          </el-form-item>
+        )
+      })
+    },
+    // 根据type渲染对应的from组件
+    checkTypeToFormElement(r) {
+      const form = this.value
+      switch (r.type) {
+        case 'select':
+          return (
+            <el-select
+              style={{ width: r.width ? r.width + 'px' : '150px' }}
+              v-model={form[r.field]}
+              filterable={r.filterable}
+              size={r.size ? r.size : 'small'}
+              disabled={r.disabled}
+              placeholder={r.placeholder}
+              on={this.setFormActions(r)}
+            >
+              {r.options.map((option) => (
+                <el-option key={option.value} label={option.label} value={option.value} />
+              ))}
+            </el-select>
+          )
+        case 'switch':
+          return <el-switch v-model={form[r.field]}></el-switch>
+        case 'cascader':
+          return (
+            <el-cascader
+              v-model={form[r.field]}
+              options={r.options}
+              onChange={r.method}
+              disabled={r.disabled}
+              placeholder={r.placeholder}
+              size={r.size ? r.size : 'small'}
+              style={{ width: r.width ? r.width + 'px' : '150px' }}
+              value-key={r.valueKey}
+              on={this.setFormActions(r)}
+            ></el-cascader>
+          )
+        case 'datePicker':
+          return (
+            <el-date-picker
+              v-model={form[r.field]}
+              type={r.type}
+              format={r.format}
+              placeholder={r.placeholder}
+              default-time={r.defaultTime}
+              value-format={r.valueType}
+              default-value={r.defaultValue}
+              range-separator={r.separator}
+              start-placeholder={r.startPlaceholder}
+              end-placeholder={r.endPlaceholder}
+              disabled={r.disabled}
+              on={this.setFormActions(r)}
+              size={r.size ? r.size : 'small'}
+              style={{ width: r.width ? r.width + 'px' : '150px' }}
+            ></el-date-picker>
+          )
+        case 'radio':
+          return (
+            <el-radio
+              v-model={form[r.field]}
+              label={r.value}
+              disabled={r.disabled}
+              size={r.size}
+              text-color={r.textColor}
+              fill={r.fill}
+              on={this.setFormActions(r)}
+            >
+              {r.label}
+            </el-radio>
+          )
+        case 'checkbox':
+          return (
+            <el-checkbox v-model={form[r.field]} disabled={r.disabled} size={r.size} on={this.setFormActions(r)}>
+              {r.label}
+            </el-checkbox>
+          )
+        default:
+          return (
+            <el-input
+              size={r.size ? r.size : 'small'}
+              style={{ width: r.width ? r.width + 'px' : '150px' }}
+              v-model={form[r.field]}
+              disabled={r.disabled}
+              placeholder={r.placeholder}
+              maxlength={r.maxlength}
+              clearable={r.clearable}
+              prefix-icon={r.prefixIcon}
+              suffix-icon={r.suffixIcon}
+              on={this.setFormActions(r)}
+            ></el-input>
+          )
+      }
+    },
+    // 表单元素方法导入
+    setFormActions(formOptions) {
+      const _props = {}
+      // todo: 没加上的方法自己加入数组
+      const _methods = ['change', 'select', 'input', 'clear', 'focus', 'blur']
+      Object.keys(formOptions).forEach((m) => {
+        if (_methods.includes(m)) {
+          Object.assign(_props, { [m]: formOptions[m] })
+        }
+      })
+      return _props
+    }
+  },
   render() {
+    const { value, rules } = this
     return (
-      <div class="form-view-box" style={{ height: this.socureElHeight + 'px' }}>
-        <section class="form-view" ref="formGroup">
-          {this.createFormItem(this.formList)}
-        </section>
-        <div class="from-view-button-group">
-          <el-button size="small" onClick={this.handleReset}>
-            重置
-          </el-button>
-          <el-button type="primary" size="small" onClick={this.handleQuery}>
-            查询
-          </el-button>
-          {this.elHeight > 52 && (
-            <span class="is-open" onClick={this.handleOpen}>
-              {this.isOpen ? '收起' : '展开'}
-              <em class={this.isOpen ? 'el-icon-arrow-up' : 'el-icon-arrow-down'}></em>
-            </span>
-          )}
-        </div>
-      </div>
+      <el-form props={{ model: value, rules }} ref="ruleForm" class="form">
+        {this.createFormItem(this.formList)}
+      </el-form>
     )
   }
 }

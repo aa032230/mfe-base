@@ -1,14 +1,14 @@
 <template>
   <div class="home">
-    <v-form :form-list="formList"></v-form>
+    <table-form :form-list="formList"></table-form>
   </div>
 </template>
 
 <script>
-import { vForm } from 'comm/src/components'
+import { tableForm } from 'comm/src/components'
 export default {
   name: 'Home',
-  components: { vForm },
+  components: { tableForm },
   data() {
     return {
       formList: [
@@ -30,10 +30,55 @@ export default {
               value: 1,
               label: '叉烧包'
             }
-          ],
-          change: (row) => {
-            console.log(row)
-          }
+          ]
+        },
+        {
+          name: '系统模块系统模块1112',
+          field: 'a8',
+          width: 220,
+          type: 'select',
+          options: [
+            {
+              value: 0,
+              label: '小籠包'
+            },
+            {
+              value: 1,
+              label: '叉烧包'
+            }
+          ]
+        },
+        {
+          name: '系统模块系统模块11312',
+          field: 'a7',
+          width: 220,
+          type: 'select',
+          options: [
+            {
+              value: 0,
+              label: '小籠包'
+            },
+            {
+              value: 1,
+              label: '叉烧包'
+            }
+          ]
+        },
+        {
+          name: '系统模块系统模块312',
+          field: 'a6',
+          width: 220,
+          type: 'select',
+          options: [
+            {
+              value: 0,
+              label: '小籠包'
+            },
+            {
+              value: 1,
+              label: '叉烧包'
+            }
+          ]
         },
         {
           name: '系统模块2',
@@ -43,10 +88,7 @@ export default {
         },
         {
           name: '系统模块3',
-          field: 'a4',
-          input: (row) => {
-            console.log(row)
-          }
+          field: 'a4'
         },
         {
           name: '系统模块4',
