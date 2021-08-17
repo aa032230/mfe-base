@@ -25,7 +25,11 @@ import {
   Message,
   Switch,
   Form,
-  FormItem
+  FormItem,
+  Table,
+  TableColumn,
+  Popover,
+  CheckboxGroup
 } from 'element-ui'
 export default {
   components: [
@@ -52,7 +56,13 @@ export default {
     Tree,
     Switch,
     Form,
-    FormItem
+    FormItem,
+    Table,
+    TableColumn,
+    Tooltip,
+    Popover,
+    CheckboxGroup,
+    Checkbox
   ],
   install(Vue) {
     Vue.prototype.$alert = MessageBox.alert

@@ -1,0 +1,30 @@
+.table-tools{
+  padding: 10px;
+  height: 32px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  em{
+    font-size: 20px;
+    color: #666;
+    padding: 0 5px;
+    cursor: pointer;
+  }
+  &-item{
+    &-ul{
+      padding: 0;
+      li{
+        text-align: center;
+        padding: 2px 0;
+        cursor: pointer;
+        &:hover{
+          background-color: #f6f6f6;
+        }
+      }
+      .is-active{
+        color: #1890ff;
+      }
+    }
+    
+  }
+}
