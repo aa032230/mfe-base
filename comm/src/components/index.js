@@ -7,4 +7,5 @@ export {default as tableTools } from './table-tools'
 export {default as vPager } from './v-pager'
 export {default as tableHead } from './table-head'
 export {default as vTable } from './v-table'
+export {default as tablePage } from './table-page'
 

@@ -53,7 +53,6 @@ export default {
 
     // 查询
     handleQuery() {
-      console.log(this.form)
       this.$emit('query', this.form)
     },
 

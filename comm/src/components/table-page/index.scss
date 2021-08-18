@@ -1,0 +1,20 @@
+.table-page{
+  height: 100%;
+  &-main{
+    background-color: #fff;
+    height: calc(100vh - 197px);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    &-table{
+      flex: 1;
+    }
+  }
+}
+/deep/ .el-table td{
+  padding: 4px;
+}
+/deep/ .el-table th{
+  padding: 0;
+  height: 34px;
+}

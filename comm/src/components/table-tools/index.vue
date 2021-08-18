@@ -10,11 +10,7 @@ export default {
     }
   },
   props: {
-    printId: {
-      type: String,
-      default: 'print'
-    },
-    sourceColumns: {
+    columns: {
       type: Array,
       default() {
         return []
@@ -27,11 +23,10 @@ export default {
   methods: {
     // 打印
     handlePrint() {
-      console.log(this.$parent)
       new Print({
-        header: this.$parent.title,
+        header: this.title,
         headerStyle: 'text-align:center',
-        printable: this.printId,
+        printable: 'print',
         type: 'html',
         maxWidth: 1150,
         targetStyles: ['*']
@@ -59,12 +54,12 @@ export default {
     },
     // 表头筛选
     filterColumn() {
-      const columns = this.sourceColumns.filter((c) => c.checked)
+      const columns = this.columns.filter((c) => c.checked)
       this.$emit('getCheckedColumns', columns)
     },
     // 选中/取消
     handleChange(item) {
-      this.sourceColumns.forEach((c) => {
+      this.columns.forEach((c) => {
         if (c.prop === item.prop) {
           c.checked = !c.checked
         }
@@ -73,11 +68,11 @@ export default {
     },
     // 下载
     handleExprot() {
-      this.$emit(this.handleExprot)
+      this.$emit('export')
     }
   },
   render() {
-    const { handlePrint, spaceMap, sourceColumns, handleChange, adjustSpace, handleExprot } = this
+    const { handlePrint, spaceMap, columns, handleChange, adjustSpace, handleExprot } = this
     return (
       <div class="table-tools">
         <em
@@ -109,7 +104,7 @@ export default {
         </el-popover>
         <el-popover placement="bottom" trigger="click" class="table-tools-item">
           <el-checkbox-group size="mini" v-model={this.checkedColumns}>
-            {sourceColumns.map((c) => {
+            {columns.map((c) => {
               return (
                 <el-checkbox
                   key={c.prop}
