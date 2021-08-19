@@ -13,9 +13,6 @@ export default {
     return {
       tableEvent:{
         'selection-change': this.selectionChange,
-        'row-click': () => {
-          
-            }
       },
       tableConfig: {
         border: true
@@ -62,7 +59,7 @@ export default {
           label: '日期',
           checked: true,
           sortable: true,
-          'sort-method': () => console.log('sort')
+          // 'sort-method': () => console.log('sort')
           // children: [
           //   {
           //     prop: 'name',
@@ -160,7 +157,6 @@ export default {
   },
   methods: {
     selectionChange(tableList) {
-      console.log(111111)
       console.log(tableList)
     }
   }

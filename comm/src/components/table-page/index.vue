@@ -94,7 +94,7 @@ export default {
           <table-form form-list={this.formList} onQuery={this.handleQuery}></table-form>
         </div>
         <div class="table-page-main">
-          {/* 表头 */}
+          {/* 表格按钮 */}
           <table-head title={this.title} buttons={this.buttons}></table-head>
           {/* 表格工具栏 */}
           <table-tools
@@ -110,8 +110,9 @@ export default {
               columns={this.targetColumns}
               tableEvent={this.tableEvent}
               tableConfig={this.tableConfig}
-              row-style={{ height: this.cellHeight + 'px' }}
-            ></v-table>
+              row-style={{ height: this.cellHeight + 'px' }} 
+            >
+            </v-table>
           </div>
         </div>
       </div>
