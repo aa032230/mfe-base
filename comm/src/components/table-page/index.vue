@@ -111,10 +111,12 @@ export default {
             onGetCheckedColumns={this.getCheckedColumns}
             columns={this.columns}
             onExport={this.handleExport}
+            printId='print'
           ></table-tools>
           {/* 表格 */}
-          <div id="print" class="table-page-main-table">
+          <div class="table-page-main-table">
             <v-table
+              id="print"
               tableData={this.tableData}
               columns={this.targetColumns}
               tableEvent={this.tableEvent}

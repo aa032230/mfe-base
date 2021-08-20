@@ -27,6 +27,14 @@ export default {
       default() {
         return [] // 根据数据展示对应的工具
       }
+    },
+    printId: {
+      type: String,
+      default: 'print'
+    },
+    title: {
+      type: String,
+      default: ''
     }
   },
   mounted() {

@@ -63,7 +63,7 @@ export default {
           method: this.handleDelete
         }
       ],
-      toolsConfig: ['refresh', 'export', 'space', 'setting'],
+      toolsConfig: ['refresh', 'print','export', 'space', 'setting'],
       formList: [
         {
           name: '系统模块',
