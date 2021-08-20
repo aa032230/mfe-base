@@ -1,31 +1,76 @@
 <template>
   <div class="home">
-    <table-page :tableEvent="tableEvent" :tableConfig="tableConfig" :form-list="formList" title="用户管理列表" :columns="columns" :tableData="tableData"></table-page>
+    <table-page
+      :operates="operates"
+      :toolsConfig="toolsConfig"
+      :tableEvent="tableEvent"
+      :tableConfig="tableConfig"
+      :form-list="formList"
+      title="用户管理列表"
+      :columns="columns"
+      :tableData="tableData"
+    >
+      <v-modal
+        @cancel="handleCancel"
+        @open="handleOpen"
+        @submit="handleSubmit"
+        :visible.sync="visible"
+        :modalConfig="modalConfig"
+      >
+        <v-form v-model="form" :form-list="formList"></v-form>
+      </v-modal>
+    </table-page>
   </div>
 </template>
 
 <script>
-import { tablePage } from 'comm/src/components'
+import { tablePage, vModal, vForm } from 'comm/src/components'
 export default {
   name: 'Home',
-  components: { tablePage },
+  components: { tablePage, vModal, vForm },
   data() {
     return {
-      tableEvent:{
-        'selection-change': this.selectionChange,
+      form: {},
+      visible: false,
+      modalConfig:{
+        title: '标题',
+        width: '30%'
+      },
+      tableEvent: {
+        selectionChange: this.selectionChange
       },
       tableConfig: {
-        border: true
+        border: true,
+
       },
+      operates: [
+        {
+          label: '解析报文',
+          type: 'text',
+          method: (index, row) => {
+            this.visible = true
+          }
+        },
+        {
+          label: '删除',
+          type: 'text',
+          method: this.handleDelete
+        }
+      ],
+      toolsConfig: ['refresh', 'export', 'space', 'setting'],
       formList: [
         {
           name: '系统模块',
-          field: 'a1'
+          field: 'a1',
+          width: '80%',
+          input(val) {
+            console.log(val)
+          }
         },
         {
           name: '系统模块系统模块',
           field: 'a2',
-          width: 220,
+          width: '80%',
           type: 'select',
           options: [
             {
@@ -41,7 +86,7 @@ export default {
         {
           name: '系统模块2',
           field: 'a3',
-          width: 220,
+          width: '100%',
           type: 'switch'
         },
         {
@@ -51,6 +96,20 @@ export default {
         {
           name: '系统模块4',
           field: 'a5'
+        },
+        {
+          name: '系统模块2',
+          field: 'a6',
+          width: 220,
+          type: 'switch'
+        },
+        {
+          name: '系统模块3',
+          field: 'a7'
+        },
+        {
+          name: '系统模块4',
+          field: 'a8'
         }
       ],
       columns: [
@@ -58,7 +117,7 @@ export default {
           prop: 'date',
           label: '日期',
           checked: true,
-          sortable: true,
+          sortable: true
           // 'sort-method': () => console.log('sort')
           // children: [
           //   {
@@ -158,9 +217,25 @@ export default {
   methods: {
     selectionChange(tableList) {
       console.log(tableList)
+    },
+    handleDelete(index,row) {
+      console.log(row)
+    },
+    handleSubmit() {
+      console.log(this.form)
+    },
+    handleCancel() {
+      console.log('cancel')
+    },
+    handleOpen() {
+      console.log('dialog open')
     }
   }
 }
 </script>
 
-<style></style>
+<style>
+.home {
+  height: 100%;
+}
+</style>

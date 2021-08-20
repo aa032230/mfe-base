@@ -1,7 +1,37 @@
 <script>
-// 表单组件
+/**
+ *  表单组件
+ *  <v-form v-model="form" :form-list="formList"></v-form>  
+ * demo: 
+ *  [
+ *  {
+ *    name: '系统模块',
+ *    field: 'a1',
+ *    input: val => val
+ *  },
+ *  {
+      name: '系统模块系统模块',
+      field: 'a2',
+      width: 220,
+      type: 'select',
+      change:(val) => console.log(val) 
+      options: [
+        {
+          value: 0,
+          label: '小籠包'
+        },
+        {
+          value: 1,
+          label: '叉烧包'
+        }
+      ]
+    },
+ * 
+ * ]
+ * 
+ */
 export default {
-  name: 'VForm',
+  name: 'v-form',
   props: {
     formList: {
       type: Array,
@@ -16,6 +46,14 @@ export default {
     rules: {
       type: Object,
       default: () => ({})
+    },
+    labelWidth: {
+      type: String,
+      default: ''
+    },
+    labelPosition: {
+      type: String,
+      default: 'right'
     }
   },
   methods: {
@@ -36,7 +74,7 @@ export default {
         case 'select':
           return (
             <el-select
-              style={{ width: r.width ? r.width + 'px' : '150px' }}
+              style={{ width: r.width ? r.width : '150px' }}
               v-model={form[r.field]}
               filterable={r.filterable}
               size={r.size ? r.size : 'small'}
@@ -60,7 +98,7 @@ export default {
               disabled={r.disabled}
               placeholder={r.placeholder}
               size={r.size ? r.size : 'small'}
-              style={{ width: r.width ? r.width + 'px' : '150px' }}
+              style={{ width: r.width ? r.width : '150px' }}
               value-key={r.valueKey}
               on={this.setFormActions(r)}
             ></el-cascader>
@@ -81,7 +119,7 @@ export default {
               disabled={r.disabled}
               on={this.setFormActions(r)}
               size={r.size ? r.size : 'small'}
-              style={{ width: r.width ? r.width + 'px' : '150px' }}
+              style={{ width: r.width ? r.width : '150px' }}
             ></el-date-picker>
           )
         case 'radio':
@@ -108,7 +146,7 @@ export default {
           return (
             <el-input
               size={r.size ? r.size : 'small'}
-              style={{ width: r.width ? r.width + 'px' : '150px' }}
+              style={{ width: r.width ? r.width : '150px' }}
               v-model={form[r.field]}
               disabled={r.disabled}
               placeholder={r.placeholder}
@@ -135,9 +173,9 @@ export default {
     }
   },
   render() {
-    const { value, rules } = this
+    const { value, rules, labelWidth, labelPosition } = this
     return (
-      <el-form props={{ model: value, rules }} ref="ruleForm" class="form">
+      <el-form props={{ model: value, rules }} ref="ruleForm" class="form" label-position={labelPosition} label-width={labelWidth} >
         {this.createFormItem(this.formList)}
       </el-form>
     )

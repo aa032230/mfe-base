@@ -1,4 +1,4 @@
-.form-view-box{
+.form-view-box {
   padding: 0 10px;
   justify-content: space-between;
   background-color: #fff;
@@ -7,17 +7,20 @@
   overflow: hidden;
   transition: all 0.3s;
   margin-bottom: 10px;
-  .form-view{
+
+  .form-view {
     width: calc(100% - 200px);
     display: flex;
     flex-wrap: wrap;
     overflow: hidden;
-    &-item{
+
+    &-item {
       display: flex;
       align-items: center;
       margin-right: 15px;
       padding: 10px 0;
-      >span{
+
+      >span {
         font-size: 14px;
         color: #666;
         display: inline-block;
@@ -25,32 +28,37 @@
         padding-right: 5px;
       }
     }
+
+    /deep/ .el-form-item {
+      margin-bottom: 0;
+      padding: 6px 0;
+      display: flex;
+      padding-right: 10px;
+    }
+
+    /deep/ .el-form-item__label {
+      padding-right: 5px;
+    }
+
+    .v-form {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+    }
   }
-  .from-view-button-group{
+
+  .from-view-button-group {
     position: absolute;
     right: 10px;
     bottom: 10px;
-    .is-open{
+
+    .is-open {
       font-size: 14px;
       color: #409eff;
       margin-left: 10px;
       text-align: right;
     }
   }
-}
-/deep/ .el-form-item{
-  margin-bottom: 0;
-  padding: 6px 0;
-  display: flex;
-  padding-right: 10px;
-}
-/deep/ .el-form-item__label{
-  padding-right: 5px;
-}
-.v-form{
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  flex-wrap: wrap;
 }

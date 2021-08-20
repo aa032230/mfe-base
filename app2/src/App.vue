@@ -24,4 +24,7 @@ export default {}
 .nodebook-leave-active {
   transition: all 0.3s;
 }
+#app{
+  height: calc(100vh - 115px);
+}
 </style>

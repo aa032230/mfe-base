@@ -1,5 +1,9 @@
 <script>
 import Print from 'print-js'
+/**
+ * demo:
+ * toolsConfig: ['refresh', 'print', 'export', 'space', 'setting']
+ */
 export default {
   name: 'table-tools',
   data() {
@@ -10,10 +14,18 @@ export default {
     }
   },
   props: {
+    // 表头原始数据
     columns: {
       type: Array,
       default() {
         return []
+      }
+    },
+    // 表格工具展示配置
+    toolsConfig: {
+      type: Array,
+      default() {
+        return [] // 根据数据展示对应的工具
       }
     }
   },
@@ -69,57 +81,76 @@ export default {
     // 下载
     handleExprot() {
       this.$emit('export')
+    },
+
+    // 工具筛选
+    switchTool() {
+      const { handlePrint, spaceMap, columns, handleChange, adjustSpace, handleExprot, toolsConfig } = this
+      if (!toolsConfig.length) return
+      return toolsConfig.map((t) => {
+        switch (t) {
+          case 'refresh':
+            return (
+              <em
+                class="el-icon-refresh"
+                title="刷新"
+                onClick={() => {
+                  window.location.reload()
+                }}
+              ></em>
+            )
+          case 'print':
+            return <em class="el-icon-document-copy" title="打印" onClick={handlePrint}></em>
+          case 'export':
+            return <em class="el-icon-download" title="下载" onClick={handleExprot}></em>
+          case 'space':
+            return (
+              <el-popover
+                placement="bottom"
+                trigger="click"
+                class="table-tools-item"
+                width="100"
+                popper-class="table-tools-popover"
+              >
+                <ul class="table-tools-item-ul">
+                  {spaceMap.map((item) => {
+                    return (
+                      <li class={{ 'is-active': this.activeName === item }} onClick={adjustSpace.bind(this, item)}>
+                        {item}
+                      </li>
+                    )
+                  })}
+                </ul>
+                <em class="el-icon-s-grid" slot="reference" title="间距调整"></em>
+              </el-popover>
+            )
+          case 'setting':
+            return (
+              <el-popover placement="bottom" trigger="click" class="table-tools-item">
+                <el-checkbox-group size="mini" v-model={this.checkedColumns}>
+                  {columns.map((c) => {
+                    return (
+                      <el-checkbox
+                        key={c.prop}
+                        label={c.label}
+                        checked={c.checked}
+                        value={c.prop}
+                        onChange={handleChange.bind(this, c)}
+                      ></el-checkbox>
+                    )
+                  })}
+                </el-checkbox-group>
+                <em class="el-icon-setting" slot="reference" title="筛选"></em>
+              </el-popover>
+            )
+          default:
+            break
+        }
+      })
     }
   },
   render() {
-    const { handlePrint, spaceMap, columns, handleChange, adjustSpace, handleExprot } = this
-    return (
-      <div class="table-tools">
-        <em
-          class="el-icon-refresh"
-          title="刷新"
-          onClick={() => {
-            window.location.reload()
-          }}
-        ></em>
-        <em class="el-icon-document-copy" title="打印" onClick={handlePrint}></em>
-        <em class="el-icon-download" title="下载" onClick={handleExprot}></em>
-        <el-popover
-          placement="bottom"
-          trigger="click"
-          class="table-tools-item"
-          width="100"
-          popper-class="table-tools-popover"
-        >
-          <ul class="table-tools-item-ul">
-            {spaceMap.map((item) => {
-              return (
-                <li class={{ 'is-active': this.activeName === item }} onClick={adjustSpace.bind(this, item)}>
-                  {item}
-                </li>
-              )
-            })}
-          </ul>
-          <em class="el-icon-s-grid" slot="reference" title="间距调整"></em>
-        </el-popover>
-        <el-popover placement="bottom" trigger="click" class="table-tools-item">
-          <el-checkbox-group size="mini" v-model={this.checkedColumns}>
-            {columns.map((c) => {
-              return (
-                <el-checkbox
-                  key={c.prop}
-                  label={c.label}
-                  checked={c.checked}
-                  value={c.prop}
-                  onChange={handleChange.bind(this, c)}
-                ></el-checkbox>
-              )
-            })}
-          </el-checkbox-group>
-          <em class="el-icon-setting" slot="reference" title="筛选"></em>
-        </el-popover>
-      </div>
-    )
+    return <div class="table-tools">{this.switchTool()}</div>
   }
 }
 </script>

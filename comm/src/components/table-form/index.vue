@@ -1,7 +1,7 @@
 <script>
 import vForm from '../v-form'
 export default {
-  name: 'tableForm',
+  name: 'table-form',
   components: {
     vForm
   },

@@ -8,4 +8,5 @@ export {default as vPager } from './v-pager'
 export {default as tableHead } from './table-head'
 export {default as vTable } from './v-table'
 export {default as tablePage } from './table-page'
+export {default as vModal } from './v-modal'
 

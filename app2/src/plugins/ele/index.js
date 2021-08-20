@@ -29,7 +29,10 @@ import {
   Table,
   TableColumn,
   Popover,
-  CheckboxGroup
+  CheckboxGroup,
+  Pagination,
+  Dialog,
+  Popconfirm
 } from 'element-ui'
 export default {
   components: [
@@ -62,7 +65,10 @@ export default {
     Tooltip,
     Popover,
     CheckboxGroup,
-    Checkbox
+    Checkbox,
+    Pagination,
+    Dialog,
+    Popconfirm
   ],
   install(Vue) {
     Vue.prototype.$alert = MessageBox.alert

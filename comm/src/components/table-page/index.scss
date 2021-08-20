@@ -1,20 +1,29 @@
-.table-page{
+.table-page {
   height: 100%;
-  &-main{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  &-main {
     background-color: #fff;
-    height: calc(100vh - 197px);
     padding: 10px;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    &-table{
+    overflow-y: auto;
+
+    &-table {
       flex: 1;
+      overflow-y: auto;
     }
   }
 }
-/deep/ .el-table td{
+
+/deep/ .el-table td {
   padding: 4px;
 }
-/deep/ .el-table th{
+
+/deep/ .el-table th {
   padding: 0;
   height: 34px;
 }

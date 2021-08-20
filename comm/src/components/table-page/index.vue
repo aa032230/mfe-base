@@ -21,6 +21,10 @@ export default {
       type: Array,
       default: () => []
     },
+    operates: {
+      type: Array,
+      default: () => []
+    },
     hasSelection: {
       type: Boolean,
       default: true
@@ -36,6 +40,10 @@ export default {
     tableEvent: {
       type: Object,
       default: () => ({})
+    },
+    toolsConfig: {
+      type: Array,
+      default: () => []
     }
   },
   components: {
@@ -47,7 +55,7 @@ export default {
   data() {
     return {
       cellHeight: 0,
-      
+
       targetColumns: [], // 目标表头
       buttons: [
         {
@@ -71,7 +79,6 @@ export default {
     // 修改表格行高
     getSpace(h) {
       this.cellHeight = h
-      console.log(this.cellHeight)
     },
     // 获取选中的表头
     getCheckedColumns(columns) {
@@ -84,6 +91,7 @@ export default {
     // 查询
     handleQuery(form) {
       console.log(form)
+      this.$emit('query', form)
     }
   },
   render() {
@@ -98,22 +106,25 @@ export default {
           <table-head title={this.title} buttons={this.buttons}></table-head>
           {/* 表格工具栏 */}
           <table-tools
+           toolsConfig={this.toolsConfig}
             onGetSpace={this.getSpace}
             onGetCheckedColumns={this.getCheckedColumns}
             columns={this.columns}
             onExport={this.handleExport}
           ></table-tools>
           {/* 表格 */}
-          <div id="print" class="print-wrap">
+          <div id="print" class="table-page-main-table">
             <v-table
               tableData={this.tableData}
               columns={this.targetColumns}
               tableEvent={this.tableEvent}
               tableConfig={this.tableConfig}
-              row-style={{ height: this.cellHeight + 'px' }} 
+              operates={this.operates}
+              row-style={{ height: this.cellHeight + 'px' }}
             >
             </v-table>
           </div>
+          {this.$slots.default}
         </div>
       </div>
     )
