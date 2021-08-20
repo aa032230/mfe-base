@@ -17,7 +17,7 @@
         :visible.sync="visible"
         :modalConfig="modalConfig"
       >
-        <v-form v-model="form" :form-list="formList"></v-form>
+        <v-form label-position="top" :model="ruleForm" :rules="rules" v-model="ruleForm" :form-list="formList"></v-form>
       </v-modal>
     </table-page>
   </div>
@@ -30,7 +30,13 @@ export default {
   components: { tablePage, vModal, vForm },
   data() {
     return {
-      form: {},
+      rules: {
+          a1: [
+            { required: true, message: '请输入活动名称', trigger: 'blur' },
+            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          ],
+      },
+      ruleForm: {},
       visible: false,
       modalConfig:{
         title: '标题',
@@ -110,7 +116,23 @@ export default {
         {
           name: '系统模块4',
           field: 'a8'
-        }
+        },
+        {
+          name: '系统模块系统模块',
+          field: 'a9',
+          width: '80%',
+          type: 'select',
+          options: [
+            {
+              value: 0,
+              label: '小籠包'
+            },
+            {
+              value: 1,
+              label: '叉烧包'
+            }
+          ]
+        },
       ],
       columns: [
         {
@@ -224,6 +246,7 @@ export default {
     handleSubmit() {
       console.log(this.form)
     },
+    // 可以做mixins
     handleCancel() {
       console.log('cancel')
     },

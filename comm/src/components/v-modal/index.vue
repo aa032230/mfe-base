@@ -72,6 +72,10 @@ export default {
         cancelText,
         props: _props
       }
+    },
+    handleCancle() {
+      this.dialogVisible = false
+      this.$emit('cancel')
     }
   },
   render() {
@@ -90,7 +94,7 @@ export default {
           {this.$slots.default}
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button size="small" onClick={this.$emit.bind(this, 'cancel')}>
+          <el-button size="small" onClick={this.handleCancle}>
             {options.cancelText}
           </el-button>
           <el-button size="small" type="primary" onClick={this.$emit.bind(this, 'submit')}>

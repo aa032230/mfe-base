@@ -13,6 +13,14 @@ export default {
     rules: {
       type: Object,
       default: () => ({})
+    },
+    labelWidth: {
+      type: String,
+      default: ''
+    },
+    labelPosition: {
+      type: String,
+      default: 'left'
     }
   },
   data() {
@@ -34,6 +42,9 @@ export default {
   methods: {
     // 获取元素实时高度
     getElementRealTimeHeight() {
+      // todo:resize是否重置属性？
+      // this.isOpen = false
+      // this.socureElHeight = 52
       const elHeight = this._el.offsetHeight || 0
       this.elHeight = elHeight
       if (elHeight <= 52) {
@@ -64,11 +75,28 @@ export default {
   },
 
   render() {
-    const { formList, form, isOpen, socureElHeight, handleReset, handleQuery, handleOpen, elHeight } = this
+    const {
+      formList,
+      form,
+      isOpen,
+      socureElHeight,
+      handleReset,
+      handleQuery,
+      handleOpen,
+      elHeight,
+      labelWidth,
+      labelPosition
+    } = this
     return (
       <div class="form-view-box" style={{ height: socureElHeight + 'px' }}>
         <section class="form-view" ref="formGroup">
-          <v-form class={['v-form', { isopen: isOpen }]} formList={formList} v-model={form} />
+          <v-form
+            label-width={labelWidth}
+            class={['v-form', { isopen: isOpen }]}
+            formList={formList}
+            v-model={form}
+            label-position={labelPosition}
+          />
         </section>
         <div class="from-view-button-group">
           <el-button size="small" onClick={handleReset}>

@@ -37,7 +37,8 @@
     }
 
     /deep/ .el-form-item__label {
-      padding-right: 5px;
+      padding-right: 10px;
+      line-height: 40px !important;
     }
 
     .v-form {
