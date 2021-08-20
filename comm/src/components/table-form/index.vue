@@ -42,7 +42,7 @@ export default {
   methods: {
     // 获取元素实时高度
     getElementRealTimeHeight() {
-      // todo:resize是否重置属性？
+      // todo:resize是否重置属性
       // this.isOpen = false
       // this.socureElHeight = 52
       const elHeight = this._el.offsetHeight || 0
@@ -89,6 +89,7 @@ export default {
     } = this
     return (
       <div class="form-view-box" style={{ height: socureElHeight + 'px' }}>
+      {/**<div class="form-view-box" style={{ height: isOpen ? 'auto' : '52px',  transition: 'height 0.3s'  }}> */}
         <section class="form-view" ref="formGroup">
           <v-form
             label-width={labelWidth}

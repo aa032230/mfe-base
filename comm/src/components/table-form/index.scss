@@ -7,13 +7,10 @@
   overflow: hidden;
   transition: all 0.3s;
   margin-bottom: 10px;
-
   .form-view {
     width: calc(100% - 200px);
     display: flex;
     flex-wrap: wrap;
-    overflow: hidden;
-
     &-item {
       display: flex;
       align-items: center;

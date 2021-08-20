@@ -1,7 +1,7 @@
 <script>
 /**
  *  表单组件
- *  <v-form v-model="form" :form-list="formList"></v-form>  
+ *  <v-form v-model="form" :form-list="formList" rules="rules"></v-form>  
  * demo: 
  *  [
  *  {
@@ -98,7 +98,6 @@ export default {
             <el-cascader
               v-model={form[r.field]}
               options={r.options}
-              onChange={r.method}
               disabled={r.disabled}
               placeholder={r.placeholder}
               size={r.size ? r.size : 'small'}
@@ -181,7 +180,7 @@ export default {
     return (
       <el-form
         rules={rules}
-        model={model}
+        props={{ model }}
         ref="ruleForm"
         class="form"
         label-position={labelPosition}
@@ -196,4 +195,17 @@ export default {
 
 <style lang="scss" scoped>
 @import './index';
+</style>
+<style>
+.el-form-item.is-required:not(.is-no-asterisk) .el-form-item__label-wrap > .el-form-item__label:before,
+.el-form-item.is-required:not(.is-no-asterisk) > .el-form-item__label::before {
+  content: '';
+  margin-right: 0;
+}
+.el-form-item.is-required:not(.is-no-asterisk) .el-form-item__label-wrap > .el-form-item__label:before,
+.el-form-item.is-required:not(.is-no-asterisk) > .el-form-item__label::after {
+  content: '*';
+  color: #f56c6c;
+  margin-left: 4px;
+}
 </style>

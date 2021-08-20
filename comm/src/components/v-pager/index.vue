@@ -48,8 +48,8 @@ export default {
   },
   methods: {
     // 改变页码/页容量
-    _dispatchEvent(val) {
-      this.$emit('query', val)
+    _dispatchEvent(pagePrams) {
+      this.$emit('query', pagePrams)
     }
   },
   render() {

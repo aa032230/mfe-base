@@ -166,7 +166,7 @@ export default {
     }
   },
   render() {
-    const { columns, rowStyle, tableData, hasSelection, createColumsFragment, hasIndex, operates } = this
+    const { columns, rowStyle, tableData, hasSelection, createColumsFragment, hasIndex, operates, createOperates } = this
     return (
       <div class="table-wrap">
         <el-table
@@ -187,7 +187,7 @@ export default {
           <el-table-column
             label="操作"
             scopedSlots={{
-              default: (scope) => this.createOperates({ scope, operates })
+              default: (scope) => createOperates({ scope, operates })
             }}
           />
         </el-table>
