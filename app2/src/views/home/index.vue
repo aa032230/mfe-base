@@ -36,17 +36,17 @@ export default {
   data() {
     return {
       rules: {
-          a1: [
-            { required: true, message: '请输入活动名称', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-          ],
+        a1: [
+          { required: true, message: '请输入活动名称', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ]
       },
       ruleForm: {
         pageIndex: 1,
         pageSize: 1
       },
       visible: false,
-      modalConfig:{
+      modalConfig: {
         title: '标题',
         width: '30%'
       },
@@ -54,7 +54,6 @@ export default {
         selectionChange: this.selectionChange
       },
       tableConfig: {
-
       },
       operates: [
         {
@@ -137,7 +136,7 @@ export default {
               label: '叉烧包'
             }
           ]
-        },
+        }
       ],
       columns: [
         {
@@ -249,7 +248,7 @@ export default {
     selectionChange(tableList) {
       console.log(tableList)
     },
-    handleDelete(index,row) {
+    handleDelete(index, row) {
       console.log(row)
     },
     handleSubmit() {
