@@ -4,7 +4,7 @@ import tree from 'vue-giant-tree'
 import { cloneDeep } from 'lodash'
 import { flatArr } from '../../utils'
 export default {
-  name: 'VTree',
+  name: 'anso-tree',
   components: {
     tree
   },

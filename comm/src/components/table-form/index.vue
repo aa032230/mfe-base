@@ -1,9 +1,9 @@
 <script>
-import vForm from '../v-form'
+import ansoForm from '../anso-form'
 export default {
   name: 'table-form',
   components: {
-    vForm
+    ansoForm
   },
   props: {
     formList: {
@@ -91,7 +91,7 @@ export default {
       <div class="form-view-box" style={{ height: socureElHeight + 'px' }}>
       {/**<div class="form-view-box" style={{ height: isOpen ? 'auto' : '52px',  transition: 'height 0.3s'  }}> */}
         <section class="form-view" ref="formGroup">
-          <v-form
+          <anso-form
             label-width={labelWidth}
             class={['v-form', { isopen: isOpen }]}
             formList={formList}
@@ -103,7 +103,7 @@ export default {
           <el-button size="small" onClick={handleReset}>
             重置
           </el-button>
-          <el-button type="primary" size="small" onClick={handleQuery}>
+          <el-button  size="small" onClick={handleQuery}>
             查询
           </el-button>
           {elHeight > 52 && (

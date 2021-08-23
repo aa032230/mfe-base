@@ -1,7 +1,8 @@
-import { TEST_MODULE } from './types'
+import { SET_FORM_VALUE } from './types'
 
 export default {
-  dispatchAction(context, payload) {
-    context.commit(TEST_MODULE.ACTIONS, payload)
+  // form表单设置
+  setFormValue(context, payload) {
+    context.commit(SET_FORM_VALUE, payload)
   }
 }

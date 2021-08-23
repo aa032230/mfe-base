@@ -71,7 +71,7 @@ export default {
         )
       })
     },
-    // 根据type渲染对应的from组件
+    // 根据type渲染对应的form组件
     checkTypeToFormElement(r) {
       const form = this.value
       switch (r.type) {
@@ -156,7 +156,7 @@ export default {
               maxlength={r.maxlength}
               clearable={r.clearable}
               prefix-icon={r.prefixIcon}
-              suffix-icon={r.suffixIcon}
+              suffix-icon={r.suffixIcon ? r.suffixIcon : 'el-icon-search'}
               on={this.setFormActions(r)}
             ></el-input>
           )

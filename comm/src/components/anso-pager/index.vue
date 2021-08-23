@@ -60,15 +60,15 @@ export default {
           current-page={this.currentPage}
           page-size={this.limit}
           on={{
-            'update:current-page': (page) => (this.currentPage = page),
-            'update:page-size': (size) => (this.limit = size)
+            'update:currentPage': (page) => (this.currentPage = page),
+            'update:pageSize': (size) => (this.limit = size)
           }}
           layout={this.layout}
           page-sizes={this.pageSizes}
           total={this.total}
-          on-size-change={(val) => this._dispatchEvent.bind(this, val)}
+          on-size-change={(val) => this._dispatchEvent(val)}
           on-current-change={(val) => {
-            this._dispatchEvent.bind(this, val)
+            this._dispatchEvent(val)
           }}
         />
       </div>

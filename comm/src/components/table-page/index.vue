@@ -1,5 +1,5 @@
 <script>
-import { tableForm, tableHead, tableTools, vTable } from '..'
+import { tableForm, tableHead, tableTools, ansoTable } from '..'
 export default {
   name: 'table-page',
   props: {
@@ -44,13 +44,40 @@ export default {
     toolsConfig: {
       type: Array,
       default: () => []
+    },
+    // 页码
+    pageIndex: {
+      type: Number,
+      default: 1
+    },
+    // 页容量
+    pageSize: {
+      type: Number,
+      default: 20
+    },
+    // 页码配置
+    pageSizes: {
+      type: Array,
+      default() {
+        return [1, 20, 40, 50, 100]
+      }
+    },
+    // 分页布局
+    layout: {
+      type: String,
+      default: 'total, sizes, prev, pager, next, jumper'
+    },
+    //总条数
+    total: {
+      type: Number,
+      default: 0
     }
   },
   components: {
     tableForm,
     tableHead,
     tableTools,
-    vTable
+    ansoTable
   },
   data() {
     return {
@@ -75,13 +102,31 @@ export default {
       isPrint: false
     }
   },
+  computed: {
+    currentPage: {
+      get() {
+        return Number(this.pageIndex)
+      },
+      set(page) {
+        this.$emit('update:pageIndex', page)
+      }
+    },
+    limit: {
+      get() {
+        return Number(this.pageSize)
+      },
+      set(size) {
+        this.$emit('update:pageSize', size)
+      }
+    }
+  },
   methods: {
     // 修改表格行高
-    getSpace(h) {
+    setSpace(h) {
       this.cellHeight = h
     },
     // 获取选中的表头
-    getCheckedColumns(columns) {
+    setCheckedColumns(columns) {
       this.targetColumns = columns
     },
     // execl下载
@@ -90,32 +135,39 @@ export default {
     },
     // 查询
     handleQuery(form) {
-      console.log(form)
       this.$emit('query', form)
+    },
+    // 重置表单
+    handleReset() {
+      this.$emit('reset')
+    },
+    //页码/页容量选择
+    dispatchEvent() {
+      this.$emit('pagination')
     }
   },
   render() {
     return (
       <div class="table-page">
-        <div class="table-page-header">
-          {/* 表头表单 */}
-          <table-form form-list={this.formList} onQuery={this.handleQuery}></table-form>
-        </div>
         <div class="table-page-main">
           {/* 表格按钮 */}
           <table-head title={this.title} buttons={this.buttons}></table-head>
+          {/* 表格表单 */}
+          <div class="table-page-main-form">
+            <table-form form-list={this.formList} onQuery={this.handleQuery} onReset={this.handleReset}></table-form>
+          </div>
           {/* 表格工具栏 */}
           <table-tools
-           toolsConfig={this.toolsConfig}
-            onGetSpace={this.getSpace}
-            onGetCheckedColumns={this.getCheckedColumns}
+            toolsConfig={this.toolsConfig}
+            onSetSpace={this.setSpace}
+            onSetCheckedColumns={this.setCheckedColumns}
             columns={this.columns}
             onExport={this.handleExport}
-            printId='print'
+            printId="print"
           ></table-tools>
           {/* 表格 */}
           <div class="table-page-main-table">
-            <v-table
+            <anso-table
               id="print"
               tableData={this.tableData}
               columns={this.targetColumns}
@@ -123,8 +175,17 @@ export default {
               tableConfig={this.tableConfig}
               operates={this.operates}
               row-style={{ height: this.cellHeight + 'px' }}
-            >
-            </v-table>
+              pageIndex={this.currentPage}
+              pageSize={this.limit}
+              on={{
+                'update:pageIndex': (page) => (this.currentPage = page),
+                'update:pageSize': (size) => (this.limit = size)
+              }}
+              layout={this.layout}
+              page-sizes={this.pageSizes}
+              total={this.total}
+              on-pagination={this.dispatchEvent}
+            ></anso-table>
           </div>
           {this.$slots.default}
         </div>

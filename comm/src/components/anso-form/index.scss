@@ -3,8 +3,13 @@
   height: 100%;
   /deep/.el-form-item__label{
     line-height: 0 !important;
+    color: #8c8c8c;
   }
   /deep/.el-form-item__content{
     margin-left: 0 !important;
+  }
+  /deep/ .el-input--small .el-input__inner{
+    height: 28px;
+    line-height: 28px;
   }
 }

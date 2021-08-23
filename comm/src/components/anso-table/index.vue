@@ -63,10 +63,10 @@
  * }
  */
 
-import { vPager } from '../'
+import { ansoPager } from '../'
 export default {
-  name: 'v-table',
-  components: { vPager },
+  name: 'anso-table',
+  components: { ansoPager },
   props: {
     // 表头
     columns: {
@@ -107,9 +107,54 @@ export default {
     rowStyle: {
       type: Object,
       default: () => ({})
+    },
+    // 页码
+    pageIndex: {
+      type: Number,
+      default: 1
+    },
+    // 页容量
+    pageSize: {
+      type: Number,
+      default: 20
+    },
+    // 页码配置
+    pageSizes: {
+      type: Array,
+      default() {
+        return [20, 40, 50, 100]
+      }
+    },
+    // 分页布局
+    layout: {
+      type: String,
+      default: 'total, sizes, prev, pager, next, jumper'
+    },
+    //总条数
+    total: {
+      type: Number,
+      default: 0
     }
   },
-
+  computed: {
+    currentPage: {
+      get() {
+        return Number(this.pageIndex)
+      },
+      set(page) {
+        this.$emit('update:pageIndex', page)
+      }
+    },
+    limit: {
+      get() {
+        return Number(this.pageSize)
+      },
+      set(size) {
+        console.log(size)
+        this.$emit('update:pageSize', size)
+      }
+    }
+  },
   methods: {
     // 遍历筛选column
     createColumsFragment(columns) {
@@ -163,10 +208,30 @@ export default {
             )
         }
       })
+    },
+    // 改变页码/页容量
+    _dispatchEvent() {
+      // console.log(this.currentPage)
+      this.$emit('pagination')
     }
   },
   render() {
-    const { columns, rowStyle, tableData, hasSelection, createColumsFragment, hasIndex, operates, createOperates } = this
+    const {
+      columns,
+      rowStyle,
+      tableData,
+      hasSelection,
+      createColumsFragment,
+      hasIndex,
+      operates,
+      createOperates,
+      total,
+      currentPage,
+      limit,
+      layout,
+      pageSizes,
+      _dispatchEvent
+    } = this
     return (
       <div class="table-wrap">
         <el-table
@@ -174,7 +239,8 @@ export default {
           data={tableData}
           style="width: 100%;"
           row-style={rowStyle}
-          attrs={{ ...this.tableConfig, height: 'calc(100% - 62px)' }}
+          attrs={{ ...this.tableConfig, height: 'calc(100% - 62px)','header-cell-style':{background: '#f9f9f9'}}}
+          
           on={this.tableEvent}
         >
           {hasSelection ? <el-table-column type="selection" width="50" align="left"></el-table-column> : ''}
@@ -191,7 +257,30 @@ export default {
             }}
           />
         </el-table>
-        <v-pager></v-pager>
+        {total ? (
+          <div class="v-pager">
+            <el-pagination
+              class="page"
+              current-page={currentPage}
+              page-size={limit}
+              on={{
+                'update:currentPage': (page) => {
+                  this.currentPage = page
+                },
+                'update:pageSize': (size) => {
+                  this.limit = size
+                }
+              }}
+              layout={layout}
+              page-sizes={pageSizes}
+              total={total}
+              on-size-change={(val) => _dispatchEvent(this, val)}
+              on-current-change={(val) => _dispatchEvent(this, val)}
+            />
+          </div>
+        ) : (
+          ''
+        )}
       </div>
     )
   }

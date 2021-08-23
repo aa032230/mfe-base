@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: 'VSidebar',
+  name: 'ansoSidebar',
   props: {
     menuList: {
       type: Array,

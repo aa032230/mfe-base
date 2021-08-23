@@ -70,12 +70,12 @@ export default {
           _h = 60
           break
       }
-      this.$emit('getSpace', _h)
+      this.$emit('setSpace', _h)
     },
     // 表头筛选
     filterColumn() {
       const columns = this.columns.filter((c) => c.checked)
-      this.$emit('getCheckedColumns', columns)
+      this.$emit('setCheckedColumns', columns)
     },
     // 选中/取消
     handleChange(item) {

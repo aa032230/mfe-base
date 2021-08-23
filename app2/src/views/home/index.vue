@@ -9,25 +9,30 @@
       title="用户管理列表"
       :columns="columns"
       :tableData="tableData"
+      :pageIndex.sync="ruleForm.pageIndex"
+      :pageSize.sync="ruleForm.pageSize"
+      :total="tableData.length"
+      @pagination="getList"
+      @query="handleQuery"
     >
-      <v-modal
+      <anso-modal
         @cancel="handleCancel"
         @open="handleOpen"
         @submit="handleSubmit"
         :visible.sync="visible"
         :modalConfig="modalConfig"
       >
-        <v-form label-position="top" :model="ruleForm" :rules="rules" v-model="ruleForm" :form-list="formList"></v-form>
-      </v-modal>
+        <anso-form label-position="top" :model="ruleForm" :rules="rules" v-model="ruleForm" :form-list="formList"></anso-form>
+      </anso-modal>
     </table-page>
   </div>
 </template>
 
 <script>
-import { tablePage, vModal, vForm } from 'comm/src/components'
+import { tablePage, ansoModal, ansoForm } from 'comm/src/components'
 export default {
   name: 'Home',
-  components: { tablePage, vModal, vForm },
+  components: { tablePage, ansoModal, ansoForm },
   data() {
     return {
       rules: {
@@ -36,7 +41,10 @@ export default {
             { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
           ],
       },
-      ruleForm: {},
+      ruleForm: {
+        pageIndex: 1,
+        pageSize: 1
+      },
       visible: false,
       modalConfig:{
         title: '标题',
@@ -46,12 +54,11 @@ export default {
         selectionChange: this.selectionChange
       },
       tableConfig: {
-        border: true,
 
       },
       operates: [
         {
-          label: '解析报文',
+          label: '编辑',
           type: 'text',
           method: (index, row) => {
             this.visible = true
@@ -68,7 +75,6 @@ export default {
         {
           name: '系统模块',
           field: 'a1',
-          width: '80%',
           input(val) {
             console.log(val)
           }
@@ -76,7 +82,6 @@ export default {
         {
           name: '系统模块系统模块',
           field: 'a2',
-          width: '80%',
           type: 'select',
           options: [
             {
@@ -237,6 +242,10 @@ export default {
     }
   },
   methods: {
+    getList() {
+      // console.log(this.ruleForm)
+      // console.log('list',1111111111222333)
+    },
     selectionChange(tableList) {
       console.log(tableList)
     },
@@ -252,6 +261,9 @@ export default {
     },
     handleOpen() {
       console.log('dialog open')
+    },
+    handleQuery(form) {
+      console.log(form)
     }
   }
 }

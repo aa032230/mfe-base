@@ -6,7 +6,7 @@
     <!-- 子应用盒子 -->
     <div class="subapp">
       <div class="sidebar">
-        <v-sidebar :menu-list="sidebarMenu" />
+        <anso-sidebar :menu-list="sidebarMenu" />
       </div>
       <div class="app-view-warp">
         <tag-views></tag-views>
@@ -18,7 +18,7 @@
 
 <script>
 import { NAVBAR_MENUS } from 'config'
-import { vSidebar } from 'comm/src/components'
+import { ansoSidebar } from 'comm/src/components'
 import { mf } from 'utils'
 import { vHeader, tagViews } from 'components'
 const _subAppContainer = '#root-view'
@@ -26,7 +26,7 @@ export default {
   name: 'App',
   components: {
     vHeader,
-    vSidebar,
+    ansoSidebar,
     tagViews
   },
   data() {
