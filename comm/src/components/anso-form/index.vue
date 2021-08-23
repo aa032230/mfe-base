@@ -156,7 +156,7 @@ export default {
               maxlength={r.maxlength}
               clearable={r.clearable}
               prefix-icon={r.prefixIcon}
-              suffix-icon={r.suffixIcon ? r.suffixIcon : 'el-icon-search'}
+              suffix-icon={r.suffixIcon}
               on={this.setFormActions(r)}
             ></el-input>
           )

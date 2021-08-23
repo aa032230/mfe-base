@@ -74,6 +74,7 @@ export default {
         {
           name: '系统模块',
           field: 'a1',
+          width: '100%',
           input(val) {
             console.log(val)
           }

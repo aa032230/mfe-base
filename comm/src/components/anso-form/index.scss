@@ -7,9 +7,13 @@
   }
   /deep/.el-form-item__content{
     margin-left: 0 !important;
+    line-height: 32px !important;
   }
   /deep/ .el-input--small .el-input__inner{
     height: 28px;
     line-height: 28px;
+  }
+  /deep/.el-form-item{
+    margin-bottom: 10px;
   }
 }
