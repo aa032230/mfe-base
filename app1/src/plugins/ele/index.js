@@ -22,7 +22,17 @@ import {
   Tree,
   MessageBox,
   Notification,
-  Message
+  Message,
+  Switch,
+  Form,
+  FormItem,
+  Table,
+  TableColumn,
+  Popover,
+  CheckboxGroup,
+  Pagination,
+  Dialog,
+  Popconfirm
 } from 'element-ui'
 export default {
   components: [
@@ -46,7 +56,19 @@ export default {
     Option,
     Tooltip,
     Tag,
-    Tree
+    Tree,
+    Switch,
+    Form,
+    FormItem,
+    Table,
+    TableColumn,
+    Tooltip,
+    Popover,
+    CheckboxGroup,
+    Checkbox,
+    Pagination,
+    Dialog,
+    Popconfirm
   ],
   install(Vue) {
     Vue.prototype.$alert = MessageBox.alert

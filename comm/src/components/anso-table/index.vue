@@ -155,13 +155,21 @@ export default {
   methods: {
     // 遍历筛选column
     createColumsFragment(columns, createApp) {
-      return columns.map(col => {
+      return columns.map((col) => {
         return (
           <el-table-column
             attrs={{ ...col }}
             key={col.prop}
             scopedSlots={{
-              default: scope => (col.render ? col.render(scope.row, col.prop, createApp) : scope.row[col.prop])
+              default: (scope) => {
+                if (col.render) {
+                  return col.render(scope.row, col.prop)
+                } else if (col.custom) {
+                  return this.$scopedSlots.custom({ row: scope.row, prop: col.prop })
+                } else {
+                  return scope.row[col.prop]
+                }
+              }
             }}
           >
             {col.children && col.children.length ? this.createColumsFragment(col.children, createApp) : ''}
@@ -207,7 +215,7 @@ export default {
                   <i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  {btn.children.map(c => {
+                  {btn.children.map((c) => {
                     return <el-dropdown-item key={c.label}>{c.label}</el-dropdown-item>
                   })}
                 </el-dropdown-menu>
@@ -220,7 +228,7 @@ export default {
                 key={btn.label}
                 type={btn.type}
                 size={btn.size ? btn.size : 'small'}
-                nativeOnClick={e => {
+                nativeOnClick={(e) => {
                   e.preventDefault()
                   btn.method(scope.$index, scope.row)
                 }}
@@ -254,7 +262,7 @@ export default {
               key={btn.label}
               type={btn.type}
               size={btn.size ? btn.size : 'small'}
-              nativeOnClick={e => {
+              nativeOnClick={(e) => {
                 e.preventDefault()
                 btn.method(scope.$index, scope.row)
               }}
@@ -295,7 +303,12 @@ export default {
           data={tableData}
           style="width: 100%;"
           row-style={rowStyle}
-          attrs={{ ...this.tableConfig, height: 'calc(100% - 62px)', 'header-cell-style': { background: '#f9f9f9' } }}
+          attrs={{
+            height: 'calc(100% - 62px)',
+            'header-cell-style': { background: '#f9f9f9' },
+            'tooltip-effect': 'light',
+            ...this.tableConfig
+          }}
           on={this.tableEvent}
         >
           {hasSelection ? <el-table-column type="selection" width="50" align="left"></el-table-column> : ''}
@@ -309,7 +322,7 @@ export default {
             label="操作"
             align="center"
             scopedSlots={{
-              default: scope => createOperates({ scope, operates })
+              default: (scope) => createOperates({ scope, operates })
             }}
           />
           <el-empty slot="empty" description="暂无数据~~~"></el-empty>
@@ -321,18 +334,18 @@ export default {
               current-page={currentPage}
               page-size={limit}
               on={{
-                'update:currentPage': page => {
+                'update:currentPage': (page) => {
                   this.currentPage = page
                 },
-                'update:pageSize': size => {
+                'update:pageSize': (size) => {
                   this.limit = size
                 }
               }}
               layout={layout}
               page-sizes={pageSizes}
               total={total}
-              on-size-change={val => _dispatchEvent(this, val)}
-              on-current-change={val => _dispatchEvent(this, val)}
+              on-size-change={(val) => _dispatchEvent(this, val)}
+              on-current-change={(val) => _dispatchEvent(this, val)}
             />
           </div>
         ) : (

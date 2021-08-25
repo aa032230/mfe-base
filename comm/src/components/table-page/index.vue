@@ -110,6 +110,9 @@ export default {
       }
     }
   },
+  mounted() {
+    // console.log(this.$scopedSlots.custom())
+  },
   methods: {
     // 修改表格行高
     setSpace(h) {
@@ -168,24 +171,17 @@ export default {
               pageIndex={this.currentPage}
               pageSize={this.limit}
               on={{
-                'update:pageIndex': page => (this.currentPage = page),
-                'update:pageSize': size => (this.limit = size)
+                'update:pageIndex': (page) => (this.currentPage = page),
+                'update:pageSize': (size) => (this.limit = size)
               }}
               layout={this.layout}
               page-sizes={this.pageSizes}
               total={this.total}
               on-pagination={this.dispatchEvent}
-            >
-              <div
-                scopedSlots={{
-                  default: scope => {
-                    console.log(1111113123)
-                  }
-                }}
-              >
-                121
-              </div>
-            </anso-table>
+              scopedSlots={{
+                custom: (scope) => this.$scopedSlots.custom(scope)
+              }}
+            ></anso-table>
           </div>
           {this.$slots.default}
         </div>

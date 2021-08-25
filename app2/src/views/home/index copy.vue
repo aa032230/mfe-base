@@ -31,9 +31,6 @@
           :form-list="formList"
         ></anso-form>
       </anso-modal>
-      <template v-slot:custom="scoped">
-        <el-input v-model="scoped.row[scoped.prop]"></el-input>
-      </template>
     </table-page>
   </div>
 </template>
@@ -45,7 +42,6 @@ export default {
   components: { tablePage, ansoModal, ansoForm },
   data() {
     return {
-      tableConfig: {},
       rules: {
         a1: [
           { required: true, message: '请输入活动名称', trigger: 'blur' },
@@ -82,6 +78,7 @@ export default {
       tableEvent: {
         selectionChange: this.selectionChange
       },
+      tableConfig: {},
       operates: [
         {
           label: '编辑',
@@ -192,8 +189,20 @@ export default {
           label: '日期',
           checked: true,
           sortable: true,
-          render(row, prop) {
-            return row[prop]
+          render(row, prop, h) {
+            return h('el-switch', {
+              props: {
+                value: row[prop] ? 1 : 0,
+                'active-value': 1,
+                'inactive-value': 0
+              },
+              nativeOn: {
+                change: e => {
+                  console.log(12312)
+                  console.log(e.target.value)
+                }
+              }
+            })
           }
           // 'sort-method': () => console.log('sort')
           // children: [
@@ -224,15 +233,12 @@ export default {
         {
           prop: 'name',
           label: '姓名',
-          width: '50px',
-          checked: true,
-          'show-overflow-tooltip': true
+          checked: true
         },
         {
           prop: 'address',
           label: '地址',
-          checked: true,
-          custom: true
+          checked: true
         },
         {
           prop: 'title',
@@ -254,8 +260,7 @@ export default {
           id: 1,
           date: '2016-05-02',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          switch: '112'
+          address: '上海市普陀区金沙江路 1518 弄'
         },
         {
           id: 2,
@@ -291,9 +296,6 @@ export default {
         }
       ]
     }
-  },
-  beforeMount () {
-    console.log(this.$scopedSlots.custom)
   },
   methods: {
     getList() {
