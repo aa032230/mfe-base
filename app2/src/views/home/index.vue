@@ -37,7 +37,6 @@
 
 <script>
 import { tablePage, ansoModal, ansoForm } from 'comm/src/components'
-import about from './About.vue'
 export default {
   name: 'user',
   components: { tablePage, ansoModal, ansoForm },

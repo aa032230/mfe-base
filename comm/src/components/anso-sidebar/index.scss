@@ -1,43 +1,53 @@
 $timeout: 0.3s;
-$menuItemHeight: 36px;
 
 /deep/ .el-menu {
   border-right: none;
-  .el-menu-item {
-    height: $menuItemHeight;
-    line-height: $menuItemHeight;
-  }
 }
-/deep/ .el-submenu__title {
-  height: $menuItemHeight;
-  line-height: $menuItemHeight;
-}
+
 /deep/ .el-submenu__title:hover {
-  background-color: #f3f5f8 !important;
+  background-color: #1890ff !important;
+
 }
+
 /deep/.el-menu-item:hover {
-  background-color: #f3f5f8 !important;
+  background-color: #1890ff !important;
+
 }
+
 /deep/.el-menu-item.is-active {
-  background-color: #f3f5f8 !important;
+  background-color: #1890ff !important;
 }
+
 .app-scrollbar:not(.el-menu-collapse) {
-  width: 100%;
+  width: 230px;
   transition: width $timeout;
 }
+
 .app-scrollbar.el-menu-collapse {
   width: 60px;
   transition: width $timeout;
 }
+
 .menu-collapse:not(.el-menu--collapse) {
   width: 100%;
   transition: width $timeout;
 }
+
 .app-scrollbar {
   height: 100%;
   position: relative;
-  background-color: #fff;
+  background-color: #001529;
+
   /deep/.el-scrollbar__wrap {
     overflow-x: hidden;
+  }
+
+  .is-collapse {
+    color: #fff;
+    font-size: 25px;
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
+    cursor: pointer;
   }
 }
