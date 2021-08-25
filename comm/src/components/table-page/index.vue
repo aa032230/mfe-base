@@ -71,6 +71,12 @@ export default {
     total: {
       type: Number,
       default: 0
+    },
+    headerConfig: {
+      type: Object,
+      default() {
+        return {}
+      }
     }
   },
   components: {
@@ -82,23 +88,7 @@ export default {
   data() {
     return {
       cellHeight: 0,
-
       targetColumns: [], // 目标表头
-      buttons: [
-        {
-          name: '新增',
-          type: 'primary',
-          methods() {
-            console.log(111111111)
-          }
-        },
-        {
-          name: '批量导入',
-          methods() {
-            console.log('批量导入')
-          }
-        }
-      ],
       isPrint: false
     }
   },
@@ -151,7 +141,7 @@ export default {
       <div class="table-page">
         <div class="table-page-main">
           {/* 表格按钮 */}
-          <table-head title={this.title} buttons={this.buttons}></table-head>
+          <table-head headerConfig={this.headerConfig}></table-head>
           {/* 表格表单 */}
           <div class="table-page-main-form">
             <table-form form-list={this.formList} onQuery={this.handleQuery} onReset={this.handleReset}></table-form>
@@ -178,14 +168,24 @@ export default {
               pageIndex={this.currentPage}
               pageSize={this.limit}
               on={{
-                'update:pageIndex': (page) => (this.currentPage = page),
-                'update:pageSize': (size) => (this.limit = size)
+                'update:pageIndex': page => (this.currentPage = page),
+                'update:pageSize': size => (this.limit = size)
               }}
               layout={this.layout}
               page-sizes={this.pageSizes}
               total={this.total}
               on-pagination={this.dispatchEvent}
-            ></anso-table>
+            >
+              <div
+                scopedSlots={{
+                  default: scope => {
+                    console.log(1111113123)
+                  }
+                }}
+              >
+                121
+              </div>
+            </anso-table>
           </div>
           {this.$slots.default}
         </div>

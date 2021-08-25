@@ -14,6 +14,7 @@
       :total="tableData.length"
       @pagination="getList"
       @query="handleQuery"
+      :headerConfig="headerConfig"
     >
       <anso-modal
         @cancel="handleCancel"
@@ -22,7 +23,13 @@
         :visible.sync="visible"
         :modalConfig="modalConfig"
       >
-        <anso-form label-position="top" :model="ruleForm" :rules="rules" v-model="ruleForm" :form-list="formList"></anso-form>
+        <anso-form
+          label-position="top"
+          :model="ruleForm"
+          :rules="rules"
+          v-model="ruleForm"
+          :form-list="formList"
+        ></anso-form>
       </anso-modal>
     </table-page>
   </div>
@@ -30,8 +37,9 @@
 
 <script>
 import { tablePage, ansoModal, ansoForm } from 'comm/src/components'
+import about from './About.vue'
 export default {
-  name: 'Home',
+  name: 'user',
   components: { tablePage, ansoModal, ansoForm },
   data() {
     return {
@@ -39,6 +47,24 @@ export default {
         a1: [
           { required: true, message: '请输入活动名称', trigger: 'blur' },
           { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ]
+      },
+      headerConfig: {
+        title: '表格头部标题',
+        buttons: [
+          {
+            name: '新增',
+            type: 'primary',
+            methods() {
+              console.log(111111111)
+            }
+          },
+          {
+            name: '批量导入',
+            methods() {
+              console.log('批量导入')
+            }
+          }
         ]
       },
       ruleForm: {
@@ -53,11 +79,31 @@ export default {
       tableEvent: {
         selectionChange: this.selectionChange
       },
-      tableConfig: {
-      },
+      tableConfig: {},
       operates: [
         {
           label: '编辑',
+          type: 'text',
+          method: (index, row) => {
+            this.visible = true
+          }
+        },
+        {
+          label: '编辑1',
+          type: 'text',
+          method: (index, row) => {
+            this.visible = true
+          }
+        },
+        {
+          label: '编辑2',
+          type: 'text',
+          method: (index, row) => {
+            this.visible = true
+          }
+        },
+        {
+          label: '编辑3',
           type: 'text',
           method: (index, row) => {
             this.visible = true
@@ -69,20 +115,19 @@ export default {
           method: this.handleDelete
         }
       ],
-      toolsConfig: ['refresh', 'print','export', 'space', 'setting'],
+      toolsConfig: ['refresh', 'print', 'export', 'space', 'setting'],
       formList: [
         {
           name: '系统模块',
           field: 'a1',
-          width: '100%',
-          input(val) {
-            console.log(val)
-          }
+          model: '1233445',
+          input(val) {}
         },
         {
           name: '系统模块系统模块',
           field: 'a2',
           type: 'select',
+          model: 0,
           options: [
             {
               value: 0,
@@ -141,10 +186,25 @@ export default {
       ],
       columns: [
         {
-          prop: 'date',
+          prop: 'switch',
           label: '日期',
           checked: true,
-          sortable: true
+          sortable: true,
+          render(row, prop, h) {
+            return h('el-switch', {
+              props: {
+                value: row[prop] ? 1 : 0,
+                'active-value': 1,
+                'inactive-value': 0
+              },
+              nativeOn: {
+                change: e => {
+                  console.log(12312)
+                  console.log(e.target.value)
+                }
+              }
+            })
+          }
           // 'sort-method': () => console.log('sort')
           // children: [
           //   {
@@ -174,10 +234,7 @@ export default {
         {
           prop: 'name',
           label: '姓名',
-          checked: true,
-          render(val) {
-            return val
-          }
+          checked: true
         },
         {
           prop: 'address',
@@ -253,7 +310,7 @@ export default {
       console.log(row)
     },
     handleSubmit() {
-      console.log(this.form)
+      console.log(this.ruleForm)
     },
     // 可以做mixins
     handleCancel() {

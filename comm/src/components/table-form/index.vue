@@ -35,6 +35,7 @@ export default {
     this._el = document.querySelector('.form-view')
     this.getElementRealTimeHeight()
     window.addEventListener('resize', this.getElementRealTimeHeight)
+    // this.initForm()
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.getElementRealTimeHeight)
@@ -51,7 +52,14 @@ export default {
         this.socureElHeight = 52
       }
     },
-
+    // 初始化表单字段
+    // initForm() {
+    //   const { formList, form } = this
+    //   Array.isArray(formList) &&
+    //     formList.forEach(f => {
+    //       this.$set(form, f.field, f.model)
+    //     })
+    // },
     // 是否展开
     handleOpen() {
       this.isOpen = !this.isOpen
@@ -89,7 +97,7 @@ export default {
     } = this
     return (
       <div class="form-view-box" style={{ height: socureElHeight + 'px' }}>
-      {/**<div class="form-view-box" style={{ height: isOpen ? 'auto' : '52px',  transition: 'height 0.3s'  }}> */}
+        {/**<div class="form-view-box" style={{ height: isOpen ? 'auto' : '52px',  transition: 'height 0.3s'  }}> */}
         <section class="form-view" ref="formGroup">
           <anso-form
             label-width={labelWidth}
@@ -103,7 +111,7 @@ export default {
           <el-button size="small" onClick={handleReset}>
             重置
           </el-button>
-          <el-button  size="small" onClick={handleQuery}>
+          <el-button size="small" onClick={handleQuery}>
             查询
           </el-button>
           {elHeight > 52 && (

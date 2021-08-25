@@ -11,7 +11,7 @@ import { modalDrag } from '../../directives'
       },
  */
 export default {
-  name: 'v-modal',
+  name: 'anso-modal',
   props: {
     visible: {
       type: Boolean,
@@ -54,7 +54,7 @@ export default {
       let confirmText = '确 定'
       let cancelText = '取 消'
       const _props = {}
-      Object.keys(options).forEach((k) => {
+      Object.keys(options).forEach(k => {
         switch (k) {
           case 'confirmText':
             confirmText = options[k]
@@ -88,11 +88,9 @@ export default {
         visible={this.dialogVisible}
         onOpen={this.$emit.bind(this, 'open')}
         onClose={this.$emit.bind(this, 'close')}
-        on={{ 'update:visible': (val) => (this.dialogVisible = val) }}
+        on={{ 'update:visible': val => (this.dialogVisible = val) }}
       >
-        <div class="v-modal-body">
-          {this.$slots.default}
-        </div>
+        <div class="v-modal-body">{this.$slots.default}</div>
         <span slot="footer" class="dialog-footer">
           <el-button size="small" onClick={this.handleCancle}>
             {options.cancelText}

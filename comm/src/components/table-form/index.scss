@@ -6,10 +6,12 @@
   height: 52px;
   overflow: hidden;
   transition: all 0.3s;
+
   .form-view {
     width: calc(100% - 200px);
     display: flex;
     flex-wrap: wrap;
+
     &-item {
       display: flex;
       align-items: center;
@@ -29,12 +31,12 @@
       margin-bottom: 0;
       padding: 6px 0;
       display: flex;
-      padding-right: 10px;
+      padding-right: 24px;
     }
 
     /deep/ .el-form-item__label {
       padding-right: 10px;
-      line-height: 40px !important;
+      line-height: 32px !important;
     }
 
     .v-form {

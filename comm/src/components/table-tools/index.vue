@@ -74,12 +74,12 @@ export default {
     },
     // 表头筛选
     filterColumn() {
-      const columns = this.columns.filter((c) => c.checked)
+      const columns = this.columns.filter(c => c.checked)
       this.$emit('setCheckedColumns', columns)
     },
     // 选中/取消
     handleChange(item) {
-      this.columns.forEach((c) => {
+      this.columns.forEach(c => {
         if (c.prop === item.prop) {
           c.checked = !c.checked
         }
@@ -95,12 +95,12 @@ export default {
     switchTool() {
       const { handlePrint, spaceMap, columns, handleChange, adjustSpace, handleExprot, toolsConfig } = this
       if (!toolsConfig.length) return
-      return toolsConfig.map((t) => {
+      return toolsConfig.map(t => {
         switch (t) {
           case 'refresh':
             return (
               <em
-                class="el-icon-refresh"
+                class="iconfont icon-refresh"
                 title="刷新"
                 onClick={() => {
                   window.location.reload()
@@ -108,9 +108,9 @@ export default {
               ></em>
             )
           case 'print':
-            return <em class="el-icon-document-copy" title="打印" onClick={handlePrint}></em>
+            return <em class="iconfont icon-copy" title="打印" onClick={handlePrint}></em>
           case 'export':
-            return <em class="el-icon-download" title="下载" onClick={handleExprot}></em>
+            return <em class="iconfont icon-download" title="下载" onClick={handleExprot}></em>
           case 'space':
             return (
               <el-popover
@@ -121,7 +121,7 @@ export default {
                 popper-class="table-tools-popover"
               >
                 <ul class="table-tools-item-ul">
-                  {spaceMap.map((item) => {
+                  {spaceMap.map(item => {
                     return (
                       <li class={{ 'is-active': this.activeName === item }} onClick={adjustSpace.bind(this, item)}>
                         {item}
@@ -129,14 +129,14 @@ export default {
                     )
                   })}
                 </ul>
-                <em class="el-icon-s-grid" slot="reference" title="间距调整"></em>
+                <em class="iconfont icon-sort" slot="reference" title="间距调整"></em>
               </el-popover>
             )
           case 'setting':
             return (
               <el-popover placement="bottom" trigger="click" class="table-tools-item">
                 <el-checkbox-group size="mini" v-model={this.checkedColumns}>
-                  {columns.map((c) => {
+                  {columns.map(c => {
                     return (
                       <el-checkbox
                         key={c.prop}
@@ -148,7 +148,7 @@ export default {
                     )
                   })}
                 </el-checkbox-group>
-                <em class="el-icon-setting" slot="reference" title="筛选"></em>
+                <em class="iconfont icon-set-up" slot="reference" title="筛选"></em>
               </el-popover>
             )
           default:
@@ -162,7 +162,6 @@ export default {
   }
 }
 </script>
-
 <style lang="scss" scoped>
 @import './index';
 </style>

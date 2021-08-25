@@ -1,5 +1,5 @@
 .table-page {
-  height: 100%;
+  height: calc(100vh - 90px);
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -12,7 +12,7 @@
     flex-direction: column;
     overflow-y: auto;
     &-form{
-      margin-top: 20px;
+      margin-top: 6px;
     }
     &-table {
       flex: 1;

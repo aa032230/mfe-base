@@ -3,16 +3,24 @@
 import tree from 'vue-giant-tree'
 import { cloneDeep } from 'lodash'
 import { flatArr } from '../../utils'
+function showRemoveBtn(treeId, treeNode) {
+  return !treeNode.isFirstNode
+}
+function showRenameBtn(treeId, treeNode) {
+  return !treeNode.isLastNode
+}
 export default {
-  name: 'anso-tree',
   components: {
     tree
   },
   props: {
     treeData: {
       require: true,
-      type: Array,
-      default: () => []
+      type: Array
+    },
+    width: {
+      type: String,
+      default: '300'
     },
     placeholder: {
       type: String,
@@ -31,13 +39,21 @@ export default {
               enable: true,
               pIdKey: 'pid'
             }
+          },
+          edit: {
+            enable: true,
+            showRemoveBtn: true,
+            showRenameBtn: showRenameBtn,
+            drag: {
+              isCopy: false, //所有操作都是move
+              isMove: true,
+              prev: true,
+              next: true,
+              inner: true
+            }
           }
         }
       }
-    },
-    width: {
-      type: String,
-      default: '300'
     }
   },
   data() {
@@ -46,69 +62,47 @@ export default {
     }
   },
   methods: {
+    // 单击
+    onClick(evt, treeId, treeNode) {
+      this.$emit('treeClick', treeNode)
+    },
+
+    // 多选
+    onCheck() {
+      const checkNodes = this.ztreeObj.getCheckedNodes()
+      this.$emit('treeCheck', checkNodes)
+    },
+
     // 初始化tree
     handleCreated(ztreeObj) {
       this.ztreeObj = ztreeObj
       // 获取ztree对象
       this.$emit('handleCreated', ztreeObj)
     },
-    // 单击
-    onClick(evt, treeId, treeNode) {
-      if (treeNode.isParent) {
-        // 去除父级选中颜色
-        this.removeParentActiveColor(treeId)
-        // 点击父节点，只展开或收缩
-        this.ztreeObj.expandNode(treeNode, !treeNode.open)
-        return
-      }
-      this.$emit('diapatchTreeEvent', treeNode)
+
+    // 返回建议数据
+    querySearch(queryString, cb) {
+      const tree = cloneDeep(this.treeData)
+      console.log(tree)
+      const restaurants = flatArr(tree, 'children')
+      const results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
+      // 调用 callback 返回建议列表的数据
+      cb(results)
     },
+
+    // 过滤
+    createFilter(queryString) {
+      return restaurant => {
+        return restaurant.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+      }
+    },
+
     // 搜索
     handleSelect(node) {
       const nodes = this.ztreeObj.getNodesByParamFuzzy('name', node.name, null)
       this.ztreeObj.expandNode(nodes[0], true, true, true)
       this.ztreeObj.selectNode(nodes[0])
-      if (nodes[0].isParent) {
-        // 去除父级选中颜色
-        this.removeParentActiveColor(nodes[0].tId)
-        return
-      }
-      this.$emit('diapatchTreeEvent', node)
-    },
-    // 多选
-    onCheck(e, treeId, treeNode) {
-      const treeNodes = flatArr([treeNode], 'children')
-      // const checkNodes = this.ztreeObj.getCheckedNodes(true)
-      this.$emit('select', treeNodes)
-    },
-
-    // 去除父节点active背景色
-    removeParentActiveColor(tid) {
-      const selectParentNode = document.querySelector(`#${tid}`)
-      const selectNode = selectParentNode.querySelector('.curSelectedNode')
-      selectNode.classList.remove('curSelectedNode')
-    },
-
-    // 返回建议数据
-    querySearch(queryString, cb) {
-      const tree = cloneDeep(this.treeData)
-      // let restaurants = void 0
-      const restaurants = flatArr(tree, 'children')
-      // 设备树只返回仪表
-      // if (this.treeType === 'equipment') {
-      //     restaurants = result.filter((t) => t.imei || t.fmAddress);
-      // } else {
-      //     restaurants = result;
-      // }
-      const results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
-      // 调用 callback 返回建议列表的数据
-      cb(results)
-    },
-    // 过滤
-    createFilter(queryString) {
-      return (restaurant) => {
-        return restaurant.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0
-      }
+      this.$emit('select', node)
     }
   },
   // 渲染
@@ -124,7 +118,7 @@ export default {
       },
       on: {
         select: this.handleSelect,
-        input: (value) => {
+        input: value => {
           this.treeValue = value
         }
       }

@@ -1,10 +1,11 @@
-.table-wrap{
+<<<<<<< HEAD
+.table-wrap {
   height: 100%;
-  &-btn{
-    margin-right: 10px;
+  &-dropdown{
+    margin-left: 10px;
   }
 }
-.v-pager{
+.v-pager {
   padding: 5px;
   text-align: right;
   margin-top: 20px;
@@ -17,4 +18,32 @@
 /deep/.el-table__body-wrapper::-webkit-scrollbar-thumb {
   background-color: #a1a3a9;
   border-radius: 3px;
+}
+.el-dropdown-link {
+  cursor: pointer;
+  color: #3171f2;
+}
+.el-icon-arrow-down {
+  font-size: 12px;
+=======
+.table-wrap {
+  height: 100%;
+  // &-btn {
+    // margin-right: 10px;
+  // }
+}
+.v-pager {
+  padding: 5px;
+  text-align: right;
+  margin-top: 20px;
+}
+//局部样式.demo是类名 是el-table标签上的自定义class
+/deep/.el-table__body-wrapper::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+/deep/.el-table__body-wrapper::-webkit-scrollbar-thumb {
+  background-color: #a1a3a9;
+  border-radius: 3px;
+>>>>>>> 7768171fa68fe02e9e685d0bde6c6536db790dcb
 }

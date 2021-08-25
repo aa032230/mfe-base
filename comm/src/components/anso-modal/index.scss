@@ -1,4 +1,13 @@
-.v-modal-body{
+.v-modal-body {
   max-height: 600px;
   overflow-y: auto;
+}
+
+/deep/.el-dialog__header {
+  border-bottom:1px solid rgba(0,0,0,0.09) ;
+
+}
+
+/deep/.el-dialog__body {
+  padding: 16px 32px;
 }

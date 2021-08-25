@@ -7,12 +7,12 @@ export default {
   functional: true,
   methods: {},
   render(h, { props }) {
-    const { title, buttons } = props
+    const { title, buttons } = props.headerConfig
     return (
       <div class="table-head">
         <div class="table-head-title">{title}</div>
         <div class="table-head-btns">
-          {buttons.map((btn) => {
+          {Array.isArray(buttons) && buttons.map(btn => {
             return (
               <el-button size={btn.size ? btn.size : 'small'} type={btn.type} onClick={btn.methods}>
                 {btn.name}

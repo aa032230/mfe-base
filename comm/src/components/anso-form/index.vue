@@ -1,8 +1,8 @@
 <script>
 /**
  *  表单组件
- *  <v-form v-model="form" :form-list="formList" rules="rules"></v-form>  
- * demo: 
+ *  <v-form v-model="form" :form-list="formList" rules="rules"></v-form>
+ * demo:
  *  [
  *  {
  *    name: '系统模块',
@@ -14,7 +14,7 @@
       field: 'a2',
       width: 220,
       type: 'select',
-      change:(val) => console.log(val) 
+      change:(val) => console.log(val)
       options: [
         {
           value: 0,
@@ -26,12 +26,12 @@
         }
       ]
     },
- * 
+ *
  * ]
- * 
+ *
  */
 export default {
-  name: 'v-form',
+  name: 'anso-form',
   props: {
     formList: {
       type: Array,
@@ -60,10 +60,30 @@ export default {
       default: 'right'
     }
   },
+  data() {
+    return {
+      form: {}
+    }
+  },
+  mounted() {
+    this.initForm()
+  },
   methods: {
+    // 初始化表单字段
+    initForm() {
+      const { formList, value } = this
+      Array.isArray(formList) &&
+        formList.forEach(f => {
+          if (f.model || f.model === 0) {
+            this.$set(value, f.field, f.model)
+          } else {
+            this.$set(value, f.field, '')
+          }
+        })
+    },
     // 表单元素构建
     createFormItem(formList) {
-      return formList.map((f) => {
+      return formList.map(f => {
         return (
           <el-form-item label={`${f.name}:`} prop={f.field} key={f.field}>
             {this.checkTypeToFormElement(f)}
@@ -83,10 +103,11 @@ export default {
               filterable={r.filterable}
               size={r.size ? r.size : 'small'}
               disabled={r.disabled}
+              clearable={r.clearable}
               placeholder={r.placeholder}
               on={this.setFormActions(r)}
             >
-              {r.options.map((option) => (
+              {r.options.map(option => (
                 <el-option key={option.value} label={option.label} value={option.value} />
               ))}
             </el-select>
@@ -167,7 +188,7 @@ export default {
       const _props = {}
       // todo: 没加上的方法自己加入数组
       const _methods = ['change', 'select', 'input', 'clear', 'focus', 'blur']
-      Object.keys(formOptions).forEach((m) => {
+      Object.keys(formOptions).forEach(m => {
         if (_methods.includes(m)) {
           Object.assign(_props, { [m]: formOptions[m] })
         }
@@ -176,17 +197,16 @@ export default {
     }
   },
   render() {
-    const { model, rules, labelWidth, labelPosition } = this
+    const { model, rules, labelWidth, labelPosition, formList } = this
     return (
       <el-form
-        rules={rules}
-        props={{ model }}
+        props={{ model, rules }}
         ref="ruleForm"
         class="form"
         label-position={labelPosition}
         label-width={labelWidth}
       >
-        {this.createFormItem(this.formList)}
+        {this.createFormItem(formList)}
       </el-form>
     )
   }

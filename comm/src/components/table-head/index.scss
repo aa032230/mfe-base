@@ -1,8 +1,10 @@
-.table-head{
+.table-head {
   display: flex;
   justify-content: space-between;
-  &-title{
+  align-items: center;
+  &-title {
     font-weight: 600;
+    font-size: 16px;
     font-family: PingFangSC, PingFangSC-Medium;
   }
 }
