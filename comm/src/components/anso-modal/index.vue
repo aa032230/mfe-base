@@ -23,6 +23,22 @@ export default {
       default() {
         return {}
       }
+    },
+    // 按钮
+    buttonConfig: {
+      type: Array,
+      default() {
+        return [
+          {
+            type: 'cancel',
+            text: '取消'
+          },
+          {
+            type: 'confirm',
+            text: '确定'
+          }
+        ]
+      }
     }
   },
   directives: {
@@ -49,30 +65,6 @@ export default {
     }
   },
   methods: {
-    // 过滤参数
-    filterProps(options) {
-      let confirmText = '确 定'
-      let cancelText = '取 消'
-      const _props = {}
-      Object.keys(options).forEach((k) => {
-        switch (k) {
-          case 'confirmText':
-            confirmText = options[k]
-            break
-          case 'cancelText':
-            cancelText = options[k]
-            break
-          default:
-            Object.assign(_props, { [k]: options[k] })
-            break
-        }
-      })
-      return {
-        confirmText,
-        cancelText,
-        props: _props
-      }
-    },
     // 表单重置
     retsetFrom() {
       this.dialogVisible = false
@@ -91,7 +83,6 @@ export default {
     },
     // 确定
     handleSubmit() {
-      console.log(this.$slots.default[0].componentInstance)
       const { $refs, value } = this.$slots.default[0].componentInstance
       $refs.ruleForm.validate((valid) => {
         if (valid) {
@@ -103,12 +94,11 @@ export default {
     }
   },
   render() {
-    const options = this.filterProps(this.modalConfig)
     return (
       <el-dialog
         close-on-click-modal={false}
         v-modal-drag
-        attrs={{ ...options.props }}
+        attrs={{ ...this.modalConfig }}
         visible={this.dialogVisible}
         onOpen={this.$emit.bind(this, 'open')}
         onClose={this.handleClose}
@@ -116,12 +106,24 @@ export default {
       >
         <div class="v-modal-body">{this.$slots.default}</div>
         <span slot="footer" class="dialog-footer">
-          <el-button size="small" onClick={this.handleCancle}>
-            {options.cancelText}
-          </el-button>
-          <el-button size="small" type="primary" onClick={this.handleSubmit}>
-            {options.confirmText}
-          </el-button>
+          {this.buttonConfig.map((item) => {
+            switch (item.type) {
+              case 'cancel':
+                return (
+                  <el-button size="small" onClick={this.handleCancle}>
+                    {item.text}
+                  </el-button>
+                )
+              case 'confirm':
+                return (
+                  <el-button size="small" type="primary" onClick={this.handleSubmit}>
+                    {item.text}
+                  </el-button>
+                )
+              default:
+                break
+            }
+          })}
         </span>
       </el-dialog>
     )
