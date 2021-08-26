@@ -80,16 +80,6 @@ export default {
       type: Array,
       default: () => []
     },
-    // 复选框
-    hasSelection: {
-      type: Boolean,
-      default: true
-    },
-    // 序号
-    hasIndex: {
-      type: Boolean,
-      default: true
-    },
     // 表配置
     tableConfig: {
       type: Object,
@@ -177,6 +167,7 @@ export default {
         )
       })
     },
+
     // 表格操作列
     createOperates({ scope, operates }) {
       const [generalOperates, specialOperates] = [[], []]
@@ -187,87 +178,59 @@ export default {
           children: specialOperates
         })
       }
-      return this.filterOperates(scope, generalOperates)
-    },
-
-    // 操作列筛选，超过三个用‘更多’下拉代替
-    filterOperates(scope, operates) {
-      return operates.map((btn, index) => {
-        switch (btn.label) {
-          case '删除':
-            return (
-              <el-popconfirm
-                title="这是一段内容确定删除吗？"
-                onConfirm={() => {
-                  btn.method(scope.$index, scope.row)
-                }}
-              >
-                <el-button slot="reference" key={btn.label} type={btn.type} size={btn.size ? btn.size : 'small'}>
-                  {btn.label}
-                </el-button>
-              </el-popconfirm>
-            )
-          case '更多':
-            return (
-              <el-dropdown class="table-wrap-dropdown">
-                <span class="el-dropdown-link">
-                  {btn.label}
-                  <i class="el-icon-arrow-down el-icon--right"></i>
-                </span>
-                <el-dropdown-menu slot="dropdown">
-                  {btn.children.map((c) => {
-                    return <el-dropdown-item key={c.label}>{c.label}</el-dropdown-item>
-                  })}
-                </el-dropdown-menu>
-              </el-dropdown>
-            )
-          default:
-            return (
-              <el-button
-                class="table-wrap-btn"
-                key={btn.label}
-                type={btn.type}
-                size={btn.size ? btn.size : 'small'}
-                nativeOnClick={(e) => {
-                  e.preventDefault()
-                  btn.method(scope.$index, scope.row)
-                }}
-              >
-                {btn.label}
-              </el-button>
-            )
-        }
+      return generalOperates.map((btn) => {
+        return this.switchOperares(scope, btn)
       })
     },
 
-    creButons(scope, btn) {
-      switch (btn.label) {
+    // 操作列筛选，超过三个用‘更多’下拉代替
+    switchOperares(scope, operate) {
+      switch (operate.label) {
         case '删除':
           return (
             <el-popconfirm
               title="这是一段内容确定删除吗？"
               onConfirm={() => {
-                btn.method(scope.$index, scope.row)
+                operate.method(scope.$index, scope.row)
               }}
             >
-              <el-button slot="reference" key={btn.label} type={btn.type} size={btn.size ? btn.size : 'small'}>
-                {btn.label}
+              <el-button
+                slot="reference"
+                key={operate.label}
+                type={operate.type}
+                size={operate.size ? operate.size : 'small'}
+              >
+                {operate.label}
               </el-button>
             </el-popconfirm>
+          )
+        case '更多':
+          return (
+            <el-dropdown class="table-wrap-dropdown">
+              <span class="el-dropdown-link">
+                {operate.label}
+                <i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                {operate.children.map((c) => {
+                  return <el-dropdown-item>{this.switchOperares(scope, c)}</el-dropdown-item>
+                })}
+              </el-dropdown-menu>
+            </el-dropdown>
           )
         default:
           return (
             <el-button
               class="table-wrap-btn"
-              key={btn.label}
-              type={btn.type}
-              size={btn.size ? btn.size : 'small'}
+              key={operate.label}
+              type={operate.type}
+              size={operate.size ? operate.size : 'small'}
               nativeOnClick={(e) => {
                 e.preventDefault()
-                btn.method(scope.$index, scope.row)
+                operate.method(scope.$index, scope.row)
               }}
             >
-              {btn.label}
+              {operate.label}
             </el-button>
           )
       }
@@ -284,9 +247,7 @@ export default {
       columns,
       rowStyle,
       tableData,
-      hasSelection,
       createColumsFragment,
-      hasIndex,
       operates,
       createOperates,
       total,
@@ -311,8 +272,6 @@ export default {
           }}
           on={this.tableEvent}
         >
-          {hasSelection ? <el-table-column type="selection" width="50" align="left"></el-table-column> : ''}
-          {hasIndex ? <el-table-column type="index" width="45"></el-table-column> : ''}
           {/* column渲染 */}
           {createColumsFragment(columns, h)}
           {/* <slot></slot> */}

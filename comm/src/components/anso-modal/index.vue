@@ -54,7 +54,7 @@ export default {
       let confirmText = '确 定'
       let cancelText = '取 消'
       const _props = {}
-      Object.keys(options).forEach(k => {
+      Object.keys(options).forEach((k) => {
         switch (k) {
           case 'confirmText':
             confirmText = options[k]
@@ -73,9 +73,33 @@ export default {
         props: _props
       }
     },
-    handleCancle() {
+    // 表单重置
+    retsetFrom() {
       this.dialogVisible = false
-      this.$emit('cancel')
+      const { ruleForm } = this.$slots.default[0].componentInstance.$refs
+      ruleForm.resetFields()
+    },
+    // 关闭modal
+    handleClose() {
+      this.retsetFrom()
+      this.$emit('close')
+    },
+    // 取消
+    handleCancle() {
+      this.retsetFrom()
+      this.$emit('cancle')
+    },
+    // 确定
+    handleSubmit() {
+      console.log(this.$slots.default[0].componentInstance)
+      const { $refs, value } = this.$slots.default[0].componentInstance
+      $refs.ruleForm.validate((valid) => {
+        if (valid) {
+          this.$emit('submit', value)
+        } else {
+          console.log('error submit!!')
+        }
+      })
     }
   },
   render() {
@@ -87,15 +111,15 @@ export default {
         attrs={{ ...options.props }}
         visible={this.dialogVisible}
         onOpen={this.$emit.bind(this, 'open')}
-        onClose={this.$emit.bind(this, 'close')}
-        on={{ 'update:visible': val => (this.dialogVisible = val) }}
+        onClose={this.handleClose}
+        on={{ 'update:visible': (val) => (this.dialogVisible = val) }}
       >
         <div class="v-modal-body">{this.$slots.default}</div>
         <span slot="footer" class="dialog-footer">
           <el-button size="small" onClick={this.handleCancle}>
             {options.cancelText}
           </el-button>
-          <el-button size="small" type="primary" onClick={this.$emit.bind(this, 'submit')}>
+          <el-button size="small" type="primary" onClick={this.handleSubmit}>
             {options.confirmText}
           </el-button>
         </span>

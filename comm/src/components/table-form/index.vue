@@ -41,6 +41,18 @@ export default {
     window.removeEventListener('resize', this.getElementRealTimeHeight)
   },
   methods: {
+    // 初始化表单字段
+    initForm() {
+      const { formList, form } = this
+      Array.isArray(formList) &&
+        formList.forEach((f) => {
+          if (f.model || f.model === 0) {
+            this.$set(form, f.field, f.model)
+          } else {
+            this.$set(form, f.field, '')
+          }
+        })
+    },
     // 获取元素实时高度
     getElementRealTimeHeight() {
       // todo:resize是否重置属性
@@ -77,7 +89,7 @@ export default {
 
     // 重置
     handleReset() {
-      this.form = this.$options.data().form
+      this.initForm()
       this.$emit('reset')
     }
   },

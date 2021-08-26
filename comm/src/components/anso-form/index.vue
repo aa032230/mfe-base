@@ -73,7 +73,7 @@ export default {
     initForm() {
       const { formList, value } = this
       Array.isArray(formList) &&
-        formList.forEach(f => {
+        formList.forEach((f) => {
           if (f.model || f.model === 0) {
             this.$set(value, f.field, f.model)
           } else {
@@ -83,7 +83,7 @@ export default {
     },
     // 表单元素构建
     createFormItem(formList) {
-      return formList.map(f => {
+      return formList.map((f) => {
         return (
           <el-form-item label={`${f.name}:`} prop={f.field} key={f.field}>
             {this.checkTypeToFormElement(f)}
@@ -107,13 +107,19 @@ export default {
               placeholder={r.placeholder}
               on={this.setFormActions(r)}
             >
-              {r.options.map(option => (
+              {r.options.map((option) => (
                 <el-option key={option.value} label={option.label} value={option.value} />
               ))}
             </el-select>
           )
         case 'switch':
-          return <el-switch v-model={form[r.field]}></el-switch>
+          return (
+            <el-switch
+              v-model={form[r.field]}
+              active-value={r.activeValue}
+              inactive-value={r.inactiveValue}
+            ></el-switch>
+          )
         case 'cascader':
           return (
             <el-cascader
@@ -188,7 +194,7 @@ export default {
       const _props = {}
       // todo: 没加上的方法自己加入数组
       const _methods = ['change', 'select', 'input', 'clear', 'focus', 'blur']
-      Object.keys(formOptions).forEach(m => {
+      Object.keys(formOptions).forEach((m) => {
         if (_methods.includes(m)) {
           Object.assign(_props, { [m]: formOptions[m] })
         }

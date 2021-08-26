@@ -122,7 +122,7 @@ export default {
         {
           name: '系统模块',
           field: 'a1',
-          model: '1233445',
+          model: '',
           input(val) {}
         },
         {
@@ -309,7 +309,6 @@ export default {
     handleSubmit() {
       console.log(this.ruleForm)
     },
-    // 可以做mixins
     handleCancel() {
       console.log('cancel')
     },
