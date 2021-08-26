@@ -30,12 +30,13 @@ export default {
       default() {
         return [
           {
-            type: 'cancel',
+            name: 'cancel',
             text: '取消'
           },
           {
-            type: 'confirm',
-            text: '确定'
+            name: 'confirm',
+            text: '确定',
+            type: 'primary'
           }
         ]
       }
@@ -68,6 +69,7 @@ export default {
     // 表单重置
     retsetFrom() {
       this.dialogVisible = false
+      if (!this.$slots.default[0].componentInstance.$refs.ruleForm) return
       const { ruleForm } = this.$slots.default[0].componentInstance.$refs
       ruleForm.resetFields()
     },
@@ -96,27 +98,43 @@ export default {
         attrs={{ ...this.modalConfig }}
         visible={this.dialogVisible}
         onOpen={this.$emit.bind(this, 'open')}
-        onClose={this.$emit.bind(this,'close')}
+        onClose={this.$emit.bind(this, 'close')}
         on={{ 'update:visible': (val) => (this.dialogVisible = val) }}
       >
         <div class="v-modal-body">{this.$slots.default}</div>
         <span slot="footer" class="dialog-footer">
           {this.buttonConfig.map((item) => {
-            switch (item.type) {
+            switch (item.name) {
               case 'cancel':
                 return (
-                  <el-button size="small" onClick={this.handleCancle}>
+                  <el-button size={item.size ? item.size : 'samll'} type={item.type} nativeOnClick={this.handleCancle}>
                     {item.text}
                   </el-button>
                 )
               case 'confirm':
                 return (
-                  <el-button size="small" type="primary" onClick={this.handleSubmit}>
+                  <el-button
+                    size="small"
+                    type={item.type}
+                    size={item.size ? item.size : 'samll'}
+                    onClick={this.handleSubmit}
+                  >
                     {item.text}
                   </el-button>
                 )
               default:
-                break
+                return (
+                  <el-button
+                    size={item.size ? item.size : 'samll'}
+                    type={item.type}
+                    nativeOnClick={(e) => {
+                      e.preventDefault()
+                      item.method()
+                    }}
+                  >
+                    {item.text}
+                  </el-button>
+                )
             }
           })}
         </span>
