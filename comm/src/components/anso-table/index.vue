@@ -80,6 +80,10 @@ export default {
       type: Array,
       default: () => []
     },
+    operatesWidth: {
+      type: String,
+      default: ''
+    },
     // 表配置
     tableConfig: {
       type: Object,

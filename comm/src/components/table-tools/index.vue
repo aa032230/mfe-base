@@ -10,6 +10,7 @@ export default {
     return {
       activeName: '默认',
       spaceMap: ['默认', '紧凑', '中等', '宽松'],
+      fColumns: [],
       checkedColumns: []
     }
   },
@@ -37,8 +38,8 @@ export default {
       default: ''
     }
   },
-  mounted() {
-    this.filterColumn()
+  mounted () {
+    this.initColumns()
   },
   methods: {
     // 打印
@@ -72,14 +73,24 @@ export default {
       }
       this.$emit('setSpace', _h)
     },
+    // 初始化Column
+    initColumns() {
+      this.fColumns = this.columns.map(item => {
+        if(item.checked === undefined) {
+          item.checked = true
+        }
+        return item
+      })
+      this.filterColumn()
+    },
     // 表头筛选
     filterColumn() {
-      const columns = this.columns.filter(c => c.checked)
+      const columns = this.fColumns.filter(c => c.checked)
       this.$emit('setCheckedColumns', columns)
     },
     // 选中/取消
     handleChange(item) {
-      this.columns.forEach(c => {
+      this.fColumns.forEach(c => {
         if (c.prop === item.prop) {
           c.checked = !c.checked
         }
@@ -93,7 +104,7 @@ export default {
 
     // 工具筛选
     switchTool() {
-      const { handlePrint, spaceMap, columns, handleChange, adjustSpace, handleExprot, toolsConfig } = this
+      const { handlePrint, spaceMap, fColumns, handleChange, adjustSpace, handleExprot, toolsConfig } = this
       if (!toolsConfig.length) return
       return toolsConfig.map(t => {
         switch (t) {
@@ -129,14 +140,14 @@ export default {
                     )
                   })}
                 </ul>
-                <em class="iconfont icon-sort" slot="reference" title="间距调整"></em>
+                <em class="iconfont icon-sort2" slot="reference" title="间距调整"></em>
               </el-popover>
             )
           case 'setting':
             return (
               <el-popover placement="bottom" trigger="click" class="table-tools-item">
                 <el-checkbox-group size="mini" v-model={this.checkedColumns}>
-                  {columns.map(c => {
+                  {fColumns.map(c => {
                     return (
                       <el-checkbox
                         key={c.prop}
@@ -148,7 +159,7 @@ export default {
                     )
                   })}
                 </el-checkbox-group>
-                <em class="iconfont icon-set-up" slot="reference" title="筛选"></em>
+                <em class="iconfont icon-set-up1" slot="reference" title="筛选"></em>
               </el-popover>
             )
           default:

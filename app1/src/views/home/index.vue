@@ -194,32 +194,32 @@ export default {
           sortable: true,
           render(row, prop) {
             return row[prop]
-          }
-          // 'sort-method': () => console.log('sort')
-          // children: [
-          //   {
-          //     prop: 'name',
-          //     label: '姓名',
-          //     checked: true,
-          //     children: [
-          //       {
-          //         prop: 'name',
-          //         label: '姓名',
-          //         checked: true
-          //       },
-          //       {
-          //         prop: 'address',
-          //         label: '地址',
-          //         checked: true
-          //       }
-          //     ]
-          //   },
-          //   {
-          //     prop: 'address',
-          //     label: '地址',
-          //     checked: true
-          //   }
-          // ]
+          },
+          'sort-method': () => console.log('sort'),
+          children: [
+            {
+              prop: 'name',
+              label: '姓名',
+              checked: true,
+              children: [
+                {
+                  prop: 'name',
+                  label: '姓名',
+                  checked: true
+                },
+                {
+                  prop: 'address',
+                  label: '地址',
+                  checked: true
+                }
+              ]
+            },
+            {
+              prop: 'address',
+              label: '地址',
+              checked: true
+            }
+          ]
         },
         {
           prop: 'name',
@@ -263,32 +263,6 @@ export default {
           name: '王小虎',
           address: '上海市普陀区金沙江路 1517 弄'
         },
-        {
-          id: 3,
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-          children: [
-            {
-              id: 31,
-              date: '2016-05-01',
-              name: '王小虎',
-              address: '上海市普陀区金沙江路 1519 弄'
-            },
-            {
-              id: 32,
-              date: '2016-05-01',
-              name: '王小虎',
-              address: '上海市普陀区金沙江路 1519 弄'
-            }
-          ]
-        },
-        {
-          id: 4,
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }
       ]
     }
   },

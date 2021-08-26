@@ -140,6 +140,7 @@ export default {
               type={r.type}
               format={r.format}
               placeholder={r.placeholder}
+              picker-options={r.pickerOptions}
               default-time={r.defaultTime}
               value-format={r.valueType}
               default-value={r.defaultValue}
@@ -181,6 +182,7 @@ export default {
               disabled={r.disabled}
               placeholder={r.placeholder}
               maxlength={r.maxlength}
+              type={r.type ? r.type: 'text'}
               clearable={r.clearable}
               prefix-icon={r.prefixIcon}
               suffix-icon={r.suffixIcon}

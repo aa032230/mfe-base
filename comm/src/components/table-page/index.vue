@@ -25,13 +25,9 @@ export default {
       type: Array,
       default: () => []
     },
-    hasSelection: {
-      type: Boolean,
-      default: true
-    },
-    hasIndex: {
-      type: Boolean,
-      default: true
+    operatesWidth: {
+      type: String,
+      default: ''
     },
     tableConfig: {
       type: Object,
