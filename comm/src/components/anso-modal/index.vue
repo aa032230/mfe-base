@@ -71,11 +71,6 @@ export default {
       const { ruleForm } = this.$slots.default[0].componentInstance.$refs
       ruleForm.resetFields()
     },
-    // 关闭modal
-    handleClose() {
-      this.retsetFrom()
-      this.$emit('close')
-    },
     // 取消
     handleCancle() {
       this.retsetFrom()
@@ -101,7 +96,7 @@ export default {
         attrs={{ ...this.modalConfig }}
         visible={this.dialogVisible}
         onOpen={this.$emit.bind(this, 'open')}
-        onClose={this.handleClose}
+        onClose={this.$emit.bind(this,'close')}
         on={{ 'update:visible': (val) => (this.dialogVisible = val) }}
       >
         <div class="v-modal-body">{this.$slots.default}</div>
