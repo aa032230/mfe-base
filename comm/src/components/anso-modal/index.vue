@@ -10,6 +10,7 @@ import { modalDrag } from '../../directives'
         width: '30%',
       },
  */
+import { DataBus } from '../../utils/'
 export default {
   name: 'anso-modal',
   props: {
@@ -66,24 +67,26 @@ export default {
     }
   },
   methods: {
-    // 表单重置
-    retsetFrom() {
-      this.dialogVisible = false
-      if (!this.$slots.default[0].componentInstance.$refs.ruleForm) return
-      const { ruleForm } = this.$slots.default[0].componentInstance.$refs
-      ruleForm.resetFields()
-    },
     // 取消
     handleCancle() {
-      this.retsetFrom()
+      this.dialogVisible = false
+      if (!this.$slots.default[0].componentInstance.$refs.ruleForm) return
+      const { $refs } = this.$slots.default[0].componentInstance
+      $refs.ruleForm.resetFields()
       this.$emit('cancle')
+    },
+    handleOpen() {
+      DataBus.emit('reset', true)
+      this.$emit('open')
     },
     // 确定
     handleSubmit() {
+      if (!this.$slots.default[0].componentInstance.$refs.ruleForm) return
       const { $refs, value } = this.$slots.default[0].componentInstance
       $refs.ruleForm.validate((valid) => {
         if (valid) {
           this.$emit('submit', value)
+          this.dialogVisible = false
         } else {
           console.log('error submit!!')
         }
@@ -97,7 +100,7 @@ export default {
         v-modal-drag
         attrs={{ ...this.modalConfig }}
         visible={this.dialogVisible}
-        onOpen={this.$emit.bind(this, 'open')}
+        onOpen={this.handleOpen}
         onClose={this.$emit.bind(this, 'close')}
         on={{ 'update:visible': (val) => (this.dialogVisible = val) }}
       >

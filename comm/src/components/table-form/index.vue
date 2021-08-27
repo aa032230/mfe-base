@@ -64,14 +64,6 @@ export default {
         this.socureElHeight = 52
       }
     },
-    // 初始化表单字段
-    // initForm() {
-    //   const { formList, form } = this
-    //   Array.isArray(formList) &&
-    //     formList.forEach(f => {
-    //       this.$set(form, f.field, f.model)
-    //     })
-    // },
     // 是否展开
     handleOpen() {
       this.isOpen = !this.isOpen

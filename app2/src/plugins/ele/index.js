@@ -32,7 +32,8 @@ import {
   CheckboxGroup,
   Pagination,
   Dialog,
-  Popconfirm
+  Popconfirm,
+  Scrollbar
 } from 'element-ui'
 export default {
   components: [
@@ -68,7 +69,8 @@ export default {
     Checkbox,
     Pagination,
     Dialog,
-    Popconfirm
+    Popconfirm,
+    Scrollbar
   ],
   install(Vue) {
     Vue.prototype.$alert = MessageBox.alert

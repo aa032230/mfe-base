@@ -30,6 +30,7 @@
  * ]
  *
  */
+import { DataBus } from '../../utils/'
 export default {
   name: 'anso-form',
   props: {
@@ -67,6 +68,7 @@ export default {
   },
   mounted() {
     this.initForm()
+    DataBus.on('reset', res => res && this.initForm())
   },
   methods: {
     // 初始化表单字段
