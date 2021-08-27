@@ -59,6 +59,14 @@ export default {
     labelPosition: {
       type: String,
       default: 'right'
+    },
+    formConfig: {
+      type: Object,
+      default: () => ({})
+    },
+    itemConfig: {
+      type: Object,
+      default: () => ({})
     }
   },
   data() {
@@ -110,37 +118,23 @@ export default {
             <el-select
               style={{ width: r.width ? r.width : '150px' }}
               v-model={form[r.field]}
-              filterable={r.filterable}
               size={r.size ? r.size : 'small'}
-              disabled={r.disabled}
-              clearable={r.clearable}
-              placeholder={r.placeholder}
-              on={this.setFormActions(r)}
+              {...this.createFormAttrs(r)}
             >
               {r.options.map((option) => (
-                <el-option key={option.value} label={option.label} value={option.value} />
+                <el-option key={option.value} props={{ ...option }} />
               ))}
             </el-select>
           )
         case 'switch':
-          return (
-            <el-switch
-              v-model={form[r.field]}
-              active-value={r.activeValue}
-              inactive-value={r.inactiveValue}
-            ></el-switch>
-          )
+          return <el-switch v-model={form[r.field]} {...this.createFormAttrs(r)}></el-switch>
         case 'cascader':
           return (
             <el-cascader
               v-model={form[r.field]}
-              options={r.options}
-              disabled={r.disabled}
-              placeholder={r.placeholder}
               size={r.size ? r.size : 'small'}
               style={{ width: r.width ? r.width : '150px' }}
-              value-key={r.valueKey}
-              on={this.setFormActions(r)}
+              {...this.createFormAttrs(r)}
             ></el-cascader>
           )
         case 'datePicker':
@@ -148,40 +142,29 @@ export default {
             <el-date-picker
               v-model={form[r.field]}
               type={r.type}
-              format={r.format}
-              placeholder={r.placeholder}
-              picker-options={r.pickerOptions}
-              default-time={r.defaultTime}
-              value-format={r.valueType}
-              default-value={r.defaultValue}
-              range-separator={r.separator}
-              start-placeholder={r.startPlaceholder}
-              end-placeholder={r.endPlaceholder}
-              disabled={r.disabled}
-              on={this.setFormActions(r)}
               size={r.size ? r.size : 'small'}
               style={{ width: r.width ? r.width : '150px' }}
+              {...this.createFormAttrs(r)}
             ></el-date-picker>
           )
-        case 'radio':
+        case 'radios':
           return (
-            <el-radio
-              v-model={form[r.field]}
-              label={r.value}
-              disabled={r.disabled}
-              size={r.size}
-              text-color={r.textColor}
-              fill={r.fill}
-              on={this.setFormActions(r)}
-            >
-              {r.label}
-            </el-radio>
+            <el-radio-group v-model={form[r.field]} {...this.createFormAttrs(r)}>
+              {r.options.map((option) => {
+                return <el-radio {...this.createFormAttrs(option)}>{option.text}</el-radio>
+              })}
+            </el-radio-group>
           )
-        case 'checkbox':
+        case 'checkboxs':
+          if (!Array.isArray(form[r.field])) {
+            this.$set(form, r.field, [])
+          }
           return (
-            <el-checkbox v-model={form[r.field]} disabled={r.disabled} size={r.size} on={this.setFormActions(r)}>
-              {r.label}
-            </el-checkbox>
+            <el-checkbox-group v-model={form[r.field]} {...this.createFormAttrs(r)}>
+              {r.options.map((option) => {
+                return <el-checkbox {...this.createFormAttrs(option)}></el-checkbox>
+              })}
+            </el-checkbox-group>
           )
         default:
           return (
@@ -189,36 +172,49 @@ export default {
               size={r.size ? r.size : 'small'}
               style={{ width: r.width ? r.width : '150px' }}
               v-model={form[r.field]}
-              disabled={r.disabled}
-              placeholder={r.placeholder}
-              maxlength={r.maxlength}
               type={r.type ? r.type : 'text'}
-              clearable={r.clearable}
-              prefix-icon={r.prefixIcon}
-              suffix-icon={r.suffixIcon}
-              on={this.setFormActions(r)}
+              {...this.createFormAttrs(r)}
             ></el-input>
           )
       }
     },
-    // 表单元素方法导入
-    setFormActions(formOptions) {
+    // 表单属性导入
+    createFormAttrs(formOptions) {
       const _props = {}
+      const _event = {}
       // todo: 没加上的方法自己加入数组
-      const _methods = ['change', 'select', 'input', 'clear', 'focus', 'blur']
+      const _methods = ['change', 'select', 'input', 'clear', 'focus', 'blur', 'click']
       Object.keys(formOptions).forEach((m) => {
         if (_methods.includes(m)) {
-          Object.assign(_props, { [m]: formOptions[m] })
+          Object.assign(_event, { [m]: formOptions[m] })
+        } else {
+          switch (m) {
+            case 'field':
+            case 'width':
+            case 'size':
+            case 'options':
+            case 'type':
+            case 'name':
+            case 'model':
+            case 'text':
+              break
+            default:
+              Object.assign(_props, { [m]: formOptions[m] })
+              break
+          }
         }
       })
-      return _props
+      return {
+        attrs: _props,
+        on: _event
+      }
     }
   },
   render() {
-    const { model, rules, labelWidth, labelPosition, formList } = this
+    const { model, rules, labelWidth, labelPosition, formList, formConfig } = this
     return (
       <el-form
-        props={{ model, rules }}
+        props={{ ...formConfig, model, rules }}
         ref="ruleForm"
         class="form"
         label-position={labelPosition}

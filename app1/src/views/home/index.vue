@@ -123,7 +123,26 @@ export default {
           name: '系统模块',
           field: 'a1',
           model: '',
-          input(val) {}
+          input(val) {
+            console.log(val)
+          }
+        },
+        {
+          name: '系统模块',
+          field: 'check',
+          model: [1],
+          type: 'checkboxs',
+          change: (val) => {
+            console.log(val)
+          },
+          options: [
+            {
+              label: 1
+            },
+            {
+              label: 2
+            }
+          ]
         },
         {
           name: '系统模块系统模块',
@@ -148,8 +167,20 @@ export default {
           type: 'switch'
         },
         {
-          name: '系统模块3',
-          field: 'a4'
+          name: '系统模块',
+          field: 'a4',
+          model: '',
+          type: 'radios',
+          options: [
+            {
+              label: 1,
+              text: 'radio1'
+            },
+            {
+              label: 2,
+              text: 'radio2'
+            }
+          ]
         },
         {
           name: '系统模块4',
@@ -262,7 +293,7 @@ export default {
           date: '2016-05-04',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1517 弄'
-        },
+        }
       ]
     }
   },
