@@ -87,7 +87,7 @@ export default {
     }
   },
   methods: {
-    // 初始化表单字段
+    // 初始化表单
     initForm() {
       const { formList, value } = this
       Array.isArray(formList) &&
