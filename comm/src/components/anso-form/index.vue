@@ -68,7 +68,15 @@ export default {
   },
   mounted() {
     this.initForm()
-    DataBus.on('reset', res => res && this.initForm())
+    DataBus.on('reset', (res) => res && this.initForm())
+  },
+  watch: {
+    formList: {
+      handler() {
+        this.initForm()
+      },
+      deep: true
+    }
   },
   methods: {
     // 初始化表单字段
@@ -184,7 +192,7 @@ export default {
               disabled={r.disabled}
               placeholder={r.placeholder}
               maxlength={r.maxlength}
-              type={r.type ? r.type: 'text'}
+              type={r.type ? r.type : 'text'}
               clearable={r.clearable}
               prefix-icon={r.prefixIcon}
               suffix-icon={r.suffixIcon}

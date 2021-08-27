@@ -70,22 +70,34 @@ export default {
     // 取消
     handleCancle() {
       this.dialogVisible = false
-      if (!this.$slots.default[0].componentInstance.$refs.ruleForm) return
-      const { $refs } = this.$slots.default[0].componentInstance
-      $refs.ruleForm.resetFields()
+      const _instance = this.getInstance()
+      if (!_instance) return
+      const { ruleForm } = _instance
+      ruleForm.resetFields()
       this.$emit('cancle')
     },
+    // 打开重置列表
     handleOpen() {
       DataBus.emit('reset', true)
       this.$emit('open')
     },
-    // 确定
-    handleSubmit() {
+    // 获取实例
+    getInstance() {
       if (!this.$slots.default[0].componentInstance.$refs.ruleForm) return
       const { $refs, value } = this.$slots.default[0].componentInstance
-      $refs.ruleForm.validate((valid) => {
+      return {
+        ruleForm: $refs.ruleForm,
+        form: value
+      }
+    },
+    // 确定
+    handleSubmit() {
+      const _instance = this.getInstance()
+      if (!_instance) return
+      const { ruleForm, form } = _instance
+      ruleForm.validate((valid) => {
         if (valid) {
-          this.$emit('submit', value)
+          this.$emit('submit', form)
           this.dialogVisible = false
         } else {
           console.log('error submit!!')
