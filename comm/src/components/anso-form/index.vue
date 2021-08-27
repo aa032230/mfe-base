@@ -85,7 +85,7 @@ export default {
     createFormItem(formList) {
       return formList.map((f) => {
         return (
-          <el-form-item label={`${f.name}:`} prop={f.field} key={f.field}>
+          <el-form-item label={f.name ? `${f.name}:` : ''} prop={f.field} key={f.field}>
             {this.checkTypeToFormElement(f)}
           </el-form-item>
         )

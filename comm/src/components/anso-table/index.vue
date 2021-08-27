@@ -141,7 +141,6 @@ export default {
         return Number(this.pageSize)
       },
       set(size) {
-        console.log(size)
         this.$emit('update:pageSize', size)
       }
     }

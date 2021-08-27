@@ -236,12 +236,12 @@ export default {
         },
         {
           prop: 'title',
-          label: '地址1'
+          label: '地址1',
+          custom: true
         },
         {
           prop: 'head',
-          label: '地址2',
-          checked: true
+          label: '地址2'
         },
         {
           prop: 'hh3',
@@ -265,9 +265,6 @@ export default {
         },
       ]
     }
-  },
-  beforeMount () {
-    console.log(this.$scopedSlots.custom)
   },
   methods: {
     getList() {

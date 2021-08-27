@@ -106,9 +106,9 @@ export default {
       }
     }
   },
-  mounted() {
-    // console.log(this.$scopedSlots.custom())
-  },
+  // mounted() {
+  //   console.log(this.$scopedSlots)
+  // },
   methods: {
     // 修改表格行高
     setSpace(h) {

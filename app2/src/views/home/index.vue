@@ -1,15 +1,13 @@
 <template>
   <div class="home">
-    <Test />
-    111111111111111111111
+
   </div>
 </template>
 
 <script>
-import { Test } from '@/components'
 export default {
   name: 'Home',
-  components: { Test },
+  components: {  },
   created() {
     // console.log(this['__CONTEXT__']);
   }
