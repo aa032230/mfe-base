@@ -34,7 +34,8 @@ import {
   Dialog,
   Popconfirm,
   RadioGroup,
-  Radio
+  Radio,
+  Image
 } from 'element-ui'
 export default {
   components: [
@@ -71,7 +72,8 @@ export default {
     Dialog,
     Popconfirm,
     RadioGroup,
-    Radio
+    Radio,
+    Image
   ],
   install(Vue) {
     Vue.prototype.$alert = MessageBox.alert

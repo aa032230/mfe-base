@@ -103,7 +103,7 @@ export default {
     createFormItem(formList) {
       return formList.map((f) => {
         return (
-          <el-form-item label={f.name ? `${f.name}:` : ''} prop={f.field} key={f.field}>
+          <el-form-item props={{ label: f.name, prop: f.field, ...this.itemConfig }} key={f.field}>
             {this.checkTypeToFormElement(f)}
           </el-form-item>
         )
@@ -214,11 +214,9 @@ export default {
     const { model, rules, labelWidth, labelPosition, formList, formConfig } = this
     return (
       <el-form
-        props={{ ...formConfig, model, rules }}
+        props={{ model, rules, labelPosition, labelWidth, inline: true, ...formConfig }}
         ref="ruleForm"
         class="form"
-        label-position={labelPosition}
-        label-width={labelWidth}
       >
         {this.createFormItem(formList)}
       </el-form>
