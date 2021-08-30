@@ -132,7 +132,7 @@ export default {
           name: '系统模块11',
           field: 'a13',
           model: '',
-          input(val) {
+          enter(val){
             console.log(val)
           }
         },

@@ -69,7 +69,7 @@ export default {
       default: () => ({})
     },
     itemRow: {
-      type:Number,
+      type: Number,
       default: 1
     }
   },
@@ -107,7 +107,7 @@ export default {
     createFormItem(formList) {
       return formList.map((f) => {
         return (
-          <el-col span={(24 / this.itemRow )}>
+          <el-col span={24 / this.itemRow}>
             <el-form-item props={{ label: f.name, prop: f.field, ...this.itemConfig }} key={f.field}>
               {this.checkTypeToFormElement(f)}
             </el-form-item>
@@ -172,6 +172,9 @@ export default {
               })}
             </el-checkbox-group>
           )
+        // 自定义
+        case 'custom':
+          return r.custom(r)
         default:
           return (
             <el-input
@@ -188,13 +191,24 @@ export default {
     createFormAttrs(formOptions) {
       const _props = {}
       const _event = {}
+      const _native = {}
       // todo: 没加上的方法自己加入数组
       const _methods = ['change', 'select', 'input', 'clear', 'focus', 'blur', 'click']
       Object.keys(formOptions).forEach((m) => {
         if (_methods.includes(m)) {
           Object.assign(_event, { [m]: formOptions[m] })
         } else {
+          // 键盘事件处理
           switch (m) {
+            case 'keyup':
+              Object.assign(_native, {[m]: formOptions[m]})
+              break
+            case 'enter': 
+            Object.assign(_native, {'keyup': (e) => {
+              if(e.keyCode !== 13) return
+              return formOptions[m](e.target.value)
+            }})
+            break
             case 'field':
             case 'width':
             case 'size':
@@ -212,7 +226,8 @@ export default {
       })
       return {
         attrs: _props,
-        on: _event
+        on: _event,
+        nativeOn: _native
       }
     }
   },
