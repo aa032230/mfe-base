@@ -1,26 +1,51 @@
-.tree-aside {
-  box-sizing: border-box;
+.anso-tree {
   height: 100%;
-  padding: 10px;
-  border-radius: 5px;
   background-color: #fff;
-  .tree-search {
+  padding: 16px 10px;
+  box-sizing: border-box;
+
+  &-search {
+    padding-top: 8px;
     display: flex;
-    justify-content: center;
-    .inline-input {
-      width: 90%;
+    .plus{
+      margin-left: 8px;
+      padding: 7px !important;
+    }    
+  }
+  .tree{
+    height: calc(100% - 101px);
+    overflow-y: auto;
+  }
+  &-title{
+    padding: 16px;
+  }
+  .custom-tree-node {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 10px;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-size: 14px;
+    color: #8c8c8c;
+
+    &-tool {
+      color: #4981f4;
+
+      em.el-icon-delete {
+        margin-left: 5px;
+      }
+    }
+
+    &:target {
+      color: #4981f4;
     }
   }
-  .tree-wrap {
-    margin: 10px 0;
-    padding: 5px;
-    height: calc(100% - 62px);
-  }
-  .tree-node {
-    height: 100%;
-  }
 }
-/deep/ .el-card__body {
-  padding: 0;
-  height: 100%;
+/deep/ .el-input__inner{
+  height: 28px;
+}
+
+/deep/.el-tree-node.is-current>.el-tree-node__content>.custom-tree-node {
+  color: #4981f4 !important;
 }

@@ -1,153 +1,146 @@
 <script>
-// todo: 如需添加功能,请参考文档 https://github.com/tower1229/Vue-Giant-Tree
-import tree from 'vue-giant-tree'
 import { cloneDeep } from 'lodash'
-import { flatArr } from '../../utils'
-function showRemoveBtn(treeId, treeNode) {
-  return !treeNode.isFirstNode
-}
-function showRenameBtn(treeId, treeNode) {
-  return !treeNode.isLastNode
-}
+import { flatten } from '../../utils'
 export default {
-  components: {
-    tree
-  },
+  name: 'anso-tree',
   props: {
-    treeData: {
-      require: true,
-      type: Array
-    },
-    width: {
-      type: String,
-      default: '300'
-    },
-    placeholder: {
-      type: String,
-      default: '仪表编号'
+    treeEvent: {
+      type: Object,
+      default() {
+        return {}
+      }
     },
     treeConfig: {
       type: Object,
-      default: () => {
-        return {
-          // check: {
-          //   chkStyle: "radio",
-          //   enable: true
-          // },
-          data: {
-            simpleData: {
-              enable: true,
-              pIdKey: 'pid'
-            }
-          },
-          edit: {
-            enable: true,
-            showRemoveBtn: true,
-            showRenameBtn: showRenameBtn,
-            drag: {
-              isCopy: false, //所有操作都是move
-              isMove: true,
-              prev: true,
-              next: true,
-              inner: true
-            }
-          }
-        }
+      default() {
+        return {}
       }
+    },
+    treeWidth: {
+      type: String,
+      default: ''
+    },
+    placeholder: {
+      type: String,
+      default: '请输入内容'
     }
   },
   data() {
     return {
-      treeValue: ''
+      treeValue: '',
+      treeNodes: []
     }
   },
   methods: {
-    // 单击
-    onClick(evt, treeId, treeNode) {
-      this.$emit('treeClick', treeNode)
-    },
-
-    // 多选
-    onCheck() {
-      const checkNodes = this.ztreeObj.getCheckedNodes()
-      this.$emit('treeCheck', checkNodes)
-    },
-
-    // 初始化tree
-    handleCreated(ztreeObj) {
-      this.ztreeObj = ztreeObj
-      // 获取ztree对象
-      this.$emit('handleCreated', ztreeObj)
-    },
-
     // 返回建议数据
     querySearch(queryString, cb) {
-      const tree = cloneDeep(this.treeData)
-      console.log(tree)
-      const restaurants = flatArr(tree, 'children')
+      const tree = cloneDeep(this.treeConfig.data)
+      const restaurants = flatten(tree)
       const results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
       cb(results)
     },
-
     // 过滤
     createFilter(queryString) {
-      return restaurant => {
-        return restaurant.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+      console.log(queryString)
+      return (restaurant) => {
+        return restaurant.menuName.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
 
     // 搜索
     handleSelect(node) {
-      const nodes = this.ztreeObj.getNodesByParamFuzzy('name', node.name, null)
-      this.ztreeObj.expandNode(nodes[0], true, true, true)
-      this.ztreeObj.selectNode(nodes[0])
+      this.$refs.tree.setCurrentKey(node.id)
+      this.treeNodes.push(node.id)
       this.$emit('select', node)
+    },
+    // 编辑
+    handleEdit(data) {
+      this.$emit('update', data)
+    },
+
+    // 删除
+    remove(node, data) {
+      this.$emit('remove', data)
+    },
+    // 树结构重绘
+    renderContent({ node, data, store }) {
+      return (
+        <div
+          class="custom-tree-node"
+          onMouseenter={() => this.$set(data, 'isShow', true)}
+          onMouseleave={() => this.$set(data, 'isShow', false)}
+        >
+          <span class="custom-tree-node-label">{data.menuName}</span>
+          <span class="custom-tree-node-tool" style={{ display: data.isShow ? 'block' : 'none' }}>
+            <em
+              class="el-icon-edit-outline"
+              on-click={(e) => {
+                e.stopPropagation()
+                this.handleEdit(data)
+              }}
+            ></em>
+            <em
+              class="el-icon-delete"
+              on-click={(e) => {
+                e.stopPropagation()
+                this.remove(node, data)
+              }}
+            ></em>
+          </span>
+        </div>
+      )
+    },
+    // 校验是否同级拖拽
+    allowDrop(draggingNode, dropNode, type) {
+      if (draggingNode.level === dropNode.level) {
+        if (draggingNode.parent.id === dropNode.parent.id) {
+          return type === 'prev' || type === 'next'
+        }
+      } else {
+        return false
+      }
     }
   },
-  // 渲染
   render() {
-    const searchAttribute = {
-      props: {
-        placeholder: this.placeholder,
-        value: this.treeValue,
-        clearable: true,
-        size: 'small',
-        valueKey: 'name',
-        prefixIcon: 'el-icon-search'
-      },
-      on: {
-        select: this.handleSelect,
-        input: value => {
-          this.treeValue = value
-        }
-      }
-    }
-    const treeAttribute = {
-      props: {
-        nodes: this.treeData,
-        setting: this.treeConfig
-      },
-      on: {
-        onClick: this.onClick,
-        onCheck: this.onCheck,
-        onCreated: this.handleCreated
-      }
-    }
+    const { treeConfig, treeWidth, allowDrop, treeEvent, placeholder, treeNodes } = this
     return (
-      <div class="tree-aside" style={{ width: this.width + 'px' }}>
-        <div class="tree-search">
+      <div style={{ width: treeWidth }} class="anso-tree">
+        {/* 搜索 */}
+        <div class="anso-tree-search">
           <el-autocomplete
             class="inline-input"
-            fetch-suggestions={(q, cb) => this.querySearch(q, cb)}
-            {...searchAttribute}
+            onSelect={this.handleSelect.bind(this)}
+            fetch-suggestions={this.querySearch.bind(this)}
+            prefixIcon="el-icon-search"
+            size="small"
+            placeholder={placeholder}
+            v-model={this.treeValue}
+            clearable
+            value-key="menuName"
           ></el-autocomplete>
+          <el-button
+            class="plus"
+            size="mini"
+            icon="el-icon-plus"
+            nativeOnClick={this.$emit.bind(this, 'add')}
+          ></el-button>
         </div>
-        <div class="tree-wrap">
-          <el-scrollbar class="tree-node" wrapStyle={[{ 'overflow-x': 'hidden' }]}>
-            <tree {...treeAttribute} />
-          </el-scrollbar>
-        </div>
+        <div class="anso-tree-title">{treeConfig.title}</div>
+        {/* tree */}
+        <el-tree
+          ref="tree"
+          highlight-current
+          class="tree"
+          attrs={{
+            'node-key': 'id',
+            ...treeConfig,
+            'allow-drop': (...args) => allowDrop(...args),
+            'render-content': (h, options) => this.renderContent(options),
+            'default-expanded-keys': treeNodes
+          }}
+          on={treeEvent}
+        ></el-tree>
       </div>
     )
   }

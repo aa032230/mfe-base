@@ -107,14 +107,14 @@ export function downloadFile(file) {
 }
 
 /**
- * 实现多维数组对象的扁平化
+ * 实现多维数组对象的扁平化 
  * @param {Array} [obj], 期望转换的数组对象
  * @param {String} key, 关键字
  */
-export function flatArr([obj], key) {
+export function flatArr(obj, key) {
   let temp = obj[key]
   let result = [obj]
-
+  console.log(result)
   if (temp && temp.constructor === Array) {
     // 1.将子级 push 到父级（造成二维数组 [obj, [children]]）
     // 2.递归子级的扁平化（清理子级中的第三维）
@@ -122,6 +122,18 @@ export function flatArr([obj], key) {
   }
   // 清理输出内容中的二维
   return result.flat()
+}
+
+// 多维数组扁平化 
+export function flatten(arr) {
+  var res = []
+  arr.map((item) => {
+    if (item.children && Array.isArray(item.children)) {
+      res = res.concat(flatten(item.children))
+    }
+    res.push(item)
+  })
+  return res
 }
 
 /**

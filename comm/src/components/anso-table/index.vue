@@ -280,13 +280,15 @@ export default {
           {/* <slot></slot> */}
           {this.$slots.default}
           {/* 操作列 */}
-          <el-table-column
+          {
+            operates.length ? <el-table-column
+            width={this.operatesWidth}
             label="操作"
-            align="center"
             scopedSlots={{
-              default: (scope) => createOperates({ scope, operates })
+              default: scope => createOperates({ scope, operates })
             }}
-          />
+          /> : ''
+          }
           <el-empty slot="empty" description="暂无数据~~~"></el-empty>
         </el-table>
         {total ? (

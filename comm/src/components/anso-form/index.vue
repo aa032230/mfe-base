@@ -235,7 +235,7 @@ export default {
     const { model, rules, labelWidth, labelPosition, formList, formConfig } = this
     return (
       <el-form
-        props={{ model, rules, labelPosition, labelWidth, inline: true, ...formConfig }}
+        props={{ model, rules, labelPosition, labelWidth, ...formConfig }}
         ref="ruleForm"
         class="form"
       >

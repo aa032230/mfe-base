@@ -178,7 +178,7 @@ export default {
         {
           name: '系统模块',
           field: 'a4',
-          model: '',
+          model: 1,
           type: 'radios',
           options: [
             {

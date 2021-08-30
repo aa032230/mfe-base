@@ -1,84 +1,136 @@
 <template>
   <div class="home">
-    <v-tree :treeConfig="treeConfig" :treeData="data" :tree-config="defaultProps" tree-width="250px" />
+    <anso-tree
+      @add="handleAdd"
+      @update="handleUpdate"
+      @remove="handleRemove"
+      :treeConfig="treeConfig"
+      tree-width="230px"
+    />
   </div>
 </template>
 
 <script>
-import { vTree } from 'comm/src/components'
+import { ansoTree } from 'comm/src/components'
 export default {
   name: 'Home',
-  components: { vTree },
+  components: { ansoTree },
   data() {
     return {
-      defaultProps: {
-        children: 'children',
-        label: 'label'
-      },
       treeConfig: {
+        draggable: true,
+        title: '产品分类',
         data: [
           {
-            label: '一级 1',
+            id: 1,
+            menuName: '系统管理',
             children: [
               {
-                label: '二级 1-1',
+                id: 100,
+                menuName: '用户管理',
                 children: [
                   {
-                    label: '三级 1-1-1',
-                    id: 2
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            label: '一级 2',
-            children: [
-              {
-                label: '二级 2-1',
-                children: [
+                    id: 1000,
+                    menuName: '用户查询'
+                  },
                   {
-                    label: '三级 2-1-1'
+                    id: 1001,
+                    menuName: '用户新增'
+                  },
+                  {
+                    id: 1002,
+                    menuName: '用户修改'
+                  },
+                  {
+                    id: 1003,
+                    menuName: '用户删除',
+                    children: [
+                      {
+                        id: 1023,
+                        menuName: '用户aaa'
+                      },
+                      {
+                        id: 1024,
+                        menuName: '用户bbb',
+                        children: [
+                          {
+                            id: 1025,
+                            menuName: '用户bbb用户bbb1用户bbb11'
+                          },
+                          {
+                            id: 1026,
+                            menuName: '用户bbb2'
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               },
               {
-                label: '二级 2-2',
+                id: 101,
+                menuName: '角色管理',
                 children: [
                   {
-                    label: '三级 2-2-1'
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            label: '一级 3',
-            children: [
-              {
-                label: '二级 3-1',
-                children: [
+                    id: 1006,
+                    menuName: '角色查询'
+                  },
                   {
-                    label: '三级 3-1-1'
-                  }
-                ]
-              },
-              {
-                label: '二级 3-2',
-                children: [
+                    id: 1007,
+                    menuName: '角色新增'
+                  },
                   {
-                    label: '三级 3-2-1'
+                    id: 1008,
+                    menuName: '角色修改'
+                  },
+                  {
+                    id: 1011,
+                    menuName: '删除角色'
+                  },
+                  {
+                    id: 1012,
+                    menuName: '角色查询'
+                  },
+                  {
+                    id: 1013,
+                    menuName: '角色新增'
+                  },
+                  {
+                    id: 1014,
+                    menuName: '角色修改'
+                  },
+                  {
+                    id: 1015,
+                    menuName: '删除角色'
                   }
                 ]
               }
             ]
           }
-        ]
+        ],
+        defaultProps: {
+          children: 'children',
+          label: 'menuName'
+        }
       }
     }
   },
   created() {
     // console.log(this['__CONTEXT__']);
+  },
+  methods: {
+    // 新增
+    handleAdd() {
+      console.log(1213)
+    },
+    // 编辑
+    handleUpdate(node) {
+      console.log(node)
+    },
+    // 删除
+    handleRemove(node) {
+      console.log(node)
+    }
   }
 }
 </script>

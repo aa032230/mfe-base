@@ -1,0 +1,26 @@
+.tree-aside {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #fff;
+  .tree-search {
+    display: flex;
+    justify-content: center;
+    .inline-input {
+      width: 90%;
+    }
+  }
+  .tree-wrap {
+    margin: 10px 0;
+    padding: 5px;
+    height: calc(100% - 62px);
+  }
+  .tree-node {
+    height: 100%;
+  }
+}
+/deep/ .el-card__body {
+  padding: 0;
+  height: 100%;
+}
