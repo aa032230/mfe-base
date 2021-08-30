@@ -29,6 +29,7 @@
           :rules="rules"
           v-model="ruleForm"
           :form-list="formList"
+          :item-row="2"
         ></anso-form>
       </anso-modal>
       <template v-slot:custom="scoped">
@@ -122,7 +123,6 @@ export default {
         {
           name: '系统模块',
           field: 'a1',
-          width: '100%',
           model: '',
           input(val) {
             console.log(val)
@@ -131,7 +131,6 @@ export default {
         {
           name: '系统模块11',
           field: 'a13',
-          width: '100%',
           model: '',
           input(val) {
             console.log(val)
@@ -199,7 +198,6 @@ export default {
         {
           name: '系统模块2',
           field: 'a6',
-          width: 220,
           type: 'switch'
         },
         {
@@ -213,7 +211,6 @@ export default {
         {
           name: '系统模块系统模块',
           field: 'a9',
-          width: '80%',
           type: 'select',
           options: [
             {

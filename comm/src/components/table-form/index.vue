@@ -104,7 +104,6 @@ export default {
       formList,
       form,
       isOpen,
-      socureElHeight,
       handleReset,
       handleQuery,
       handleOpen,
@@ -112,11 +111,12 @@ export default {
       labelWidth,
       labelPosition,
       formConfig,
-      itemConfig
+      itemConfig,
+      itemRow
     } = this
     return (
       // <div class="form-view-box" style={{ height: socureElHeight + 'px' }}>
-      <div class="form-view-box" style={{ height: isOpen ? 'auto' : '52px', transition: 'height 0.3s' }}>
+      <div class="form-view-box" style={{ height: isOpen ? 'auto' : '44px', transition: 'height 0.3s' }}>
         <section class="form-view" ref="formGroup">
           <anso-form
             class={['v-form', { isopen: isOpen }]}
@@ -125,10 +125,10 @@ export default {
           />
         </section>
         <div class="from-view-button-group">
-          <el-button size="small" onClick={handleReset}>
+          <el-button size="mini" onClick={handleReset}>
             重置
           </el-button>
-          <el-button size="small" type="primary" onClick={handleQuery}>
+          <el-button size="mini" type="primary" onClick={handleQuery}>
             查询
           </el-button>
           {elHeight > 52 && (

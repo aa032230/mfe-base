@@ -14,7 +14,7 @@ export default {
         <div class="table-head-btns">
           {Array.isArray(buttons) && buttons.map(btn => {
             return (
-              <el-button size={btn.size ? btn.size : 'small'} type={btn.type} onClick={btn.methods}>
+              <el-button size={btn.size ? btn.size : 'mini'} type={btn.type} onClick={btn.methods}>
                 {btn.name}
               </el-button>
             )

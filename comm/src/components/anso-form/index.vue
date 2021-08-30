@@ -67,6 +67,10 @@ export default {
     itemConfig: {
       type: Object,
       default: () => ({})
+    },
+    itemRow: {
+      type:Number,
+      default: 1
     }
   },
   data() {
@@ -103,9 +107,11 @@ export default {
     createFormItem(formList) {
       return formList.map((f) => {
         return (
-          <el-form-item props={{ label: f.name, prop: f.field, ...this.itemConfig }} key={f.field}>
-            {this.checkTypeToFormElement(f)}
-          </el-form-item>
+          <el-col span={(24 / this.itemRow )}>
+            <el-form-item props={{ label: f.name, prop: f.field, ...this.itemConfig }} key={f.field}>
+              {this.checkTypeToFormElement(f)}
+            </el-form-item>
+          </el-col>
         )
       })
     },
@@ -116,7 +122,7 @@ export default {
         case 'select':
           return (
             <el-select
-              style={{ width: r.width ? r.width : '150px' }}
+              style={{ width: r.width }}
               v-model={form[r.field]}
               size={r.size ? r.size : 'small'}
               {...this.createFormAttrs(r)}
@@ -133,7 +139,7 @@ export default {
             <el-cascader
               v-model={form[r.field]}
               size={r.size ? r.size : 'small'}
-              style={{ width: r.width ? r.width : '150px' }}
+              style={{ width: r.width }}
               {...this.createFormAttrs(r)}
             ></el-cascader>
           )
@@ -143,7 +149,7 @@ export default {
               v-model={form[r.field]}
               type={r.type}
               size={r.size ? r.size : 'small'}
-              style={{ width: r.width ? r.width : '150px' }}
+              style={{ width: r.width }}
               {...this.createFormAttrs(r)}
             ></el-date-picker>
           )
@@ -170,7 +176,7 @@ export default {
           return (
             <el-input
               size={r.size ? r.size : 'small'}
-              style={{ width: r.width ? r.width : '150px' }}
+              style={{ width: r.width }}
               v-model={form[r.field]}
               type={r.type ? r.type : 'text'}
               {...this.createFormAttrs(r)}
@@ -218,7 +224,9 @@ export default {
         ref="ruleForm"
         class="form"
       >
-        {this.createFormItem(formList)}
+        <el-row type="flex" class="form-row" gutter={15}>
+          {this.createFormItem(formList)}
+        </el-row>
       </el-form>
     )
   }

@@ -122,16 +122,15 @@ export default {
             switch (item.name) {
               case 'cancel':
                 return (
-                  <el-button size={item.size ? item.size : 'samll'} type={item.type} nativeOnClick={this.handleCancle}>
+                  <el-button size={item.size ? item.size : 'mini'} type={item.type} nativeOnClick={this.handleCancle}>
                     {item.text}
                   </el-button>
                 )
               case 'confirm':
                 return (
                   <el-button
-                    size="small"
                     type={item.type}
-                    size={item.size ? item.size : 'samll'}
+                    size={item.size ? item.size : 'mini'}
                     onClick={this.handleSubmit}
                   >
                     {item.text}
@@ -140,7 +139,7 @@ export default {
               default:
                 return (
                   <el-button
-                    size={item.size ? item.size : 'samll'}
+                    size={item.size ? item.size : 'mini'}
                     type={item.type}
                     nativeOnClick={(e) => {
                       e.preventDefault()

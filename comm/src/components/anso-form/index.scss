@@ -1,7 +1,11 @@
 .form {
   width: 100%;
   height: 100%;
-
+  &-row{
+    width: 100%;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+  }
   /deep/.el-form-item__label {
     line-height: 0 !important;
     color: #8c8c8c;
@@ -19,6 +23,10 @@
 
   /deep/.el-form-item {
     margin-bottom: 20px;
+    width: 100%;
+  }
+  /deep/.el-select{
+    width: 100%;
   }
 
 }
