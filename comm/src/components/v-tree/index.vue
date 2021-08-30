@@ -2,10 +2,10 @@
 export default {
   name: 'v-tree',
   props: {
-    treeData: {
-      type: Array,
+    treeEvent: {
+      type: Object,
       default() {
-        return []
+        return {}
       }
     },
     treeConfig: {
@@ -20,22 +20,20 @@ export default {
     }
   },
   methods: {
-    handleClick(node) {},
-    append(data) {
-      const newChild = { id: 3, label: 'testtest', children: [] }
-      if (!data.children) {
-        console.log(data)
-        this.$set(data, 'children', [])
-      }
-      data.children.push(newChild)
+    handleNodeClick(node) {
+      this.$emit('nodeClick', node)
     },
 
-    remove(node, data) {
-      const parent = node.parent
-      const children = parent.data.children || parent.data
-      const index = children.findIndex((d) => d.id === data.id)
-      children.splice(index, 1)
+    // 编辑
+    handleEdit(data) {
+      this.$emit('update', data)
     },
+
+    // 删除
+    remove(node, data) {
+      this.$emit('remove', data)
+    },
+    // 树结构重绘
     renderContent({ node, data, store }) {
       return (
         <div
@@ -43,29 +41,60 @@ export default {
           onMouseenter={() => this.$set(data, 'isShow', true)}
           onMouseleave={() => this.$set(data, 'isShow', false)}
         >
-          <span class='custom-tree-node-label'>{node.label}</span>
-          <span style={{ display: data.isShow ? 'block' : 'none' }}>
-            <el-button size="mini" type="text" on-click={() => this.append(data)}>
-              Append
-            </el-button>
-            <el-button size="mini" type="text" on-click={() => this.remove(node, data)}>
-              Delete
-            </el-button>
+          <span class="custom-tree-node-label">{node.label}</span>
+          <span class="custom-tree-node-tool" style={{ display: data.isShow ? 'block' : 'none' }}>
+            <em
+              class="el-icon-edit-outline"
+              on-click={(e) => {
+                e.stopPropagation()
+                this.handleEdit(data)
+              }}
+            ></em>
+            <em
+              class="el-icon-delete"
+              on-click={(e) => {
+                e.stopPropagation()
+                this.remove(node, data)
+              }}
+            ></em>
           </span>
         </div>
       )
+    },
+    // 校验是否同级拖拽
+    allowDrop(draggingNode, dropNode, type) {
+      if (draggingNode.level === dropNode.level) {
+        if (draggingNode.parent.id === dropNode.parent.id) {
+          return type === 'prev' || type === 'next'
+        }
+      } else {
+        return false
+      }
+    },
+    handleCheck(...args) {
+      this.$emit('nodeChange', ...args )
+    },
+    handleNodeDrop(...args) {
+      this.$emit('nodeDropEnd', ...args)
     }
   },
   render() {
-    const { treeData, treeConfig, treeWidth } = this
-
+    const { treeConfig, treeWidth, allowDrop, treeEvent } = this
     return (
       <div style={{ width: treeWidth }} class="v-tree">
         <el-tree
-          data={treeData}
-          props={treeConfig}
-          on-node-click={this.handleClick}
-          render-content={(h, options) => this.renderContent(options)}
+          ref="tree"
+          attrs={{
+            'allow-drop': (...args) => allowDrop(...args),
+            'render-content': (h, options) => this.renderContent(options),
+            ...treeConfig
+          }}
+          on={{
+            'node-drop': (...args) => this.handleNodeDrop(...args),
+            'node-click': (...args) => this.handleNodeClick(...args),
+            'check-change': (...args) => this.handleCheck(...args),
+            ...treeEvent
+          }}
         ></el-tree>
       </div>
     )

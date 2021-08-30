@@ -111,7 +111,7 @@ export default {
           case 'refresh':
             return (
               <em
-                class="iconfont icon-refresh"
+                class="el-icon-refresh"
                 title="刷新"
                 onClick={() => {
                   window.location.reload()
@@ -119,9 +119,9 @@ export default {
               ></em>
             )
           case 'print':
-            return <em class="iconfont icon-copy" title="打印" onClick={handlePrint}></em>
+            return <em class="el-icon-document-copy" title="打印" onClick={handlePrint}></em>
           case 'export':
-            return <em class="iconfont icon-download" title="下载" onClick={handleExprot}></em>
+            return <em class="el-icon-bottom" title="下载" onClick={handleExprot}></em>
           case 'space':
             return (
               <el-popover
@@ -140,7 +140,7 @@ export default {
                     )
                   })}
                 </ul>
-                <em class="iconfont icon-sort2" slot="reference" title="间距调整"></em>
+                <em class="el-icon-rank" slot="reference" title="间距调整"></em>
               </el-popover>
             )
           case 'setting':
@@ -159,7 +159,7 @@ export default {
                     )
                   })}
                 </el-checkbox-group>
-                <em class="iconfont icon-set-up1" slot="reference" title="筛选"></em>
+                <em class="el-icon-setting" slot="reference" title="筛选"></em>
               </el-popover>
             )
           default:
