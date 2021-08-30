@@ -121,11 +121,7 @@ export default {
           case 'print':
             return <em class="el-icon-document-copy" title="打印" onClick={handlePrint}></em>
           case 'export':
-<<<<<<< HEAD
-            return <em class="el-icon-bottom" title="下载" onClick={handleExprot}></em>
-=======
             return <em class="el-icon-download" title="下载" onClick={handleExprot}></em>
->>>>>>> c9cbe36e0258972f0db93d07b3ef04ca0b24dc05
           case 'space':
             return (
               <el-popover
