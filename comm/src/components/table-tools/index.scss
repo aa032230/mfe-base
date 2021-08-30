@@ -1,30 +1,51 @@
-.table-tools{
+.table-tools {
   padding: 10px;
   height: 23px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  em{
+
+  em {
     font-size: 20px;
     color: #666;
     padding: 0 5px;
     cursor: pointer;
   }
-  &-item{
-    &-ul{
+
+  &-item {
+    &-ul {
       padding: 0;
-      li{
+
+      li {
         text-align: center;
         padding: 2px 0;
         cursor: pointer;
-        &:hover{
+
+        &:hover {
           background-color: #f6f6f6;
         }
       }
-      .is-active{
+
+      .is-active {
         color: #1890ff;
       }
     }
 
   }
+}
+
+::v-deep.el-checkbox-group {
+  width: 180px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+::v-deep.el-checkbox {
+  margin: 0;
+  width: 80px;
+}
+
+::v-deep.el-checkbox:nth-of-type(odd) {
+  margin-right: 20px;
 }

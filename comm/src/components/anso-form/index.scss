@@ -1,19 +1,24 @@
 .form {
   width: 100%;
   height: 100%;
+
   /deep/.el-form-item__label {
     line-height: 0 !important;
     color: #8c8c8c;
   }
+
   /deep/.el-form-item__content {
     margin-left: 0 !important;
     line-height: 32px !important;
   }
+
   /deep/ .el-input--small .el-input__inner {
     height: 28px;
     line-height: 28px;
   }
+
   /deep/.el-form-item {
     margin-bottom: 20px;
   }
+
 }

@@ -32,7 +32,10 @@ import {
   CheckboxGroup,
   Pagination,
   Dialog,
-  Popconfirm
+  Popconfirm,
+  RadioGroup,
+  Radio,
+  Image
 } from 'element-ui'
 export default {
   components: [
@@ -42,7 +45,6 @@ export default {
     Breadcrumb,
     BreadcrumbItem,
     Backtop,
-    Checkbox,
     Dropdown,
     DropdownMenu,
     DropdownItem,
@@ -68,7 +70,10 @@ export default {
     Checkbox,
     Pagination,
     Dialog,
-    Popconfirm
+    Popconfirm,
+    RadioGroup,
+    Radio,
+    Image
   ],
   install(Vue) {
     Vue.prototype.$alert = MessageBox.alert

@@ -73,6 +73,31 @@ export default {
       default() {
         return {}
       }
+    },
+    // 表单项
+    formConfig: {
+      type: Object,
+      default: () => ({})
+    },
+    itemConfig: {
+      type: Object,
+      default: () => ({})
+    },
+    labelWidth: {
+      type: String,
+      default: ''
+    },
+    labelPosition: {
+      type: String,
+      default: 'left'
+    },
+    rules: {
+      type: Object,
+      default: () => ({})
+    },
+    model: {
+      type: Object,
+      default: () => ({})
     }
   },
   components: {
@@ -106,9 +131,6 @@ export default {
       }
     }
   },
-  // mounted() {
-  //   console.log(this.$scopedSlots)
-  // },
   methods: {
     // 修改表格行高
     setSpace(h) {
@@ -132,48 +154,83 @@ export default {
     },
     //页码/页容量选择
     dispatchEvent() {
+      console.log(112)
       this.$emit('pagination')
     }
   },
   render() {
+    const {
+      headerConfig,
+      formList,
+      formConfig,
+      itemConfig,
+      labelWidth,
+      labelPosition,
+      rules,
+      model,
+      handleQuery,
+      handleReset,
+      toolsConfig,
+      setSpace,
+      setCheckedColumns,
+      columns,
+      handleExport,
+      tableData,
+      targetColumns,
+      tableEvent,
+      tableConfig,
+      operates,
+      cellHeight,
+      currentPage,
+      limit,
+      layout,
+      pageSizes,
+      total,
+      dispatchEvent
+    } = this
     return (
       <div class="table-page">
         <div class="table-page-main">
           {/* 表格按钮 */}
-          <table-head headerConfig={this.headerConfig}></table-head>
+          <table-head headerConfig={headerConfig}></table-head>
           {/* 表格表单 */}
           <div class="table-page-main-form">
-            <table-form form-list={this.formList} onQuery={this.handleQuery} onReset={this.handleReset}></table-form>
+            <table-form
+              props={{ formList, formConfig, itemConfig, labelWidth, labelPosition, rules, model }}
+              onQuery={handleQuery}
+              onReset={handleReset}
+            ></table-form>
           </div>
           {/* 表格工具栏 */}
           <table-tools
-            toolsConfig={this.toolsConfig}
-            onSetSpace={this.setSpace}
-            onSetCheckedColumns={this.setCheckedColumns}
-            columns={this.columns}
-            onExport={this.handleExport}
+            props={{ toolsConfig, columns }}
+            onSetSpace={setSpace}
+            onSetCheckedColumns={setCheckedColumns}
+            onExport={handleExport}
             printId="print"
           ></table-tools>
           {/* 表格 */}
           <div class="table-page-main-table">
             <anso-table
               id="print"
-              tableData={this.tableData}
-              columns={this.targetColumns}
-              tableEvent={this.tableEvent}
-              tableConfig={this.tableConfig}
-              operates={this.operates}
-              row-style={{ height: this.cellHeight + 'px' }}
-              pageIndex={this.currentPage}
-              pageSize={this.limit}
+              props={{
+                tableData,
+                columns: targetColumns,
+                tableEvent,
+                tableConfig,
+                operates,
+                'row-style': { height: cellHeight + 'px' },
+                layout,
+                pageSizes,
+                total
+              }}
+              pageIndex={currentPage}
+              pageSize={limit}
               on={{
                 'update:pageIndex': (page) => (this.currentPage = page),
-                'update:pageSize': (size) => (this.limit = size)
+                'update:pageSize': (size) => (this.limit = size),
+                pagination: dispatchEvent
               }}
-              layout={this.layout}
-              page-sizes={this.pageSizes}
-              total={this.total}
-              on-pagination={this.dispatchEvent}
               scopedSlots={{
                 custom: (scope) => this.$scopedSlots.custom(scope)
               }}

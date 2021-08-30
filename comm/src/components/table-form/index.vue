@@ -14,6 +14,10 @@ export default {
       type: Object,
       default: () => ({})
     },
+    model: {
+      type: Object,
+      default: () => ({})
+    },
     labelWidth: {
       type: String,
       default: ''
@@ -21,6 +25,15 @@ export default {
     labelPosition: {
       type: String,
       default: 'left'
+    },
+    // 表单项
+    formConfig: {
+      type: Object,
+      default: () => ({})
+    },
+    itemConfig: {
+      type: Object,
+      default: () => ({})
     }
   },
   data() {
@@ -97,25 +110,25 @@ export default {
       handleOpen,
       elHeight,
       labelWidth,
-      labelPosition
+      labelPosition,
+      formConfig,
+      itemConfig
     } = this
     return (
-      <div class="form-view-box" style={{ height: socureElHeight + 'px' }}>
-        {/**<div class="form-view-box" style={{ height: isOpen ? 'auto' : '52px',  transition: 'height 0.3s'  }}> */}
+      // <div class="form-view-box" style={{ height: socureElHeight + 'px' }}>
+      <div class="form-view-box" style={{ height: isOpen ? 'auto' : '52px', transition: 'height 0.3s' }}>
         <section class="form-view" ref="formGroup">
           <anso-form
-            label-width={labelWidth}
             class={['v-form', { isopen: isOpen }]}
-            formList={formList}
             v-model={form}
-            label-position={labelPosition}
+            props={{ formConfig, itemConfig, labelPosition, formList, labelWidth }}
           />
         </section>
         <div class="from-view-button-group">
           <el-button size="small" onClick={handleReset}>
             重置
           </el-button>
-          <el-button size="small" onClick={handleQuery}>
+          <el-button size="small" type="primary" onClick={handleQuery}>
             查询
           </el-button>
           {elHeight > 52 && (

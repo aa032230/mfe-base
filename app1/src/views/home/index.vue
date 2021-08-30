@@ -122,8 +122,37 @@ export default {
         {
           name: '系统模块',
           field: 'a1',
+          width: '100%',
           model: '',
-          input(val) {}
+          input(val) {
+            console.log(val)
+          }
+        },
+        {
+          name: '系统模块11',
+          field: 'a13',
+          width: '100%',
+          model: '',
+          input(val) {
+            console.log(val)
+          }
+        },
+        {
+          name: '系统模块',
+          field: 'check',
+          model: [1],
+          type: 'checkboxs',
+          change: (val) => {
+            console.log(val)
+          },
+          options: [
+            {
+              label: 1
+            },
+            {
+              label: 2
+            }
+          ]
         },
         {
           name: '系统模块系统模块',
@@ -148,8 +177,20 @@ export default {
           type: 'switch'
         },
         {
-          name: '系统模块3',
-          field: 'a4'
+          name: '系统模块',
+          field: 'a4',
+          model: '',
+          type: 'radios',
+          options: [
+            {
+              label: 1,
+              text: 'radio1'
+            },
+            {
+              label: 2,
+              text: 'radio2'
+            }
+          ]
         },
         {
           name: '系统模块4',
@@ -188,65 +229,47 @@ export default {
       ],
       columns: [
         {
-          prop: 'switch',
+          prop: 'date',
           label: '日期',
-          checked: true,
           sortable: true,
           render(row, prop) {
             return row[prop]
           },
-          'sort-method': () => console.log('sort'),
-          children: [
-            {
-              prop: 'name',
-              label: '姓名',
-              checked: true,
-              children: [
-                {
-                  prop: 'name',
-                  label: '姓名',
-                  checked: true
-                },
-                {
-                  prop: 'address',
-                  label: '地址',
-                  checked: true
-                }
-              ]
-            },
-            {
-              prop: 'address',
-              label: '地址',
-              checked: true
-            }
-          ]
+          'sort-method': () => console.log('sort')
         },
         {
           prop: 'name',
           label: '姓名',
           width: '50px',
-          checked: true,
           'show-overflow-tooltip': true
         },
         {
           prop: 'address',
           label: '地址',
-          checked: true,
           custom: true
         },
         {
           prop: 'title',
           label: '地址1',
-          custom: true
+          render: (scope, prop) => {
+            return (
+              <el-image
+                style="width: 50px;"
+                src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+              ></el-image>
+            )
+          }
         },
         {
           prop: 'head',
-          label: '地址2'
+          label: '地址2',
+          render: (scope, prop) => {
+            return <el-switch v-model={scope[prop]}></el-switch>
+          }
         },
         {
           prop: 'hh3',
-          label: '地址3',
-          checked: true
+          label: '地址3'
         }
       ],
       tableData: [
@@ -262,7 +285,7 @@ export default {
           date: '2016-05-04',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1517 弄'
-        },
+        }
       ]
     }
   },
