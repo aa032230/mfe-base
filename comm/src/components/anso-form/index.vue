@@ -1,35 +1,4 @@
 <script>
-/**
- *  表单组件
- *  <v-form v-model="form" :form-list="formList" rules="rules"></v-form>
- * demo:
- *  [
- *  {
- *    name: '系统模块',
- *    field: 'a1',
- *    input: val => val
- *  },
- *  {
-      name: '系统模块系统模块',
-      field: 'a2',
-      width: 220,
-      type: 'select',
-      change:(val) => console.log(val)
-      options: [
-        {
-          value: 0,
-          label: '小籠包'
-        },
-        {
-          value: 1,
-          label: '叉烧包'
-        }
-      ]
-    },
- *
- * ]
- *
- */
 import { DataBus } from '../../utils/'
 export default {
   name: 'anso-form',

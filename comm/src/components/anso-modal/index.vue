@@ -1,15 +1,5 @@
 <script>
 import { modalDrag } from '../../directives'
-/**
- * demo:
- * <v-modal @cancel="handleCancel" @submit="handleSubmit" @open="handleOpen" @close="handleClose" :visible.sync="visible"  :modalConfig="modalConfig">
-          <v-form :form-list="formList" ></v-form>
-      </v-modal>
- * modalConfig:{ // 对应ele配置参数
-        title: '标题',
-        width: '30%',
-      },
- */
 import { DataBus } from '../../utils/'
 export default {
   name: 'anso-modal',
