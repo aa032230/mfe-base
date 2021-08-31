@@ -28,7 +28,8 @@ export default {
   data() {
     return {
       treeValue: '',
-      treeNodes: []
+      treeNodes: [],
+      isExpand: true
     }
   },
   methods: {
@@ -65,6 +66,7 @@ export default {
     },
     // 树结构重绘
     renderContent({ node, data, store }) {
+      const { treeConfig } = this
       return (
         <div
           class="custom-tree-node"
@@ -73,20 +75,28 @@ export default {
         >
           <span class="custom-tree-node-label">{data.menuName}</span>
           <span class="custom-tree-node-tool" style={{ display: data.isShow ? 'block' : 'none' }}>
-            <em
-              class="el-icon-edit-outline"
-              on-click={(e) => {
-                e.stopPropagation()
-                this.handleEdit(data)
-              }}
-            ></em>
-            <em
-              class="el-icon-delete"
-              on-click={(e) => {
-                e.stopPropagation()
-                this.remove(node, data)
-              }}
-            ></em>
+            {
+              treeConfig.edit ?
+              <em
+                class="el-icon-edit-outline"
+                on-click={(e) => {
+                  e.stopPropagation()
+                  this.handleEdit(data)
+                }}
+              ></em>
+              : ''
+            }
+            {
+              treeConfig.delete ?
+              <em
+                class="el-icon-delete"
+                on-click={(e) => {
+                  e.stopPropagation()
+                  this.remove(node, data)
+                }}
+              ></em>
+              : ''
+            }
           </span>
         </div>
       )
@@ -105,42 +115,58 @@ export default {
   render() {
     const { treeConfig, treeWidth, allowDrop, treeEvent, placeholder, treeNodes } = this
     return (
-      <div style={{ width: treeWidth }} class="anso-tree">
-        {/* 搜索 */}
-        <div class="anso-tree-search">
-          <el-autocomplete
-            class="inline-input"
-            onSelect={this.handleSelect.bind(this)}
-            fetch-suggestions={this.querySearch.bind(this)}
-            prefixIcon="el-icon-search"
-            size="small"
-            placeholder={placeholder}
-            v-model={this.treeValue}
-            clearable
-            value-key="menuName"
-          ></el-autocomplete>
-          <el-button
-            class="plus"
-            size="mini"
-            icon="el-icon-plus"
-            nativeOnClick={this.$emit.bind(this, 'add')}
-          ></el-button>
+      <div class="anso-tree-wrap" style={{ width: this.isExpand ? treeWidth : '15px' }}>
+        <div class="anso-tree" style={{ display: this.isExpand ? 'block' : 'none' }}>
+          {/* 搜索 */}
+          <div class="anso-tree-search">
+            <el-autocomplete
+              class="inline-input"
+              onSelect={this.handleSelect.bind(this)}
+              fetch-suggestions={this.querySearch.bind(this)}
+              prefixIcon="el-icon-search"
+              size="small"
+              placeholder={placeholder}
+              v-model={this.treeValue}
+              clearable
+              value-key="menuName"
+            ></el-autocomplete>
+            <el-button
+              class="plus"
+              size="mini"
+              icon="el-icon-plus"
+              nativeOnClick={this.$emit.bind(this, 'add')}
+            ></el-button>
+          </div>
+          {/* 标题 */}
+          <div class="anso-tree-title">{treeConfig.title}</div>
+          {/* 自定义 */}
+          {this.$slots.default}
+          {/* tree */}
+          <el-tree
+            ref="tree"
+            highlight-current
+            class="tree"
+            attrs={{
+              'node-key': 'id',
+              ...treeConfig,
+              'allow-drop': (...args) => allowDrop(...args),
+              'render-content': (h, options) => this.renderContent(options),
+              'default-expanded-keys': treeNodes
+            }}
+            on={treeEvent}
+          ></el-tree>
         </div>
-        <div class="anso-tree-title">{treeConfig.title}</div>
-        {/* tree */}
-        <el-tree
-          ref="tree"
-          highlight-current
-          class="tree"
-          attrs={{
-            'node-key': 'id',
-            ...treeConfig,
-            'allow-drop': (...args) => allowDrop(...args),
-            'render-content': (h, options) => this.renderContent(options),
-            'default-expanded-keys': treeNodes
+        {/* 伸展/收缩按钮 */}
+        <div
+          class="icon-wrap"
+          onClick={() => {
+            this.isExpand = !this.isExpand
           }}
-          on={treeEvent}
-        ></el-tree>
+        >
+          <div class="icon-wrap-main">
+            <span class={['icon', this.isExpand ? 'el-icon-caret-left' : 'el-icon-caret-right']}></span>
+          </div>
+        </div>
       </div>
     )
   }

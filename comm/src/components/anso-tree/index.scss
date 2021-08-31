@@ -1,48 +1,90 @@
-.anso-tree {
+.anso-tree-wrap {
   height: 100%;
-  background-color: #fff;
-  padding: 16px 10px;
-  box-sizing: border-box;
+  overflow: hidden;
+  transition: all 0.3s;
+  position: relative;
 
-  &-search {
-    padding-top: 8px;
-    display: flex;
-    .plus{
-      margin-left: 8px;
-      padding: 7px !important;
-    }    
-  }
-  .tree{
-    height: calc(100% - 101px);
-    overflow-y: auto;
-  }
-  &-title{
-    padding: 16px;
-  }
-  .custom-tree-node {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-right: 10px;
-    font-family: PingFangSC, PingFangSC-Regular;
-    font-size: 14px;
-    color: #8c8c8c;
+  .icon-wrap {
+    width: 12px;
+    height: 26px;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    bottom: 50%;
+    cursor: pointer;
 
-    &-tool {
-      color: #4981f4;
+    &-main {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      &:hover {
+        border-color: #4981f4;
+      }
 
-      em.el-icon-delete {
-        margin-left: 5px;
+      &:hover .icon {
+        color: #4981f4;
+      }
+
+      .icon {
+        color: #8c8c8c;
+      }
+    }
+  }
+
+  .anso-tree {
+    height: 100%;
+    background-color: #fff;
+    padding: 16px 10px;
+    box-sizing: border-box;
+    transition: all 0.3s;
+
+    &-search {
+      padding-top: 8px;
+      display: flex;
+
+      .plus {
+        margin-left: 8px;
+        padding: 7px !important;
       }
     }
 
-    &:target {
-      color: #4981f4;
+    .tree {
+      height: calc(100% - 101px);
+      overflow-y: auto;
+    }
+
+    &-title {
+      padding: 16px;
+    }
+
+    .custom-tree-node {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-right: 10px;
+      font-family: PingFangSC, PingFangSC-Regular;
+      font-size: 14px;
+      color: #8c8c8c;
+
+      &-tool {
+        color: #4981f4;
+
+        em.el-icon-delete {
+          margin-left: 5px;
+        }
+      }
+
+      &:target {
+        color: #4981f4;
+      }
     }
   }
 }
-/deep/ .el-input__inner{
+
+/deep/ .el-input__inner {
   height: 28px;
 }
 
