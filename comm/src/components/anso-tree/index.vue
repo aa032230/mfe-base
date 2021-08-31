@@ -1,4 +1,14 @@
 <script>
+/**
+ * <anso-Tree
+        :tree-width="treeWidth"
+        :tree-config="treeConfig"
+        :tree-event="treeEvent"
+        @select="handleSelect"
+        @remove="handleRemove"
+        @add="handleAdd"
+      ></anso-Tree>
+ */
 import { cloneDeep } from 'lodash'
 import { flatten } from '../../utils'
 export default {

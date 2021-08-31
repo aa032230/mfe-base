@@ -99,7 +99,9 @@ export default {
           if (f.model || f.model === 0) {
             this.$set(value, f.field, f.model)
           } else {
-            this.$set(value, f.field, '')
+            if (f.type !== 'select') {
+              this.$set(value, f.field, '')
+            }
           }
         })
     },
@@ -174,7 +176,7 @@ export default {
           )
         // 自定义
         case 'custom':
-          return r.custom(r)
+          return r.custom(form[r.field])
         default:
           return (
             <el-input
@@ -201,14 +203,16 @@ export default {
           // 键盘事件处理
           switch (m) {
             case 'keyup':
-              Object.assign(_native, {[m]: formOptions[m]})
+              Object.assign(_native, { [m]: formOptions[m] })
               break
-            case 'enter': 
-            Object.assign(_native, {'keyup': (e) => {
-              if(e.keyCode !== 13) return
-              return formOptions[m](e.target.value)
-            }})
-            break
+            case 'enter':
+              Object.assign(_native, {
+                keyup: (e) => {
+                  if (e.keyCode !== 13) return
+                  return formOptions[m](e.target.value)
+                }
+              })
+              break
             case 'field':
             case 'width':
             case 'size':
@@ -234,11 +238,7 @@ export default {
   render() {
     const { model, rules, labelWidth, labelPosition, formList, formConfig } = this
     return (
-      <el-form
-        props={{ model, rules, labelPosition, labelWidth, ...formConfig }}
-        ref="ruleForm"
-        class="form"
-      >
+      <el-form props={{ model, rules, labelPosition, labelWidth, ...formConfig }} ref="ruleForm" class="form">
         <el-row type="flex" class="form-row" gutter={15}>
           {this.createFormItem(formList)}
         </el-row>
