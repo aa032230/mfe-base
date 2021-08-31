@@ -43,6 +43,9 @@
         {
           label: '解析报文',
           type: 'text',
+          show(row) {} // 是否展示按钮
+          disabled(row){} // 是否禁用,
+          isLoading(row) // loading状态
           method: (index, row) => { ... } or this.myAction
         }
       ],
@@ -141,6 +144,7 @@ export default {
         return Number(this.pageSize)
       },
       set(size) {
+        console.log(size)
         this.$emit('update:pageSize', size)
       }
     }
@@ -148,13 +152,14 @@ export default {
   methods: {
     // 遍历筛选column
     createColumsFragment(columns, createApp) {
-      return columns.map((col) => {
+      return columns.map(col => {
         return (
           <el-table-column
             attrs={{ ...col }}
             key={col.prop}
+            show-overflow-tooltip
             scopedSlots={{
-              default: (scope) => {
+              default: scope => {
                 if (col.render) {
                   return col.render(scope.row, col.prop)
                 } else if (col.custom) {
@@ -171,7 +176,7 @@ export default {
       })
     },
 
-    // 表格操作列
+    // 表格操作列筛选，超过三个用‘更多’下拉代替
     createOperates({ scope, operates }) {
       const [generalOperates, specialOperates] = [[], []]
       operates.forEach((option, index) => (index > 2 ? specialOperates.push(option) : generalOperates.push(option)))
@@ -181,60 +186,65 @@ export default {
           children: specialOperates
         })
       }
-      return generalOperates.map((btn) => {
+      return generalOperates.map(btn => {
         return this.switchOperares(scope, btn)
       })
     },
 
-    // 操作列筛选，超过三个用‘更多’下拉代替
+    // 根据按钮文本为按钮添加对应的parentElement
     switchOperares(scope, operate) {
+      const _flag = operate.show ? operate.show(scope.row) : true
       switch (operate.label) {
-        case '删除':
-          return (
-            <el-popconfirm
-              title="这是一段内容确定删除吗？"
-              onConfirm={() => {
-                operate.method(scope.$index, scope.row)
-              }}
-            >
-              <el-button
-                slot="reference"
-                key={operate.label}
-                type={operate.type}
-                size={operate.size ? operate.size : 'small'}
-              >
-                {operate.label}
-              </el-button>
-            </el-popconfirm>
-          )
+        // case '删除':
+        //   return (
+        //     <el-popconfirm
+        //       title="这是一段内容确定删除吗？"
+        //       onConfirm={() => {
+        //         operate.method(scope.$index, scope.row)
+        //       }}
+        //     >
+        //       <el-button
+        //         slot="reference"
+        //         key={operate.label}
+        //         type={operate.type}
+        //         size={operate.size ? operate.size : 'small'}
+        //       >
+        //         {operate.label}
+        //       </el-button>
+        //     </el-popconfirm>
+        //   )
         case '更多':
           return (
             <el-dropdown class="table-wrap-dropdown">
               <span class="el-dropdown-link">
                 {operate.label}
-                <i class="el-icon-arrow-down el-icon--right"></i>
+                <i class="el-icon-caret-bottom el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                {operate.children.map((c) => {
+                {operate.children.map(c => {
                   return <el-dropdown-item>{this.switchOperares(scope, c)}</el-dropdown-item>
                 })}
               </el-dropdown-menu>
             </el-dropdown>
           )
         default:
-          return (
+          return _flag ? (
             <el-button
               class="table-wrap-btn"
               key={operate.label}
               type={operate.type}
               size={operate.size ? operate.size : 'small'}
-              nativeOnClick={(e) => {
+              disabled={operate.disabled ? operate.disabled(scope.row) : false}
+              loading={operate.isLoading ? operate.isLoading(scope.row) : false}
+              nativeOnClick={e => {
                 e.preventDefault()
                 operate.method(scope.$index, scope.row)
               }}
             >
               {operate.label}
             </el-button>
+          ) : (
+            ''
           )
       }
     },
@@ -280,17 +290,21 @@ export default {
           {/* <slot></slot> */}
           {this.$slots.default}
           {/* 操作列 */}
-          {
-            operates.length ? <el-table-column
-            width={this.operatesWidth}
-            label="操作"
-            scopedSlots={{
-              default: scope => createOperates({ scope, operates })
-            }}
-          /> : ''
-          }
+          {operates.length ? (
+            <el-table-column
+              width={this.operatesWidth}
+              label="操作"
+              scopedSlots={{
+                default: scope => createOperates({ scope, operates })
+              }}
+            />
+          ) : (
+            ''
+          )}
+          {/* 空展示 */}
           <el-empty slot="empty" description="暂无数据~~~"></el-empty>
         </el-table>
+        {/* 分页 */}
         {total ? (
           <div class="v-pager">
             <el-pagination
@@ -298,18 +312,18 @@ export default {
               current-page={currentPage}
               page-size={limit}
               on={{
-                'update:currentPage': (page) => {
+                'update:currentPage': page => {
                   this.currentPage = page
                 },
-                'update:pageSize': (size) => {
+                'update:pageSize': size => {
                   this.limit = size
                 }
               }}
               layout={layout}
               page-sizes={pageSizes}
               total={total}
-              on-size-change={(val) => _dispatchEvent(this, val)}
-              on-current-change={(val) => _dispatchEvent(this, val)}
+              on-size-change={val => _dispatchEvent(this, val)}
+              on-current-change={val => _dispatchEvent(this, val)}
             />
           </div>
         ) : (

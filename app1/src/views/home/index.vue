@@ -124,6 +124,7 @@ export default {
           name: '系统模块',
           field: 'a1',
           model: '',
+          width: '150px',
           input(val) {
             console.log(val)
           }
@@ -157,6 +158,7 @@ export default {
           name: '系统模块系统模块',
           field: 'a2',
           type: 'select',
+          width: '150px',
           model: 0,
           options: [
             {
