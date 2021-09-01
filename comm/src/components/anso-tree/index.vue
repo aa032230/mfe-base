@@ -85,8 +85,7 @@ export default {
         >
           <span class="custom-tree-node-label">{data.menuName}</span>
           <span class="custom-tree-node-tool" style={{ display: data.isShow ? 'block' : 'none' }}>
-            {
-              treeConfig.edit ?
+            {treeConfig.edit ? (
               <em
                 class="el-icon-edit-outline"
                 on-click={(e) => {
@@ -94,10 +93,10 @@ export default {
                   this.handleEdit(data)
                 }}
               ></em>
-              : ''
-            }
-            {
-              treeConfig.delete ?
+            ) : (
+              ''
+            )}
+            {treeConfig.delete ? (
               <em
                 class="el-icon-delete"
                 on-click={(e) => {
@@ -105,8 +104,9 @@ export default {
                   this.remove(node, data)
                 }}
               ></em>
-              : ''
-            }
+            ) : (
+              ''
+            )}
           </span>
         </div>
       )
@@ -140,12 +140,16 @@ export default {
               clearable
               value-key="menuName"
             ></el-autocomplete>
-            <el-button
-              class="plus"
-              size="mini"
-              icon="el-icon-plus"
-              nativeOnClick={this.$emit.bind(this, 'add')}
-            ></el-button>
+            {treeConfig.add ? (
+              <el-button
+                class="plus"
+                size="mini"
+                icon="el-icon-plus"
+                nativeOnClick={this.$emit.bind(this, 'add')}
+              ></el-button>
+            ) : (
+              ''
+            )}
           </div>
           {/* 标题 */}
           <div class="anso-tree-title">{treeConfig.title}</div>

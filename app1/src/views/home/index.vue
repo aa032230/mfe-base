@@ -81,8 +81,9 @@ export default {
       tableEvent: {
         selectionChange: this.selectionChange
       },
-      operates: [
-        {
+      operates: {
+        data : [
+          {
           label: '编辑',
           type: 'text',
           method: (index, row) => {
@@ -115,7 +116,8 @@ export default {
           type: 'text',
           method: this.handleDelete
         }
-      ],
+        ]
+      },
       toolsConfig: ['refresh', 'print', 'export', 'space', 'setting'],
       formList: [
         {

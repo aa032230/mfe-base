@@ -9,10 +9,6 @@ export default {
         return []
       }
     },
-    title: {
-      type: String,
-      default: ''
-    },
     columns: {
       type: Array,
       default: () => []
@@ -25,9 +21,13 @@ export default {
       type: Object,
       default: () => {}
     },
-    operatesWidth: {
-      type: String,
-      default: ''
+    hasSelection: {
+      type: Boolean,
+      default: true
+    },
+    hasIndex: {
+      type: Boolean,
+      default: true
     },
     tableConfig: {
       type: Object,
@@ -55,7 +55,7 @@ export default {
     pageSizes: {
       type: Array,
       default() {
-        return [1, 20, 40, 50, 100]
+        return [20, 40, 50, 100]
       }
     },
     // 分页布局
@@ -98,6 +98,10 @@ export default {
     model: {
       type: Object,
       default: () => ({})
+    },
+    operatesWidth: {
+      type: String,
+      default: () => ''
     }
   },
   components: {
@@ -109,6 +113,7 @@ export default {
   data() {
     return {
       cellHeight: 0,
+
       targetColumns: [], // 目标表头
       isPrint: false
     }
@@ -186,56 +191,71 @@ export default {
       layout,
       pageSizes,
       total,
-      dispatchEvent
+      dispatchEvent,
+      operatesWidth
     } = this
     return (
       <div class="table-page">
         <div class="table-page-main">
           {/* 表格按钮 */}
-          <table-head headerConfig={headerConfig}></table-head>
+          {headerConfig ? <table-head headerConfig={headerConfig}></table-head> : ''}
           {/* 表格表单 */}
-          <div class="table-page-main-form">
-            <table-form
-              props={{ formList, formConfig, itemConfig, labelWidth, labelPosition, rules, model }}
-              onQuery={handleQuery}
-              onReset={handleReset}
-            ></table-form>
-          </div>
+          {formList ? (
+            <div class="table-page-main-form">
+              <table-form
+                props={{ formList, formConfig, itemConfig, labelWidth, labelPosition, rules, model }}
+                onQuery={handleQuery}
+                onReset={handleReset}
+              ></table-form>
+            </div>
+          ) : (
+            ''
+          )}
           {/* 表格工具栏 */}
-          <table-tools
-            props={{ toolsConfig, columns }}
-            onSetSpace={setSpace}
-            onSetCheckedColumns={setCheckedColumns}
-            onExport={handleExport}
-            printId="print"
-          ></table-tools>
+          {toolsConfig ? (
+            <table-tools
+              props={{ toolsConfig, columns }}
+              onSetSpace={setSpace}
+              onSetCheckedColumns={setCheckedColumns}
+              onExport={handleExport}
+              printId="print"
+            ></table-tools>
+          ) : (
+            ''
+          )}
           {/* 表格 */}
-          <div class="table-page-main-table">
-            <anso-table
-              id="print"
-              props={{
-                tableData,
-                columns: targetColumns,
-                tableEvent,
-                tableConfig,
-                operates,
-                'row-style': { height: cellHeight + 'px' },
-                layout,
-                pageSizes,
-                total
-              }}
-              pageIndex={currentPage}
-              pageSize={limit}
-              on={{
-                'update:pageIndex': (page) => (this.currentPage = page),
-                'update:pageSize': (size) => (this.limit = size),
-                pagination: dispatchEvent
-              }}
-              scopedSlots={{
-                custom: (scope) => this.$scopedSlots.custom(scope)
-              }}
-            ></anso-table>
-          </div>
+
+          {tableData ? (
+            <div class="table-page-main-table">
+              <anso-table
+                id="print"
+                props={{
+                  tableData,
+                  columns: targetColumns,
+                  tableEvent,
+                  tableConfig,
+                  operates,
+                  'row-style': { height: cellHeight + 'px' },
+                  operatesWidth,
+                  layout,
+                  pageSizes,
+                  total
+                }}
+                pageIndex={currentPage}
+                pageSize={limit}
+                on={{
+                  'update:pageIndex': (page) => (this.currentPage = page),
+                  'update:pageSize': (size) => (this.limit = size),
+                  pagination: dispatchEvent
+                }}
+                scopedSlots={{
+                  custom: (scope) => this.$scopedSlots.custom(scope)
+                }}
+              ></anso-table>
+            </div>
+          ) : (
+            ''
+          )}
           {this.$slots.default}
         </div>
       </div>
