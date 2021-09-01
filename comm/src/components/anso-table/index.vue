@@ -14,8 +14,8 @@ export default {
     },
     // 操作
     operates: {
-      type: Array,
-      default: () => []
+      type: Object,
+      default: () => {}
     },
     operatesWidth: {
       type: String,
@@ -86,18 +86,21 @@ export default {
   methods: {
     // 遍历筛选column
     createColumsFragment(columns, createApp) {
-      return columns.map(col => {
+      return columns.map((col) => {
         return (
           <el-table-column
             attrs={{ ...col }}
             key={col.prop}
             show-overflow-tooltip
             scopedSlots={{
-              default: scope => {
+              default: (scope) => {
                 if (col.render) {
                   return col.render(scope.row, col.prop)
                 } else if (col.custom) {
-                  return this.$scopedSlots.custom({ row: scope.row, prop: col.prop })
+                  return this.$scopedSlots.custom({
+                    row: scope.row,
+                    prop: col.prop
+                  })
                 } else {
                   return scope.row[col.prop]
                 }
@@ -111,7 +114,7 @@ export default {
     },
 
     // 表格操作列筛选，超过三个用‘更多’下拉代替
-    createOperates({ scope, operates }) {
+    createOperates(scope, operates) {
       const [generalOperates, specialOperates] = [[], []]
       operates.forEach((option, index) => (index > 2 ? specialOperates.push(option) : generalOperates.push(option)))
       if (specialOperates.length) {
@@ -120,7 +123,7 @@ export default {
           children: specialOperates
         })
       }
-      return generalOperates.map(btn => {
+      return generalOperates.map((btn) => {
         return this.switchOperares(scope, btn)
       })
     },
@@ -155,7 +158,7 @@ export default {
                 <i class="el-icon-caret-bottom el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                {operate.children.map(c => {
+                {operate.children.map((c) => {
                   return <el-dropdown-item>{this.switchOperares(scope, c)}</el-dropdown-item>
                 })}
               </el-dropdown-menu>
@@ -170,7 +173,7 @@ export default {
               size={operate.size ? operate.size : 'small'}
               disabled={operate.disabled ? operate.disabled(scope.row) : false}
               loading={operate.isLoading ? operate.isLoading(scope.row) : false}
-              nativeOnClick={e => {
+              nativeOnClick={(e) => {
                 e.preventDefault()
                 operate.method(scope.$index, scope.row)
               }}
@@ -187,6 +190,16 @@ export default {
     _dispatchEvent() {
       // console.log(this.currentPage)
       this.$emit('pagination')
+    },
+    // 获取操作列属性
+    getOperatesAttrs(operates) {
+      const _props = {}
+      Object.keys(operates).forEach((k) => {
+        if (k !== 'data') {
+          Object.assign(_props, { [k]: operates[k] })
+        }
+      })
+      return _props
     }
   },
   render(h) {
@@ -204,6 +217,7 @@ export default {
       pageSizes,
       _dispatchEvent
     } = this
+
     return (
       <div class="table-wrap">
         <el-table
@@ -212,7 +226,7 @@ export default {
           style="width: 100%;"
           row-style={rowStyle}
           attrs={{
-            height: 'calc(100% - 62px)',
+            height: 'calc(100% - 56px)',
             'header-cell-style': { background: '#f9f9f9' },
             'tooltip-effect': 'light',
             ...this.tableConfig
@@ -224,12 +238,11 @@ export default {
           {/* <slot></slot> */}
           {this.$slots.default}
           {/* 操作列 */}
-          {operates.length ? (
+          {operates.data.length ? (
             <el-table-column
-              width={this.operatesWidth}
-              label="操作"
+              props={{ label: '操作', ...this.getOperatesAttrs(operates) }}
               scopedSlots={{
-                default: scope => createOperates({ scope, operates })
+                default: (scope) => createOperates(scope, operates.data)
               }}
             />
           ) : (
@@ -246,18 +259,18 @@ export default {
               current-page={currentPage}
               page-size={limit}
               on={{
-                'update:currentPage': page => {
+                'update:currentPage': (page) => {
                   this.currentPage = page
                 },
-                'update:pageSize': size => {
+                'update:pageSize': (size) => {
                   this.limit = size
                 }
               }}
               layout={layout}
               page-sizes={pageSizes}
               total={total}
-              on-size-change={val => _dispatchEvent(this, val)}
-              on-current-change={val => _dispatchEvent(this, val)}
+              on-size-change={(val) => _dispatchEvent(this, val)}
+              on-current-change={(val) => _dispatchEvent(this, val)}
             />
           </div>
         ) : (

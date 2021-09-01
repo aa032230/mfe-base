@@ -48,10 +48,8 @@ export default {
     return {
       tableConfig: {},
       rules: {
-        a1: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-        ]
+        a1: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
+        a2: [{ required: true, message: '请输入活动名称', trigger: 'change' }]
       },
       headerConfig: {
         title: '表格头部标题',
@@ -133,7 +131,7 @@ export default {
           name: '系统模块11',
           field: 'a13',
           model: '',
-          enter(val){
+          enter(val) {
             console.log(val)
           }
         },
@@ -158,8 +156,6 @@ export default {
           name: '系统模块系统模块',
           field: 'a2',
           type: 'select',
-          width: '150px',
-          model: 0,
           options: [
             {
               value: 0,

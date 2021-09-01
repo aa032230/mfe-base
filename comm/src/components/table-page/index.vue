@@ -22,8 +22,8 @@ export default {
       default: () => []
     },
     operates: {
-      type: Array,
-      default: () => []
+      type: Object,
+      default: () => {}
     },
     operatesWidth: {
       type: String,
