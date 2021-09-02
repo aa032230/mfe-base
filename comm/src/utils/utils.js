@@ -107,7 +107,7 @@ export function downloadFile(file) {
 }
 
 /**
- * 实现多维数组对象的扁平化 
+ * 实现多维数组对象的扁平化
  * @param {Array} [obj], 期望转换的数组对象
  * @param {String} key, 关键字
  */
@@ -124,7 +124,7 @@ export function flatArr(obj, key) {
   return result.flat()
 }
 
-// 多维数组扁平化 
+// 多维数组扁平化
 export function flatten(arr) {
   var res = []
   arr.map((item) => {
@@ -143,4 +143,35 @@ export function flatten(arr) {
  */
 export function _import(file) {
   return require('@/views/' + file).default
+}
+
+/**
+ * @description 将扁平化数据 转换成 树状结构
+ * @param {Array} list 扁平化的数据
+ * @param {String} pid parentId的key名
+ * @param {String} id id的key名
+ * @param {String} child children的key名
+ */
+export function treeFormat({ list, pid = 'parentId', id = 'id', child = 'children' }) {
+  const listOjb = {} // 用来储存{key: obj}格式的对象
+  const treeList = [] // 用来储存最终树形结构数据的数组
+  // 将数据变换成{key: obj}格式，方便下面处理数据
+  for (let i = 0; i < list.length; i++) {
+    listOjb[list[i][id]] = list[i]
+  }
+  // 根据pid来将数据进行格式化
+  for (let j = 0; j < list.length; j++) {
+    // 判断父级是否存在
+    const haveParent = listOjb[list[j][pid]]
+    if (haveParent) {
+      // 如果有没有父级children字段，就创建一个children字段
+      !haveParent[child] && (haveParent[child] = [])
+      // 在父级里插入子项
+      haveParent[child].push(list[j])
+    } else {
+      // 如果没有父级直接插入到最外层
+      treeList.push(list[j])
+    }
+  }
+  return treeList
 }

@@ -1,6 +1,6 @@
 <script>
 /**
- * <anso-Tree
+ *<anso-Tree
         :tree-width="treeWidth"
         :tree-config="treeConfig"
         :tree-event="treeEvent"
@@ -10,7 +10,7 @@
       ></anso-Tree>
  */
 import { cloneDeep } from 'lodash'
-import { flatten } from '../../utils'
+import { flatten, treeFormat } from '../../utils'
 export default {
   name: 'anso-tree',
   props: {
@@ -39,23 +39,40 @@ export default {
     return {
       treeValue: '',
       treeNodes: [],
-      isExpand: true
+      isExpand: true,
+      treeData: []
+    }
+  },
+  watch: {
+    treeConfig: {
+      handler(val) {
+        const { data, enable, pIdKey } = this.treeConfig
+        if (!enable) {
+          this.treeData = data
+        } else {
+          this.treeData = treeFormat({ list: data, pid: pIdKey })
+        }
+      },
+      deep: true,
+      immediate: true
     }
   },
   methods: {
     // 返回建议数据
     querySearch(queryString, cb) {
-      const tree = cloneDeep(this.treeConfig.data)
-      const restaurants = flatten(tree)
+      const { treeConfig } = this
+      if(!Array.isArray(treeConfig.data )) return
+      const tree = cloneDeep(treeConfig.data)
+      const restaurants = treeConfig?.enable ? tree : flatten(tree)
       const results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
       cb(results)
     },
     // 过滤
     createFilter(queryString) {
-      console.log(queryString)
       return (restaurant) => {
-        return restaurant.menuName.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+        console.log(restaurant[this.treeConfig?.defaultProps.label])
+        return restaurant[this.treeConfig?.defaultProps.label].toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
 
@@ -77,14 +94,16 @@ export default {
     // 树结构重绘
     renderContent({ node, data, store }) {
       const { treeConfig } = this
+      const _name = treeConfig.defaultProps.label
       return (
         <div
           class="custom-tree-node"
           onMouseenter={() => this.$set(data, 'isShow', true)}
           onMouseleave={() => this.$set(data, 'isShow', false)}
         >
-          <span class="custom-tree-node-label">{data.menuName}</span>
+          <span class="custom-tree-node-label">{data[_name]}</span>
           <span class="custom-tree-node-tool" style={{ display: data.isShow ? 'block' : 'none' }}>
+            {treeConfig.draggable ? <em class="el-icon-rank"></em> : ''}
             {treeConfig.edit ? (
               <em
                 class="el-icon-edit-outline"
@@ -124,6 +143,7 @@ export default {
   },
   render() {
     const { treeConfig, treeWidth, allowDrop, treeEvent, placeholder, treeNodes } = this
+    const _name = treeConfig?.defaultProps.label
     return (
       <div class="anso-tree-wrap" style={{ width: this.isExpand ? treeWidth : '15px' }}>
         <div class="anso-tree" style={{ display: this.isExpand ? 'block' : 'none' }}>
@@ -138,7 +158,7 @@ export default {
               placeholder={placeholder}
               v-model={this.treeValue}
               clearable
-              value-key="menuName"
+              value-key={_name}
             ></el-autocomplete>
             {treeConfig.add ? (
               <el-button
@@ -163,6 +183,7 @@ export default {
             attrs={{
               'node-key': 'id',
               ...treeConfig,
+              data: this.treeData,
               'allow-drop': (...args) => allowDrop(...args),
               'render-content': (h, options) => this.renderContent(options),
               'default-expanded-keys': treeNodes

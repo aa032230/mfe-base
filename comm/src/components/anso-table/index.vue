@@ -1,4 +1,5 @@
 <script>
+import { willStampToDate } from '../../utils'
 export default {
   name: 'anso-table',
   props: {
@@ -102,7 +103,7 @@ export default {
                     prop: col.prop
                   })
                 } else {
-                  return scope.row[col.prop]
+                  return col.format ? willStampToDate(scope.row[col.prop], col.format) : scope.row[col.prop]
                 }
               }
             }}
@@ -238,7 +239,7 @@ export default {
           {/* <slot></slot> */}
           {this.$slots.default}
           {/* 操作列 */}
-          {operates.data.length ? (
+          {operates?.data.length ? (
             <el-table-column
               props={{ label: '操作', ...this.getOperatesAttrs(operates) }}
               scopedSlots={{

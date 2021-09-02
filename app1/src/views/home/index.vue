@@ -45,6 +45,21 @@ export default {
   name: 'user',
   components: { tablePage, ansoModal, ansoForm },
   data() {
+    const tData = [
+      {
+        id: 1,
+        date: Date.now(),
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄',
+        switch: '112'
+      },
+      {
+        id: 2,
+        date: Date.now(),
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1517 弄'
+      }
+    ]
     return {
       tableConfig: {},
       rules: {
@@ -82,40 +97,40 @@ export default {
         selectionChange: this.selectionChange
       },
       operates: {
-        data : [
+        data: [
           {
-          label: '编辑',
-          type: 'text',
-          method: (index, row) => {
-            this.visible = true
+            label: '编辑',
+            type: 'text',
+            method: (index, row) => {
+              this.visible = true
+            }
+          },
+          {
+            label: '编辑1',
+            type: 'text',
+            method: (index, row) => {
+              this.visible = true
+            }
+          },
+          {
+            label: '编辑2',
+            type: 'text',
+            method: (index, row) => {
+              this.visible = true
+            }
+          },
+          {
+            label: '编辑3',
+            type: 'text',
+            method: (index, row) => {
+              this.visible = true
+            }
+          },
+          {
+            label: '删除',
+            type: 'text',
+            method: this.handleDelete
           }
-        },
-        {
-          label: '编辑1',
-          type: 'text',
-          method: (index, row) => {
-            this.visible = true
-          }
-        },
-        {
-          label: '编辑2',
-          type: 'text',
-          method: (index, row) => {
-            this.visible = true
-          }
-        },
-        {
-          label: '编辑3',
-          type: 'text',
-          method: (index, row) => {
-            this.visible = true
-          }
-        },
-        {
-          label: '删除',
-          type: 'text',
-          method: this.handleDelete
-        }
         ]
       },
       toolsConfig: ['refresh', 'print', 'export', 'space', 'setting'],
@@ -157,17 +172,13 @@ export default {
         {
           name: '系统模块系统模块',
           field: 'a2',
-          type: 'select',
-          options: [
-            {
-              value: 0,
-              label: '小籠包'
-            },
-            {
-              value: 1,
-              label: '叉烧包'
-            }
-          ]
+          type: 'treeSelect',
+          data: tData,
+          props: {
+            value: 'id', // ID字段名
+            label: 'name', // 显示名称
+            children: 'children'
+          }
         },
         {
           name: '系统模块2',
@@ -229,10 +240,7 @@ export default {
           prop: 'date',
           label: '日期',
           sortable: true,
-          render(row, prop) {
-            return row[prop]
-          },
-          'sort-method': () => console.log('sort')
+          format: 'YYYY-MM-DD HH:mm:ss'
         },
         {
           prop: 'name',
@@ -269,21 +277,7 @@ export default {
           label: '地址3'
         }
       ],
-      tableData: [
-        {
-          id: 1,
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          switch: '112'
-        },
-        {
-          id: 2,
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }
-      ]
+      tableData: tData
     }
   },
   methods: {

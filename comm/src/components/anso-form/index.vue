@@ -1,5 +1,6 @@
 <script>
 import { DataBus } from '../../utils/'
+import { ansoTreeSelect } from '../'
 export default {
   name: 'anso-form',
   props: {
@@ -65,7 +66,7 @@ export default {
       const { formList, value } = this
       Array.isArray(formList) &&
         formList.forEach((f) => {
-          if (f.model || f.model === 0) {
+          if (f.model !== undefined && !value[f.field]) {
             this.$set(value, f.field, f.model)
           } else {
             if (f.type !== 'select') {
@@ -78,7 +79,7 @@ export default {
     createFormItem(formList) {
       return formList.map((f) => {
         return (
-          <el-col span={24 / this.itemRow}>
+          <el-col span={24 / (f.itemRow ? f.itemRow : this.itemRow)}>
             <el-form-item props={{ label: f.name, prop: f.field, ...this.itemConfig }} key={f.field}>
               {this.checkTypeToFormElement(f)}
             </el-form-item>
@@ -143,9 +144,13 @@ export default {
               })}
             </el-checkbox-group>
           )
+        case 'treeSelect':
+          return <ansoTreeSelect v-model={form[r.field]} {...this.createFormAttrs(r)}></ansoTreeSelect>
         // 自定义
         case 'custom':
           return r.custom(form[r.field])
+        case 'slot':
+          return this.$slots[r.field]
         default:
           return (
             <el-input
@@ -158,7 +163,7 @@ export default {
           )
       }
     },
-    // 表单属性导入
+    // 属性和事件导入
     createFormAttrs(formOptions) {
       const _props = {}
       const _event = {}
@@ -184,12 +189,12 @@ export default {
               break
             case 'field':
             case 'width':
-            case 'size':
             case 'options':
             case 'type':
             case 'name':
             case 'model':
             case 'text':
+            case 'size':
               break
             default:
               Object.assign(_props, { [m]: formOptions[m] })
@@ -207,7 +212,19 @@ export default {
   render() {
     const { model, rules, labelWidth, labelPosition, formList, formConfig } = this
     return (
-      <el-form props={{ model, rules, labelPosition, labelWidth, ...formConfig }} ref="ruleForm" class="form">
+      <el-form
+        props={{
+          model,
+          rules,
+          labelPosition,
+          labelWidth,
+          inline: true,
+          ...formConfig,
+          'validate-on-rule-change': false
+        }}
+        ref="ruleForm"
+        class="form"
+      >
         <el-row type="flex" class="form-row" gutter={15}>
           {this.createFormItem(formList)}
         </el-row>

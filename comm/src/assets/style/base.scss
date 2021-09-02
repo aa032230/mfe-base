@@ -1,0 +1,140 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  color: #262626;
+}
+img {
+  display: inline-block;
+}
+html {
+  background-color: #fafafa;
+}
+a {
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+}
+.t2 {
+  font-size: 56px;
+}
+.t3 {
+  font-size: 42px;
+}
+.t4 {
+  font-size: 32px;
+}
+/***/
+$textMainColor: #262626; // 字体通用颜色
+$SecondaryTextColor: #8c8c8c;
+$mainColor: #3171f2; // 高亮色，按钮主要颜色
+$activeColor: $mainColor;
+$errorColor: #ff4d4f;
+$borderColor: #f0f0f0;
+$hoverColor: #5a8df5; // 高亮色鼠标移上去变颜色
+
+/***/
+@mixin border-radius($borderRadius: 4px) {
+  border-radius: $borderRadius;
+}
+
+@mixin clearfix() {
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+    overflow: hidden;
+  }
+}
+
+/***/
+.shadow-box {
+  margin: 24px;
+  box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  @include border-radius();
+}
+//
+
+.fl-left {
+  float: left;
+}
+.fl-right {
+  float: right;
+}
+
+/* 一行，省略号 */
+@mixin textOverflow() {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+/* 清除浮动 */
+@mixin fn-clear() {
+  zoom: 1;
+  &:after {
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+    content: '.';
+  }
+}
+
+/* .special-scroll 特殊的滚动条 */
+@mixin special-scroll($width: 6px, $height: 10px, $bgc: #ccc, $hbgc: #666) {
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $height;
+  }
+  &::-webkit-scrollbar-track {
+    background: 0 0;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $bgc;
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: $hbgc;
+  }
+  &::-webkit-scrollbar-corner {
+    background-color: #535353;
+  }
+  &::-webkit-scrollbar-resizer {
+    background-color: #ff6e00;
+  }
+}
+
+@mixin fz($fontSize: 14px) {
+  font-size: $fontSize;
+  line-height: calc(#{$fontSize} + 8px);
+}
+
+html {
+  @include special-scroll();
+  overflow-x: hidden;
+  @include fz();
+}
+
+/** 子应用页面总的内边距布局 */
+.child-view-main {
+  height: 100%;
+}
+.sub-cont-wrap {
+  padding: 16px 25px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/** el style  **/
+.el-input__suffix-inner {
+  .el-icon-arrow-up {
+    &::before {
+      content: '\e78f' !important;
+    }
+  }
+}

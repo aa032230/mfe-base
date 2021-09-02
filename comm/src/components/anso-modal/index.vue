@@ -57,14 +57,23 @@ export default {
     }
   },
   methods: {
-    // 取消
-    handleCancle() {
+    // 重置表单
+    resetForm() {
       this.dialogVisible = false
       const _instance = this.getInstance()
       if (!_instance) return
       const { ruleForm } = _instance
       ruleForm.resetFields()
-      this.$emit('cancle')
+    },
+    // 取消
+    handleCancle() {
+      this.resetForm()
+      this.$emit('cancel')
+    },
+    // 关闭
+    handleClose() {
+      this.resetForm()
+      this.$emit('close')
     },
     // 打开重置列表
     handleOpen() {
@@ -73,7 +82,7 @@ export default {
     },
     // 获取实例
     getInstance() {
-      if (!this.$slots.default[0].componentInstance.$refs.ruleForm) return
+      if (!this.$slots.default[0].componentInstance?.$refs?.ruleForm) return
       const { $refs, value } = this.$slots.default[0].componentInstance
       return {
         ruleForm: $refs.ruleForm,
@@ -103,45 +112,45 @@ export default {
         attrs={{ ...this.modalConfig }}
         visible={this.dialogVisible}
         onOpen={this.handleOpen}
-        onClose={this.$emit.bind(this, 'close')}
+        onClose={this.handleClose}
         on={{ 'update:visible': (val) => (this.dialogVisible = val) }}
       >
         <div class="v-modal-body">{this.$slots.default}</div>
-        <span slot="footer" class="dialog-footer">
-          {this.buttonConfig.map((item) => {
-            switch (item.name) {
-              case 'cancel':
-                return (
-                  <el-button size={item.size ? item.size : 'mini'} type={item.type} nativeOnClick={this.handleCancle}>
-                    {item.text}
-                  </el-button>
-                )
-              case 'confirm':
-                return (
-                  <el-button
-                    type={item.type}
-                    size={item.size ? item.size : 'mini'}
-                    onClick={this.handleSubmit}
-                  >
-                    {item.text}
-                  </el-button>
-                )
-              default:
-                return (
-                  <el-button
-                    size={item.size ? item.size : 'mini'}
-                    type={item.type}
-                    nativeOnClick={(e) => {
-                      e.preventDefault()
-                      item.method()
-                    }}
-                  >
-                    {item.text}
-                  </el-button>
-                )
-            }
-          })}
-        </span>
+        {this.buttonConfig.length ? (
+          <span slot="footer" class="dialog-footer">
+            {this.buttonConfig.map((item) => {
+              switch (item.name) {
+                case 'cancel':
+                  return (
+                    <el-button size={item.size ? item.size : 'mini'} type={item.type} nativeOnClick={this.handleCancle}>
+                      {item.text}
+                    </el-button>
+                  )
+                case 'confirm':
+                  return (
+                    <el-button type={item.type} size={item.size ? item.size : 'mini'} onClick={this.handleSubmit}>
+                      {item.text}
+                    </el-button>
+                  )
+                default:
+                  return (
+                    <el-button
+                      size={item.size ? item.size : 'mini'}
+                      type={item.type}
+                      nativeOnClick={(e) => {
+                        e.preventDefault()
+                        item.method()
+                      }}
+                    >
+                      {item.text}
+                    </el-button>
+                  )
+              }
+            })}
+          </span>
+        ) : (
+          ''
+        )}
       </el-dialog>
     )
   }
