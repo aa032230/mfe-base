@@ -18,10 +18,6 @@ export default {
       type: Object,
       default: () => ({})
     },
-    model: {
-      type: Object,
-      default: () => ({})
-    },
     labelWidth: {
       type: String,
       default: ''
@@ -210,11 +206,11 @@ export default {
     }
   },
   render() {
-    const { model, rules, labelWidth, labelPosition, formList, formConfig } = this
+    const { value, rules, labelWidth, labelPosition, formList, formConfig } = this
     return (
       <el-form
         props={{
-          model,
+          model: value,
           rules,
           labelPosition,
           labelWidth,

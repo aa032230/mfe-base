@@ -1,11 +1,13 @@
 <template>
   <div class="home">
+    <ansoConfirm></ansoConfirm>
     <table-page
       :operates="operates"
       :toolsConfig="toolsConfig"
       :tableEvent="tableEvent"
       :tableConfig="tableConfig"
       :form-list="formList"
+      :form-data="ruleForm"
       title="用户管理列表"
       :columns="columns"
       :tableData="tableData"
@@ -40,10 +42,10 @@
 </template>
 
 <script>
-import { tablePage, ansoModal, ansoForm } from 'comm/src/components'
+import { tablePage, ansoModal, ansoForm, ansoConfirm } from 'comm/src/components'
 export default {
   name: 'user',
-  components: { tablePage, ansoModal, ansoForm },
+  components: { tablePage, ansoModal, ansoForm, ansoConfirm },
   data() {
     const tData = [
       {
@@ -301,6 +303,15 @@ export default {
       console.log('dialog open')
     },
     handleQuery(form) {
+      const s = '123l12jk3j1;23'
+      const temp = `<p style="color:red">${s}</p>`
+      this.$ansoConfirm({ title: 'hahah', message: temp })
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
       console.log(form)
     }
   }

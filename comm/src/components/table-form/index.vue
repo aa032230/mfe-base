@@ -14,10 +14,6 @@ export default {
       type: Object,
       default: () => ({})
     },
-    model: {
-      type: Object,
-      default: () => ({})
-    },
     labelWidth: {
       type: String,
       default: ''

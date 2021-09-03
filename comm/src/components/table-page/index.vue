@@ -95,10 +95,6 @@ export default {
       type: Object,
       default: () => ({})
     },
-    model: {
-      type: Object,
-      default: () => ({})
-    },
     operatesWidth: {
       type: String,
       default: () => ''
@@ -159,7 +155,6 @@ export default {
     },
     //页码/页容量选择
     dispatchEvent() {
-      console.log(112)
       this.$emit('pagination')
     }
   },
@@ -172,7 +167,6 @@ export default {
       labelWidth,
       labelPosition,
       rules,
-      model,
       handleQuery,
       handleReset,
       toolsConfig,
@@ -203,7 +197,7 @@ export default {
           {formList ? (
             <div class="table-page-main-form">
               <table-form
-                props={{ formList, formConfig, itemConfig, labelWidth, labelPosition, rules, model }}
+                props={{ formList, formConfig, itemConfig, labelWidth, labelPosition, rules }}
                 onQuery={handleQuery}
                 onReset={handleReset}
               ></table-form>

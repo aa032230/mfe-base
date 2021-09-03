@@ -10,4 +10,5 @@ export { default as tableHead } from './table-head'
 export { default as ansoTable } from './anso-table'
 export { default as tablePage } from './table-page'
 export { default as ansoModal } from './anso-modal'
+export { default as ansoConfirm } from './anso-confirm'
 

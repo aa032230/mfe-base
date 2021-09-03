@@ -138,7 +138,7 @@ export default {
   data() {
     return {
       filterText: '',
-      selectData: [], // 选中的节点
+      selectData: undefined, // 选中的节点
       defaultValue: this.value, // 初始值
       defaultExpandedKey: [],
       options: [
