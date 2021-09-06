@@ -1,0 +1,279 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 2755614 */
+  src: url('iconfont.woff2?t=1630909250902') format('woff2'),
+       url('iconfont.woff?t=1630909250902') format('woff'),
+       url('iconfont.ttf?t=1630909250902') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-mark:before {
+  content: "\e630";
+}
+
+.icon-photo:before {
+  content: "\e60b";
+}
+
+.icon-verification-code:before {
+  content: "\e60a";
+}
+
+.icon-a-down2:before {
+  content: "\e651";
+}
+
+.icon-back-to:before {
+  content: "\e652";
+}
+
+.icon-up2:before {
+  content: "\e653";
+}
+
+.icon-down11:before {
+  content: "\e649";
+}
+
+.icon-add2:before {
+  content: "\e64a";
+}
+
+.icon-information:before {
+  content: "\e64b";
+}
+
+.icon-up1:before {
+  content: "\e64c";
+}
+
+.icon-hint1:before {
+  content: "\e64d";
+}
+
+.icon-upload:before {
+  content: "\e64e";
+}
+
+.icon-download1:before {
+  content: "\e64f";
+}
+
+.icon-date:before {
+  content: "\e650";
+}
+
+.icon-open:before {
+  content: "\e627";
+}
+
+.icon-drag1:before {
+  content: "\e628";
+}
+
+.icon-Close:before {
+  content: "\e644";
+}
+
+.icon-put-away:before {
+  content: "\e645";
+}
+
+.icon-unfold:before {
+  content: "\e646";
+}
+
+.icon-unfold1:before {
+  content: "\e647";
+}
+
+.icon-put-away1:before {
+  content: "\e648";
+}
+
+.icon-add1:before {
+  content: "\e62f";
+}
+
+.icon-file:before {
+  content: "\e631";
+}
+
+.icon-edit:before {
+  content: "\e632";
+}
+
+.icon-delete:before {
+  content: "\e633";
+}
+
+.icon-close1:before {
+  content: "\e634";
+}
+
+.icon-not-selected:before {
+  content: "\e635";
+}
+
+.icon-a-backto:before {
+  content: "\e636";
+}
+
+.icon-excel:before {
+  content: "\e637";
+}
+
+.icon-hide:before {
+  content: "\e638";
+}
+
+.icon-half-choice:before {
+  content: "\e639";
+}
+
+.icon-question:before {
+  content: "\e63a";
+}
+
+.icon-right:before {
+  content: "\e63b";
+}
+
+.icon-selected1:before {
+  content: "\e63c";
+}
+
+.icon-Set-up:before {
+  content: "\e63d";
+}
+
+.icon-show:before {
+  content: "\e63e";
+}
+
+.icon-selected2:before {
+  content: "\e63f";
+}
+
+.icon-set-up1:before {
+  content: "\e641";
+}
+
+.icon-sort1:before {
+  content: "\e642";
+}
+
+.icon-sort2:before {
+  content: "\e643";
+}
+
+.icon-real-time-monitoring:before {
+  content: "\e61e";
+}
+
+.icon-equipment-management:before {
+  content: "\e61f";
+}
+
+.icon-tenant-management:before {
+  content: "\e625";
+}
+
+.icon-down:before {
+  content: "\e62e";
+}
+
+.icon-a-functionmenumanagement2:before {
+  content: "\e61b";
+}
+
+.icon-copy:before {
+  content: "\e612";
+}
+
+.icon-add:before {
+  content: "\e613";
+}
+
+.icon-batch-delete:before {
+  content: "\e614";
+}
+
+.icon-close:before {
+  content: "\e616";
+}
+
+.icon-Dictionary-management:before {
+  content: "\e617";
+}
+
+.icon-authority-management:before {
+  content: "\e618";
+}
+
+.icon-download:before {
+  content: "\e619";
+}
+
+.icon-a-Packaging-service:before {
+  content: "\e61a";
+}
+
+.icon-drag:before {
+  content: "\e61c";
+}
+
+.icon-Function-access-management:before {
+  content: "\e61d";
+}
+
+.icon-documentation:before {
+  content: "\e620";
+}
+
+.icon-search:before {
+  content: "\e621";
+}
+
+.icon-unchecked:before {
+  content: "\e622";
+}
+
+.icon-hint:before {
+  content: "\e623";
+}
+
+.icon-successfully-downloaded:before {
+  content: "\e624";
+}
+
+.icon-left:before {
+  content: "\e626";
+}
+
+.icon-selected:before {
+  content: "\e629";
+}
+
+.icon-user-group-management:before {
+  content: "\e62a";
+}
+
+.icon-user-management:before {
+  content: "\e62b";
+}
+
+.icon-subsystem-management:before {
+  content: "\e62c";
+}
+
+.icon-refresh:before {
+  content: "\e62d";
+}
+

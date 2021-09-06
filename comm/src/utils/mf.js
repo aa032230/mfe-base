@@ -1,5 +1,5 @@
 import actions from './actions'
-import { ansoConfirm } from '../plungins'
+import { ansoConfirm } from '../plugins'
 if (isLoadInSubAppContainer()) {
   /* eslint no-undef: "off" */
   __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__

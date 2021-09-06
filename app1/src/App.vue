@@ -11,7 +11,7 @@
   </div>
 </template>
 
-<style lang="scss">
+<style>
 .nodebook-enter,
 .nodebook-leave-to {
   transform: scale(0.9);

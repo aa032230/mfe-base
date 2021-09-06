@@ -305,13 +305,8 @@ export default {
     handleQuery(form) {
       const s = '123l12jk3j1;23'
       const temp = `<p style="color:red">${s}</p>`
-      this.$ansoConfirm({ title: 'hahah', message: temp })
-        .then((res) => {
-          console.log(res)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+
+      this.$ansoConfirm({ title: '卡号的', message: temp, type:'success'})
       console.log(form)
     }
   }
