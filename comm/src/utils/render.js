@@ -5,9 +5,7 @@
  * @param {*} options  Vue实例数据总线
  */
 import { checkType } from './utils'
-import { ansoConfirm } from '../plugins'
 export default function renderApp(Vue, App, options) {
-  Vue.use(ansoConfirm)
   const instance = new Vue(Object.assign(usePlugins(Vue, options), { render: (h) => h(App) }))
   // window.__SetSubAppLoading__ = setSubAppLoading(instance)
   return instance

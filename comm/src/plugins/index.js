@@ -1,1 +1,1 @@
-export const ansoConfirm = require('./anso-confirm').default
+export const ansoPrompt = require('./anso-prompt/').default

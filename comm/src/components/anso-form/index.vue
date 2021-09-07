@@ -86,8 +86,10 @@ export default {
     // 根据type渲染对应的form组件
     checkTypeToFormElement(r) {
       const form = this.value
+      let _options = void 0
       switch (r.type) {
         case 'select':
+           _options = typeof r.options === 'function' ? r.options(r) : r.options
           return (
             <el-select
               style={{ width: r.width }}
@@ -95,9 +97,8 @@ export default {
               size={r.size ? r.size : 'small'}
               {...this.createFormAttrs(r)}
             >
-              {r.options.map((option) => (
-                <el-option key={option.value} props={{ ...option }} />
-              ))}
+              {Array.isArray(_options) &&
+                _options.map((option) => <el-option key={option.value} props={{ ...option }} />)}
             </el-select>
           )
         case 'switch':

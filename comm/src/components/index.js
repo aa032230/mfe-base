@@ -1,6 +1,7 @@
 // 公共组件导出总线
 // export { default as vTree } from './v-tree'
 export { default as ansoTreeSelect } from './anso-tree-select'
+export { default as ansoDatePicker } from './anso-datepicker'
 export { default as ansoTree } from './anso-tree'
 export { default as ansoSidebar } from './anso-sidebar'
 export { default as ansoForm } from './anso-form'
@@ -10,5 +11,3 @@ export { default as tableHead } from './table-head'
 export { default as ansoTable } from './anso-table'
 export { default as tablePage } from './table-page'
 export { default as ansoModal } from './anso-modal'
-export { default as ansoConfirm } from './anso-confirm'
-

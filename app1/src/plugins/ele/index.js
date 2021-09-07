@@ -37,7 +37,8 @@ import {
   Radio,
   Image,
   Col,
-  Row
+  Row,
+  DatePicker
 } from 'element-ui'
 export default {
   components: [
@@ -77,7 +78,8 @@ export default {
     Radio,
     Image,
     Row,
-    Col
+    Col,
+    DatePicker
   ],
   install(Vue) {
     Vue.prototype.$alert = MessageBox.alert

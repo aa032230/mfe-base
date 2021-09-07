@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <ansoConfirm></ansoConfirm>
     <table-page
       :operates="operates"
       :toolsConfig="toolsConfig"
@@ -42,10 +41,10 @@
 </template>
 
 <script>
-import { tablePage, ansoModal, ansoForm, ansoConfirm } from 'comm/src/components'
+import { tablePage, ansoModal, ansoForm } from 'comm/src/components'
 export default {
   name: 'user',
-  components: { tablePage, ansoModal, ansoForm, ansoConfirm },
+  components: { tablePage, ansoModal, ansoForm },
   data() {
     const tData = [
       {
@@ -225,16 +224,18 @@ export default {
           name: '系统模块系统模块',
           field: 'a9',
           type: 'select',
-          options: [
-            {
-              value: 0,
-              label: '小籠包'
-            },
-            {
-              value: 1,
-              label: '叉烧包'
-            }
-          ]
+          options: () => {
+            return [
+              {
+                value: 0,
+                label: '小籠包'
+              },
+              {
+                value: 1,
+                label: '叉烧包'
+              }
+            ]
+          }
         }
       ],
       columns: [
@@ -306,7 +307,8 @@ export default {
       const s = '123l12jk3j1;23'
       const temp = `<p style="color:red">${s}</p>`
 
-      this.$ansoConfirm({ title: '卡号的', message: temp, type:'success'})
+      // this.$ansoConfirm({ title: '卡号的', message: temp, type:'success'})
+      this.$ansoAlert({ title: '卡号的', message: temp, type: 'success' })
       console.log(form)
     }
   }

@@ -61,7 +61,7 @@ export default {
     },
     //总条数
     total: {
-      type: Number,
+      type: [Number, String],
       default: 0
     }
   },
@@ -269,7 +269,7 @@ export default {
               }}
               layout={layout}
               page-sizes={pageSizes}
-              total={total}
+              total={Number(total)}
               on-size-change={(val) => _dispatchEvent(this, val)}
               on-current-change={(val) => _dispatchEvent(this, val)}
             />

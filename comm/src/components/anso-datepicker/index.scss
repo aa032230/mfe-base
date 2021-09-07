@@ -1,0 +1,21 @@
+.anso-date-picker {
+  border: 1px solid #DCDFE6;
+  border-radius: 4px;
+  display: inline-block;
+  &-prefix-text {
+    font-size: 14px;
+    padding-left: 10px;
+    color: #606266;
+    &-line{
+      padding-left: 10px;
+    }
+  }
+
+  &-box {
+    border: none;
+  }
+}
+
+.anso-date-picker.is-active {
+  border-color: #3a77f3;
+}

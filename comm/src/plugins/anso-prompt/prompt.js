@@ -12,12 +12,12 @@
           console.log(err)
         })
  */
-export default class AnsoConfirm {
+export default class ansoPrompt {
   constructor(vm, options) {
     this.vue = vm
     this.options = options
   }
-  // 初始化
+  // confirm
   initConfirm() {
     const { title, confirmAttrs } = this.filterConfirmArgement()
     const { type, message } = confirmAttrs
@@ -38,6 +38,17 @@ export default class AnsoConfirm {
     })
   }
 
+  // alert
+  initAlert() {
+    const { title, confirmAttrs } = this.filterConfirmArgement()
+    const { type, message } = confirmAttrs
+    this.vue.$alert(message, title, {
+      ...confirmAttrs,
+      center: true,
+      ...this.withTypeSetClass(type),
+      dangerouslyUseHTMLString: true
+    })
+  }
   // 根据类型命中对应参数
   withTypeSetClass(type) {
     const attr = {
@@ -62,7 +73,7 @@ export default class AnsoConfirm {
 
   // 参数过滤
   filterConfirmArgement() {
-    let title = '标题'
+    let title = '提示'
     let confirmAttrs = {}
     Object.keys(this.options).forEach((k) => {
       switch (k) {
