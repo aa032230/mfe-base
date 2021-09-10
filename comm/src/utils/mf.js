@@ -1,5 +1,5 @@
 import actions from './actions'
-import { ansoPrompt } from '../plugins'
+import { ansoPrompt, ansoDatePick } from '../plugins'
 if (isLoadInSubAppContainer()) {
   /* eslint no-undef: "off" */
   __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__
@@ -17,7 +17,7 @@ export function wrapStartup(startup) {
     async bootstrap() {},
     async mount(props) {
       if (!config.plugins) config.plugins = []
-      config.plugins.push(ansoPrompt)
+      config.plugins.push(ansoPrompt, ansoDatePick)
       window.__CONTEXT__ = {
         $data: props.data,
         $utils: Object.assign({}, props.utils)

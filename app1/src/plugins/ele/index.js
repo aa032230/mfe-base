@@ -38,7 +38,8 @@ import {
   Image,
   Col,
   Row,
-  DatePicker
+  DatePicker,
+  Scrollbar
 } from 'element-ui'
 export default {
   components: [
@@ -79,7 +80,8 @@ export default {
     Image,
     Row,
     Col,
-    DatePicker
+    DatePicker,
+    
   ],
   install(Vue) {
     Vue.prototype.$alert = MessageBox.alert
@@ -87,5 +89,6 @@ export default {
     Vue.prototype.$prompt = MessageBox.prompt
     Vue.prototype.$notify = Notification
     Vue.prototype.$message = Message
+    Vue.use(Scrollbar)
   }
 }

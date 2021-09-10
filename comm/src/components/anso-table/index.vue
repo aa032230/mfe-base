@@ -86,9 +86,11 @@ export default {
   },
   methods: {
     // 遍历筛选column
-    createColumsFragment(columns, createApp) {
+    createColumsFragment(columns) {
       return columns.map((col) => {
-        return (
+        return col.type ? (
+          <el-table-column attrs={{ ...col }} key={col.type} show-overflow-tooltip></el-table-column>
+        ) : (
           <el-table-column
             attrs={{ ...col }}
             key={col.prop}
@@ -103,12 +105,12 @@ export default {
                     prop: col.prop
                   })
                 } else {
-                  return col.format ? willStampToDate(scope.row[col.prop], col.format) : scope.row[col.prop]
+                  return col.format ? willStampToDate(scope.row[col.prop], col.format) : scope.row[col.prop] || '--'
                 }
               }
             }}
           >
-            {col.children && col.children.length ? this.createColumsFragment(col.children, createApp) : ''}
+            {col.children && col.children.length ? this.createColumsFragment(col.children) : ''}
           </el-table-column>
         )
       })
@@ -176,7 +178,7 @@ export default {
               loading={operate.isLoading ? operate.isLoading(scope.row) : false}
               nativeOnClick={(e) => {
                 e.preventDefault()
-                operate.method(scope.$index, scope.row)
+                operate.method(scope.$index, scope.row, e)
               }}
             >
               {operate.label}
@@ -235,7 +237,7 @@ export default {
           on={this.tableEvent}
         >
           {/* column渲染 */}
-          {createColumsFragment(columns, h)}
+          {createColumsFragment(columns)}
           {/* <slot></slot> */}
           {this.$slots.default}
           {/* 操作列 */}

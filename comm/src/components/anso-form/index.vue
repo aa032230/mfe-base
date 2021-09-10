@@ -18,6 +18,10 @@ export default {
       type: Object,
       default: () => ({})
     },
+    model: {
+      type: Object,
+      default: () => ({})
+    },
     labelWidth: {
       type: String,
       default: ''
@@ -47,6 +51,14 @@ export default {
   mounted() {
     this.initForm()
     DataBus.on('reset', (res) => res && this.initForm())
+    // 渲染完后再调异步数据
+    this.$nextTick(() => {
+      this.formList.forEach((item) => {
+        if (typeof item.options === 'function') {
+          item.options(item)
+        }
+      })
+    })
   },
   watch: {
     formList: {
@@ -62,12 +74,12 @@ export default {
       const { formList, value } = this
       Array.isArray(formList) &&
         formList.forEach((f) => {
-          if (f.model !== undefined && !value[f.field]) {
+          if (value[f.field]) return
+          if (f.model !== undefined) {
             this.$set(value, f.field, f.model)
           } else {
-            if (f.type !== 'select') {
-              this.$set(value, f.field, '')
-            }
+            if (f.type === 'select') return
+            this.$set(value, f.field, '')
           }
         })
     },
@@ -76,7 +88,17 @@ export default {
       return formList.map((f) => {
         return (
           <el-col span={24 / (f.itemRow ? f.itemRow : this.itemRow)}>
-            <el-form-item props={{ label: f.name, prop: f.field, ...this.itemConfig }} key={f.field}>
+            <el-form-item props={{ prop: f.field, ...this.itemConfig }} key={f.field}>
+              <div slot="label" class="label-wrap">
+                <div>{f.name}</div>
+                {f.tips ? (
+                  <el-tooltip content={f.tips} placement="top" effect="light">
+                    <span class="el-icon-question icon"></span>
+                  </el-tooltip>
+                ) : (
+                  ''
+                )}
+              </div>
               {this.checkTypeToFormElement(f)}
             </el-form-item>
           </el-col>
@@ -89,7 +111,7 @@ export default {
       let _options = void 0
       switch (r.type) {
         case 'select':
-           _options = typeof r.options === 'function' ? r.options(r) : r.options
+          _options = typeof r.options === 'function' ? [] : r.options
           return (
             <el-select
               style={{ width: r.width }}
@@ -123,22 +145,26 @@ export default {
             ></el-date-picker>
           )
         case 'radios':
+          _options = typeof r.options === 'function' ? [] : r.options
           return (
             <el-radio-group v-model={form[r.field]} {...this.createFormAttrs(r)}>
-              {r.options.map((option) => {
-                return <el-radio {...this.createFormAttrs(option)}>{option.text}</el-radio>
-              })}
+              {Array.isArray(_options) &&
+                _options.map((option) => {
+                  return <el-radio {...this.createFormAttrs(option)}>{option.text}</el-radio>
+                })}
             </el-radio-group>
           )
         case 'checkboxs':
           if (!Array.isArray(form[r.field])) {
             this.$set(form, r.field, [])
           }
+          _options = typeof r.options === 'function' ? [] : r.options
           return (
             <el-checkbox-group v-model={form[r.field]} {...this.createFormAttrs(r)}>
-              {r.options.map((option) => {
-                return <el-checkbox {...this.createFormAttrs(option)}></el-checkbox>
-              })}
+              {Array.isArray(_options) &&
+                _options.map((option) => {
+                  return <el-checkbox {...this.createFormAttrs(option)}></el-checkbox>
+                })}
             </el-checkbox-group>
           )
         case 'treeSelect':
@@ -160,6 +186,8 @@ export default {
           )
       }
     },
+    // 校验select options字段，针对不同情况进行不同处理
+    checkOptions(options) {},
     // 属性和事件导入
     createFormAttrs(formOptions) {
       const _props = {}
@@ -207,11 +235,11 @@ export default {
     }
   },
   render() {
-    const { value, rules, labelWidth, labelPosition, formList, formConfig } = this
+    const { model, rules, labelWidth, labelPosition, formList, formConfig } = this
     return (
       <el-form
         props={{
-          model: value,
+          model: model ? model : this.value,
           rules,
           labelPosition,
           labelWidth,
@@ -245,5 +273,9 @@ export default {
   content: '*';
   color: #f56c6c;
   margin-left: 4px;
+}
+input,
+textarea {
+  color: #262626 !important;
 }
 </style>

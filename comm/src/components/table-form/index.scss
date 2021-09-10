@@ -8,17 +8,13 @@
 
   .form-view {
     width: calc(100% - 200px);
-    // display: flex;
-    // align-items: center;
-    // flex-wrap: wrap;
-
     &-item {
       display: flex;
       align-items: center;
       margin-right: 15px;
       padding: 10px 0;
 
-      >span {
+      > span {
         font-size: 14px;
         color: #666;
         display: inline-block;
@@ -32,14 +28,23 @@
       padding: 6px 0;
       display: flex;
     }
-    /deep/ .el-col{
-      width:  auto !important;
+    /deep/ .el-col {
+      width: auto !important;
     }
     /deep/ .el-form-item__label {
       padding-right: 10px;
       line-height: 32px !important;
+      padding-top: 0 !important;
+      .label-wrap{
+        .icon{
+          position: static;
+          margin-top: 8px;
+          margin-left: 5px;
+        }
+      }
+      
     }
-    /deep/ .el-form-item__content{
+    /deep/ .el-form-item__content {
       flex: 1;
     }
 
@@ -54,9 +59,9 @@
 
   .from-view-button-group {
     position: absolute;
-    right: 10px;
+    right: 0;
     bottom: 8px;
-    
+
     .is-open {
       font-size: 14px;
       color: #409eff;

@@ -2,7 +2,7 @@
 /**
  * 平台日期组件
  */
-import dayjs from 'dayjs'
+import { setPickOptions } from '../../config'
 export default {
   name: 'anso-datepicker',
   props: {},
@@ -13,7 +13,8 @@ export default {
       type: 'datetimerange',
       isActive: false,
       prefixText: '',
-      pickerOptions: ''
+      pickerOptions: setPickOptions(_that),
+      value: ''
     }
   },
   methods: {
@@ -24,11 +25,14 @@ export default {
     handleBlur() {
       this.isActive = false
       this.$emit('blur')
-    }
+    },
+    handleClear() {
+      console.log(112)
+    },
+    handleChange(v) {
+    },
   },
-  mounted() {
-    
-  },
+  mounted() {},
   render() {
     return (
       <div class={['anso-date-picker', { 'is-active': this.isActive }]}>
@@ -40,16 +44,20 @@ export default {
         ) : (
           ''
         )}
-
         <el-date-picker
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
+          onChange={(v) => {
+            this.handleChange(v)
+          }}
+          onClear={this.handleClear}
           class="anso-date-picker-box "
           v-model={this.value1}
           type={this.type}
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
+          value-format="timestamp"
           picker-options={this.pickerOptions}
         ></el-date-picker>
       </div>

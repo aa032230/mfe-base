@@ -52,7 +52,9 @@ export default {
         date: Date.now(),
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄',
-        switch: '112'
+        switch: '112',
+        showButton: false,
+        disabled: true,
       },
       {
         id: 2,
@@ -114,6 +116,20 @@ export default {
             }
           },
           {
+            label: '删除',
+            type: 'text',
+            method: (index,row,e) => {
+              // event.target.innerText = '1123'
+              // e.target.parentElement.setAttribute('disabled', 'disabled')
+              // e.target.parentElement.classList.add('is-disabled')
+              // op.label = '11123'
+              
+            },
+            disabled(row) {
+              return row.disabled
+            }
+          },
+          {
             label: '编辑2',
             type: 'text',
             method: (index, row) => {
@@ -126,11 +142,6 @@ export default {
             method: (index, row) => {
               this.visible = true
             }
-          },
-          {
-            label: '删除',
-            type: 'text',
-            method: this.handleDelete
           }
         ]
       },
@@ -240,10 +251,14 @@ export default {
       ],
       columns: [
         {
+          type: 'selection',
+          width: '55',
+        },
+        {
           prop: 'date',
-          label: '日期',
+          label: '日期11',
           sortable: true,
-          format: 'YYYY-MM-DD HH:mm:ss'
+          format: 'YYYY-MM-DD HH:mm:ss',
         },
         {
           prop: 'name',
