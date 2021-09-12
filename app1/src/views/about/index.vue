@@ -1,10 +1,11 @@
 <template>
   <div class="about">
     <anso-date-picker
-      v-model="value2"
-      type="datetimerange"
+      v-model="value"
+      :type="'datetimerange'"
       :picker-options="pickerOptions"
       range-separator="至"
+      size="small"
       start-placeholder="开始日期"
       end-placeholder="结束日期"
     ></anso-date-picker>
@@ -46,7 +47,7 @@ export default {
           }
         ]
       },
-      value2: ''
+      value: ''
     }
   }
 }

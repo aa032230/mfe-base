@@ -45,43 +45,47 @@
     v-clickoutside="handleClose"
     v-else
   >
-    <span style="font-size: 12px; min-width: 72px" v-if="prefixText">{{ prefixText }} |</span>
-    <i :class="['el-input__icon', 'el-range__icon', triggerClass]"></i>
-    <input
-      autocomplete="off"
-      :placeholder="startPlaceholder"
-      :value="displayValue && displayValue[0]"
-      :disabled="pickerDisabled"
-      v-bind="firstInputId"
-      :readonly="!editable || readonly"
-      :name="name && name[0]"
-      @input="handleStartInput"
-      @change="handleStartChange"
-      @focus="handleFocus"
-      class="el-range-input"
-    />
-    <slot name="range-separator">
-      <span class="el-range-separator">{{ rangeSeparator }}</span>
-    </slot>
-    <input
-      autocomplete="off"
-      :placeholder="endPlaceholder"
-      :value="displayValue && displayValue[1]"
-      :disabled="pickerDisabled"
-      v-bind="secondInputId"
-      :readonly="!editable || readonly"
-      :name="name && name[1]"
-      @input="handleEndInput"
-      @change="handleEndChange"
-      @focus="handleFocus"
-      class="el-range-input"
-    />
-    <i
-      @click="handleClickIcon"
-      v-if="haveTrigger"
-      :class="[showClose ? '' + clearIcon : '']"
-      class="el-input__icon el-range__close-icon"
-    ></i>
+    <div style="font-size: 12px; height: 24px; line-height: 24px" v-show="prefixText">
+      <span style="padding-right: 3px">{{ prefixText }}</span>
+      <span style="padding: 0 2px">|</span>
+    </div>
+    <div style="display: flex; align-items: center; flex: 1">
+      <input
+        autocomplete="off"
+        :placeholder="startPlaceholder"
+        :value="displayValue && displayValue[0]"
+        :disabled="pickerDisabled"
+        v-bind="firstInputId"
+        :readonly="!editable || readonly"
+        :name="name && name[0]"
+        @input="handleStartInput"
+        @change="handleStartChange"
+        @focus="handleFocus"
+        class="el-range-input"
+      />
+      <slot name="range-separator">
+        <span class="el-range-separator">{{ rangeSeparator }}</span>
+      </slot>
+      <input
+        autocomplete="off"
+        :placeholder="endPlaceholder"
+        :value="displayValue && displayValue[1]"
+        :disabled="pickerDisabled"
+        v-bind="secondInputId"
+        :readonly="!editable || readonly"
+        :name="name && name[1]"
+        @input="handleEndInput"
+        @change="handleEndChange"
+        @focus="handleFocus"
+        class="el-range-input"
+      />
+      <i
+        @click="handleClickIcon"
+        v-if="haveTrigger"
+        :class="[showClose ? '' + clearIcon : '']"
+        class="el-input__icon el-range__close-icon"
+      ></i>
+    </div>
   </div>
 </template>
 
@@ -922,3 +926,11 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.el-date-editor /deep/.el-range__close-icon {
+  width: 20px !important;
+}
+::v-deep.el-input__inner {
+  padding-right: 3px !important;
+}
+</style>
