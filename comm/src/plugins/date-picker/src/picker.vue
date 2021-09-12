@@ -45,6 +45,7 @@
     v-clickoutside="handleClose"
     v-else
   >
+    <span style="font-size: 12px; min-width: 72px" v-if="prefixText">{{ prefixText }} |</span>
     <i :class="['el-input__icon', 'el-range__icon', triggerClass]"></i>
     <input
       autocomplete="off"
@@ -392,7 +393,8 @@ export default {
       showClose: false,
       userInput: null,
       valueOnOpen: null, // value when picker opens, used to determine whether to emit change
-      unwatchPickerOptions: null
+      unwatchPickerOptions: null,
+      prefixText: ''
     }
   },
 
@@ -694,6 +696,7 @@ export default {
         if (this.picker && typeof this.picker.handleClear === 'function') {
           this.picker.handleClear()
         }
+        this.prefixText = ''
       } else {
         this.pickerVisible = !this.pickerVisible
       }
@@ -779,7 +782,6 @@ export default {
 
     handleRangeClick() {
       const type = this.type
-
       if (HAVE_TRIGGER_TYPES.indexOf(type) !== -1 && !this.pickerVisible) {
         this.pickerVisible = true
       }
@@ -828,19 +830,16 @@ export default {
 
       const updateOptions = () => {
         const options = this.pickerOptions
-
         if (options && options.selectableRange) {
           let ranges = options.selectableRange
           const parser = TYPE_VALUE_RESOLVER_MAP.datetimerange.parser
           const format = DEFAULT_FORMATS.timerange
-
           ranges = Array.isArray(ranges) ? ranges : [ranges]
           this.picker.selectableRange = ranges.map((range) => parser(range, format, this.rangeSeparator))
         }
-
         for (const option in options) {
           if (
-            Object.prototype.hasOwnProperty.call(options, 'option') &&
+            Object.prototype.hasOwnProperty.call(options, option) &&
             // 忽略 time-picker 的该配置项
             option !== 'selectableRange'
           ) {
@@ -865,7 +864,10 @@ export default {
         this.emitInput(date)
         this.picker.resetView && this.picker.resetView()
       })
-
+      // todo: myedit
+      this.picker.$on('getPrefixText', (text = '') => {
+        this.prefixText = text
+      })
       this.picker.$on('select-range', (start, end, pos) => {
         if (this.refInput.length === 0) return
         if (!pos || pos === 'min') {

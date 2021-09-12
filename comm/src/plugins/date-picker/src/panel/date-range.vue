@@ -23,8 +23,6 @@
           >
             {{ shortcut.text }}
           </button>
-          <button>1123123</button>
-          <button>1123123</button>
         </div>
         <div class="el-picker-panel__body">
           <div class="el-date-range-picker__time-header" v-if="showTime">
@@ -41,7 +39,6 @@
                   @change="(val) => handleDateChange(val, 'min')"
                 />
               </span>
-              12312312
               <span class="el-date-range-picker__time-picker-wrap" v-clickoutside="handleMinTimeClose">
                 <el-input
                   size="small"
@@ -356,6 +353,7 @@ export default {
       defaultTime: null,
       minDate: '',
       maxDate: '',
+      prefixText: '',
       leftDate: new Date(),
       rightDate: nextMonth(new Date()),
       rangeState: {
@@ -603,10 +601,10 @@ export default {
     },
 
     handleRangePick(val, close = true) {
+      this.$emit('getPrefixText', '')
       const defaultTime = this.defaultTime || []
       const minDate = modifyWithTimeString(val.minDate, defaultTime[0])
       const maxDate = modifyWithTimeString(val.maxDate, defaultTime[1])
-
       if (this.maxDate === maxDate && this.minDate === minDate) {
         return
       }
@@ -624,6 +622,8 @@ export default {
     },
 
     handleShortcutClick(shortcut) {
+      this.prefixText = shortcut.text // todo: my edit
+      this.$emit('getPrefixText', this.prefixText)
       if (shortcut.onClick) {
         shortcut.onClick(this)
       }

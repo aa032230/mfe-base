@@ -10,7 +10,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "dayjs": "^1.10.6",
+    "dayjs": "^1.10.7",
     "default-passive-events": "^2.0.0",
     "element-ui": "^2.15.6",
     "print-js": "^1.6.0",

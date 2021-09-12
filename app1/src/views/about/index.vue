@@ -44,10 +44,7 @@ export default {
               picker.$emit('pick', [start, end])
             }
           }
-        ],
-        onPick(a,b) {
-          console.log(1121)
-        }
+        ]
       },
       value2: ''
     }
