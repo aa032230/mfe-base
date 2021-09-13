@@ -5,7 +5,6 @@ export default {
       form: {},
       formParams: {},
       formVisble: false,
-      formIndex: 0,
       a: {
         name: 1,
         text: 2,
@@ -57,8 +56,11 @@ export default {
     }
   },
   methods: {
-    handleAdd(params) {
+    handleAdd() {
+      const { form } = this
+      this.$set(form, 'params', {})
       this.formVisble = true
+      console.log(this.formParams)
       // return this.createFormItem(form.params)
     },
     handleSumbit() {
@@ -141,7 +143,7 @@ export default {
             </el-form-item>
           </el-form>
         </div>
-        {formVisble ? this.createFormItem() : ''}
+        {formVisble ? this.createFormItem({}) : ''}
       </div>
     )
   }
