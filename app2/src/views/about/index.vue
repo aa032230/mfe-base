@@ -77,6 +77,7 @@ export default {
         } else {
           _target.children = [formParams]
         }
+
       } else {
         if (form.children && Array.isArray(form.children)) {
           form.children.push(formParams)
@@ -86,10 +87,12 @@ export default {
       }
       if (_target) {
         this.formParams = _target
+        this.formArr.pop()
       } else {
         this.formParams = {}
         this.formVisble = false
       }
+      console.log(form)
     },
     handleConfirm() {
       const s = this.formatData(this.formArr)
