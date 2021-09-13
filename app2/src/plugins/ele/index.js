@@ -33,7 +33,8 @@ import {
   Pagination,
   Dialog,
   Popconfirm,
-  Scrollbar
+  Scrollbar,
+  Link
 } from 'element-ui'
 export default {
   components: [
@@ -70,7 +71,8 @@ export default {
     Pagination,
     Dialog,
     Popconfirm,
-    Scrollbar
+    Scrollbar,
+    Link
   ],
   install(Vue) {
     Vue.prototype.$alert = MessageBox.alert
