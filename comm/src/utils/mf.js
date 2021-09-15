@@ -1,5 +1,5 @@
 import actions from './actions'
-import { ansoPrompt, ansoDatePick } from '../plugins'
+import { ansoPrompt, ansoDatePick, ansoDialog } from '../plugins'
 if (isLoadInSubAppContainer()) {
   /* eslint no-undef: "off" */
   __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__
@@ -17,16 +17,20 @@ export function wrapStartup(startup) {
     async bootstrap() {},
     async mount(props) {
       if (!config.plugins) config.plugins = []
-      config.plugins.push(ansoPrompt, ansoDatePick)
       window.__CONTEXT__ = {
         $data: props.data,
         $utils: Object.assign({}, props.utils)
       }
-      config.plugins.push({
-        install: function (v) {
-          v.prototype.__CONTEXT__ = window.__CONTEXT__
-        }
-      })
+      config.plugins.push(
+        {
+          install: function (v) {
+            v.prototype.__CONTEXT__ = window.__CONTEXT__
+          }
+        },
+        ansoPrompt,
+        ansoDatePick,
+        ansoDialog
+      )
       actions.setActions(props)
       app = render(Vue, App, config, props)
     },

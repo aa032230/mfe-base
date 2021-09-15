@@ -1,4 +1,5 @@
 <script>
+import test from './test.vue'
 export default {
   data() {
     return {
@@ -57,6 +58,8 @@ export default {
       }
     }
   },
+  mounted() {
+  },
   methods: {
     handleAdd1() {
       const { formArr, formParams } = this
@@ -65,7 +68,8 @@ export default {
       // return this.createFormItem(form.params)
     },
     handleAdd() {
-      this.formVisble = true
+      // this.formVisble = true
+      this.ansoDialog({ title: '哈哈哈哈', component: test })
     },
     handleSumbit() {
       const { formParams, formArr, form } = this
@@ -77,7 +81,6 @@ export default {
         } else {
           _target.children = [formParams]
         }
-
       } else {
         if (form.children && Array.isArray(form.children)) {
           form.children.push(formParams)
@@ -104,7 +107,6 @@ export default {
       const _len = params.length
       if (!_len) return
       const pIndex = params[_len - 2]
-      console.log(params[pIndex])
       if (params[pIndex].children && Array.isArray(params[pIndex])) {
         params[pIndex].children.push(params[_len - 1])
       } else {

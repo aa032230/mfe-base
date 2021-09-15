@@ -54,7 +54,7 @@ export default {
         address: '上海市普陀区金沙江路 1518 弄',
         switch: '112',
         showButton: false,
-        disabled: true
+        disabled: true,
       },
       {
         id: 2,
@@ -118,11 +118,12 @@ export default {
           {
             label: '删除',
             type: 'text',
-            method: (index, row, e) => {
+            method: (index,row,e) => {
               // event.target.innerText = '1123'
               // e.target.parentElement.setAttribute('disabled', 'disabled')
               // e.target.parentElement.classList.add('is-disabled')
               // op.label = '11123'
+              
             },
             disabled(row) {
               return row.disabled
@@ -251,13 +252,13 @@ export default {
       columns: [
         {
           type: 'selection',
-          width: '55'
+          width: '55',
         },
         {
           prop: 'date',
           label: '日期11',
           sortable: true,
-          format: 'YYYY-MM-DD HH:mm:ss'
+          format: 'YYYY-MM-DD HH:mm:ss',
         },
         {
           prop: 'name',
