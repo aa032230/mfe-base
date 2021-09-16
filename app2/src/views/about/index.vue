@@ -58,8 +58,7 @@ export default {
       }
     }
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     handleAdd1() {
       const { formArr, formParams } = this
@@ -69,7 +68,13 @@ export default {
     },
     handleAdd() {
       // this.formVisble = true
-      this.ansoDialog({ title: '哈哈哈哈', component: test })
+      this.ansoDialog({
+        title: '哈哈哈哈',
+        component: test,
+        cancleText: '',
+        callback(ctx) {
+        }
+      })
     },
     handleSumbit() {
       const { formParams, formArr, form } = this

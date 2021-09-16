@@ -1,16 +1,32 @@
 <script>
-export default {
+import { modalDrag } from '../../../directives'
+const _dialog = {
   data() {
     return {
       visible: false
     }
   },
+  directives: {
+    modalDrag
+  },
   methods: {
-    handleSumbit() {
-      this.visible = false
-    },
     handleClose() {
       this.visible = false
+    },
+    handleSubmit() {
+      const instace = this.$refs.child
+      const _el = this.$refs.child.$children[0]
+      if (typeof _el.rules === 'object') {
+        _el.validate((valid) => {
+          if (valid) {
+            this.$options.data().callback(instace)
+            this.visible = false
+          }
+        })
+      } else {
+        this.visible = false
+        this.$options.data().callback(instace)
+      }
     }
   },
   render(h) {
@@ -21,8 +37,10 @@ export default {
           visible: this.visible,
           title: this.title,
           width: this.width || '30%',
-          'before-close': this.handleClose
-        }
+          'before-close': this.handleClose,
+          'close-on-click-modal': false
+        },
+        directives: [{ name: 'modal-drag' }]
       },
       [
         h(
@@ -31,32 +49,45 @@ export default {
             slot: 'footer'
           },
           [
-            h(
-              'el-button',
-              {
-                on: {
-                  click: () => (this.visible = false)
-                }
-              },
-              '取消'
-            ),
-            h(
-              'el-button',
-              {
-                props: {
-                  type: 'primary'
+            this.cancleText &&
+              h(
+                'el-button',
+                {
+                  on: {
+                    click: () => (this.visible = false)
+                  },
+                  props: {
+                    size: 'small'
+                  }
                 },
-                on: {
-                  click: this.handleSumbit
-                }
-              },
-              '确定'
-            )
+                this.cancleText
+              ),
+            this.confirmText &&
+              h(
+                'el-button',
+                {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  on: {
+                    click: this.handleSubmit
+                  }
+                },
+                this.confirmText
+              )
           ]
         ),
-        h(this.component)
+        h(this.component, {
+          ref: 'child'
+        })
       ]
     )
   }
 }
+
+export default _dialog
 </script>
+<style lang="scss" scoped>
+@import './dialog.scss';
+</style>
