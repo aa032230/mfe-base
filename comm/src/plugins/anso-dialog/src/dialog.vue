@@ -11,6 +11,10 @@ const _dialog = {
   },
   methods: {
     handleClose() {
+      const context = this.$refs.child.$children[0]
+      if (context.$el.classList.contains('el-form')) {
+        context.resetFields()
+      }
       this.visible = false
     },
     handleSubmit() {
@@ -54,7 +58,7 @@ const _dialog = {
                 'el-button',
                 {
                   on: {
-                    click: () => (this.visible = false)
+                    click: this.handleClose
                   },
                   props: {
                     size: 'small'

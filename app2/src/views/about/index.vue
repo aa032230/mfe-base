@@ -71,7 +71,6 @@ export default {
       this.ansoDialog({
         title: '哈哈哈哈',
         component: test,
-        cancleText: '',
         callback(ctx) {
         }
       })
