@@ -33,6 +33,10 @@ export default {
     placeholder: {
       type: String,
       default: '请输入内容'
+    },
+    currentNodeKey: {
+      type: [String, Number],
+      default: ''
     }
   },
   data() {
@@ -50,64 +54,101 @@ export default {
         if (!enable) {
           this.treeData = data
         } else {
-          this.treeData = treeFormat({ list: data, pid: pIdKey })
+          this.treeData = treeFormat(data, 'id', pIdKey)
         }
       },
       deep: true,
       immediate: true
     }
   },
+  mounted() {
+    this.$emit('onCreated', this.$refs.tree)
+  },
   methods: {
-    // 返回建议数据
+    /**
+     * @description:  返回建议数据
+     * @param {*} queryString
+     * @param {*} cb
+     * @return {*}
+     */
+
     querySearch(queryString, cb) {
       const { treeConfig } = this
-      if(!Array.isArray(treeConfig.data )) return
+      if (!treeConfig.data) return
       const tree = cloneDeep(treeConfig.data)
       const restaurants = treeConfig?.enable ? tree : flatten(tree)
       const results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
       // 调用 callback 返回建议列表的数据
       cb(results)
     },
-    // 过滤
+    /**
+     * @description: 过滤
+     * @param {*} queryString
+     * @return {*}
+     */
+
     createFilter(queryString) {
-      return (restaurant) => {
-        console.log(restaurant[this.treeConfig?.defaultProps.label])
-        return restaurant[this.treeConfig?.defaultProps.label].toLowerCase().indexOf(queryString.toLowerCase()) === 0
+      return restaurant => {
+        return restaurant[this.treeConfig?.props.label].toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
 
-    // 搜索
+    /**
+     * @description:  搜索
+     * @param {*} node
+     * @return {*}
+     */
+
     handleSelect(node) {
-      this.$refs.tree.setCurrentKey(node.id)
-      this.treeNodes.push(node.id)
+      this.setCurrentActive(node.id)
       this.$emit('select', node)
     },
-    // 编辑
+    setCurrentActive(id) {
+      this.$refs.tree.setCurrentKey(id)
+      this.treeNodes.push(id)
+    },
+    /**
+     * @description:  编辑
+     * @param {*} data
+     * @return {*}
+     */
+
     handleEdit(data) {
       this.$emit('update', data)
     },
 
-    // 删除
+    /**
+     * @description: 删除
+     * @param {*} node
+     * @param {*} data
+     * @return {*}
+     */
+
     remove(node, data) {
       this.$emit('remove', data)
     },
-    // 树结构重绘
+    /**
+     * @description: 树结构重绘
+     * @param {*} node
+     * @param {*} data
+     * @param {*} store
+     * @return {*}
+     */
+
     renderContent({ node, data, store }) {
       const { treeConfig } = this
-      const _name = treeConfig.defaultProps.label
+      const _name = treeConfig.props.label
       return (
         <div
           class="custom-tree-node"
-          onMouseenter={() => this.$set(data, 'isShow', true)}
-          onMouseleave={() => this.$set(data, 'isShow', false)}
         >
-          <span class="custom-tree-node-label">{data[_name]}</span>
+          <span class="custom-tree-node-label" title={data[_name]}>{data[_name]}</span>
           <span class="custom-tree-node-tool" style={{ display: data.isShow ? 'block' : 'none' }}>
             {treeConfig.draggable ? <em class="el-icon-rank"></em> : ''}
             {treeConfig.edit ? (
               <em
                 class="el-icon-edit-outline"
-                on-click={(e) => {
+                on-click={e => {
                   e.stopPropagation()
                   this.handleEdit(data)
                 }}
@@ -118,7 +159,7 @@ export default {
             {treeConfig.delete ? (
               <em
                 class="el-icon-delete"
-                on-click={(e) => {
+                on-click={e => {
                   e.stopPropagation()
                   this.remove(node, data)
                 }}
@@ -130,7 +171,14 @@ export default {
         </div>
       )
     },
-    // 校验是否同级拖拽
+    /**
+     * @description:  校验是否同级拖拽
+     * @param {*} draggingNode
+     * @param {*} dropNode
+     * @param {*} type
+     * @return {*}
+     */
+
     allowDrop(draggingNode, dropNode, type) {
       if (draggingNode.level === dropNode.level) {
         if (draggingNode.parent.id === dropNode.parent.id) {
@@ -141,9 +189,16 @@ export default {
       }
     }
   },
+
+  /**
+   * @description:
+   * @param {*}
+   * @return {*}
+   */
+
   render() {
-    const { treeConfig, treeWidth, allowDrop, treeEvent, placeholder, treeNodes } = this
-    const _name = treeConfig?.defaultProps.label
+    const { treeConfig, treeWidth, allowDrop, treeEvent, placeholder, treeNodes, currentNodeKey } = this
+    const _name = treeConfig?.props.label
     return (
       <div class="anso-tree-wrap" style={{ width: this.isExpand ? treeWidth : '15px' }}>
         <div class="anso-tree" style={{ display: this.isExpand ? 'block' : 'none' }}>
@@ -180,9 +235,13 @@ export default {
             ref="tree"
             highlight-current
             class="tree"
+            check-on-click-node
+            current-node-key={currentNodeKey}
             attrs={{
               'node-key': 'id',
               ...treeConfig,
+              title: '',
+
               data: this.treeData,
               'allow-drop': (...args) => allowDrop(...args),
               'render-content': (h, options) => this.renderContent(options),

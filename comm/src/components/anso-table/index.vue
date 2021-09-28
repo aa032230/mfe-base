@@ -99,8 +99,8 @@ export default {
               default: (scope) => {
                 if (col.render) {
                   return col.render(scope.row, col.prop)
-                } else if (col.custom) {
-                  return this.$scopedSlots.custom({
+                } else if (col.slot) {
+                  return this.$scopedSlots.default({
                     row: scope.row,
                     prop: col.prop
                   })

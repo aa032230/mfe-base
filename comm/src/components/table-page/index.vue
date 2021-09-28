@@ -192,9 +192,9 @@ export default {
       <div class="table-page">
         <div class="table-page-main">
           {/* 表格按钮 */}
-          {headerConfig ? <table-head headerConfig={headerConfig}></table-head> : ''}
+          {Object.keys(headerConfig).length ? <table-head headerConfig={headerConfig}></table-head> : ''}
           {/* 表格表单 */}
-          {formList ? (
+          {formList.length ? (
             <div class="table-page-main-form">
               <table-form
                 props={{ formList, formConfig, itemConfig, labelWidth, labelPosition, rules }}
@@ -243,7 +243,7 @@ export default {
                   pagination: dispatchEvent
                 }}
                 scopedSlots={{
-                  custom: (scope) => this.$scopedSlots.custom(scope)
+                  default: (scope) => this.$scopedSlots.default(scope)
                 }}
               ></anso-table>
             </div>

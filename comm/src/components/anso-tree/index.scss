@@ -3,6 +3,7 @@
   overflow: hidden;
   transition: all 0.3s;
   position: relative;
+  background-color: #fff;
 
   .icon-wrap {
     width: 12px;
@@ -16,9 +17,12 @@
     &-main {
       width: 24px;
       height: 24px;
+      line-height: 22px;
       border-radius: 50%;
+      box-sizing: border-box;
       border: 1px solid #ccc;
       background-color: #fff;
+
       &:hover {
         border-color: #4981f4;
       }
@@ -29,6 +33,7 @@
 
       .icon {
         color: #8c8c8c;
+        font-size: 14px;
       }
     }
   }
@@ -53,32 +58,52 @@
     .tree {
       height: calc(100% - 101px);
       overflow-y: auto;
+      @include special-scroll();
     }
 
     &-title {
       padding: 16px;
     }
 
+    .custom-tree-node:hover>.custom-tree-node-tool {
+      display: block !important;
+    }
+
     .custom-tree-node {
-      flex: 1;
+      width: 100%;
+      overflow: hidden;
       display: flex;
       align-items: center;
-      justify-content: space-between;
       padding-right: 10px;
       font-family: PingFangSC, PingFangSC-Regular;
       font-size: 14px;
       color: #8c8c8c;
 
-      &-tool {
-        color: #4981f4;
+      &-label {
+        display: block;
+        width: 70% !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
 
-        em.el-icon-delete {
+      &-tool {
+        color: #8c8c8c;
+        position: absolute;
+        right: 10px;
+        display: none;
+
+        em {
           margin-left: 5px;
+
+          &:hover {
+            color: #3f71f2;
+          }
         }
       }
 
       &:target {
-        color: #4981f4;
+        color: #3f71f2;
       }
     }
   }
@@ -89,5 +114,5 @@
 }
 
 /deep/.el-tree-node.is-current>.el-tree-node__content>.custom-tree-node {
-  color: #4981f4 !important;
+  color: #3f71f2 !important;
 }

@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <table-page
-      :operates="operates"
       :toolsConfig="toolsConfig"
       :tableEvent="tableEvent"
       :tableConfig="tableConfig"
@@ -33,8 +32,14 @@
           :item-row="2"
         ></anso-form>
       </anso-modal>
-      <template v-slot:custom="scoped">
-        <el-input v-model="scoped.row[scoped.prop]"></el-input>
+      <template slot-scope="scoped">
+        <div v-if="isEdit">
+          <el-button size="small" type="text" @click="this.handleEdit(scoped.row)">编辑</el-button>
+          <el-button size="small" type="text" @click="this.handleEdit(scoped.row)">删除</el-button>
+        </div>
+        <div v-else>
+          <el-button size="small" type="text" @click="this.handleEdit(scoped.row)">详情</el-button>
+        </div>
       </template>
     </table-page>
   </div>
@@ -54,7 +59,7 @@ export default {
         address: '上海市普陀区金沙江路 1518 弄',
         switch: '112',
         showButton: false,
-        disabled: true,
+        disabled: true
       },
       {
         id: 2,
@@ -64,6 +69,7 @@ export default {
       }
     ]
     return {
+      isEdit: false,
       tableConfig: {},
       rules: {
         a1: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
@@ -109,7 +115,7 @@ export default {
             }
           },
           {
-            label: '编辑1',
+            label: '详情',
             type: 'text',
             method: (index, row) => {
               this.visible = true
@@ -118,29 +124,14 @@ export default {
           {
             label: '删除',
             type: 'text',
-            method: (index,row,e) => {
+            method: (index, row, e) => {
               // event.target.innerText = '1123'
               // e.target.parentElement.setAttribute('disabled', 'disabled')
               // e.target.parentElement.classList.add('is-disabled')
               // op.label = '11123'
-              
             },
             disabled(row) {
               return row.disabled
-            }
-          },
-          {
-            label: '编辑2',
-            type: 'text',
-            method: (index, row) => {
-              this.visible = true
-            }
-          },
-          {
-            label: '编辑3',
-            type: 'text',
-            method: (index, row) => {
-              this.visible = true
             }
           }
         ]
@@ -252,13 +243,13 @@ export default {
       columns: [
         {
           type: 'selection',
-          width: '55',
+          width: '55'
         },
         {
           prop: 'date',
           label: '日期11',
           sortable: true,
-          format: 'YYYY-MM-DD HH:mm:ss',
+          format: 'YYYY-MM-DD HH:mm:ss'
         },
         {
           prop: 'name',
@@ -268,8 +259,7 @@ export default {
         },
         {
           prop: 'address',
-          label: '地址',
-          custom: true
+          label: '地址'
         },
         {
           prop: 'title',
@@ -293,12 +283,20 @@ export default {
         {
           prop: 'hh3',
           label: '地址3'
+        },
+        {
+          prop: 'operate',
+          label: '操作',
+          slot: true
         }
       ],
       tableData: tData
     }
   },
   methods: {
+    handleEdit(row) {
+      console.log(row)
+    },
     getList() {
       // console.log(this.ruleForm)
       // console.log('list',1111111111222333)

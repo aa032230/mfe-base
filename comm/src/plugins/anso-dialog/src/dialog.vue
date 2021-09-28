@@ -83,7 +83,10 @@ const _dialog = {
           ]
         ),
         h(this.component, {
-          ref: 'child'
+          ref: 'child',
+          attrs: {
+            ...this.componentConfig
+          }
         })
       ]
     )
