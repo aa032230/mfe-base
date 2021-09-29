@@ -74,7 +74,7 @@ export default {
       const { formList, value } = this
       Array.isArray(formList) &&
         formList.forEach((f) => {
-          if (value[f.field]) return
+          if (value[f.field] !== undefined) return
           if (f.model !== undefined) {
             this.$set(value, f.field, f.model)
           } else {

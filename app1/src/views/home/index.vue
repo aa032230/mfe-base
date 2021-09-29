@@ -33,13 +33,9 @@
         ></anso-form>
       </anso-modal>
       <template slot-scope="scoped">
-        <div v-if="isEdit">
-          <el-button size="small" type="text" @click="this.handleEdit(scoped.row)">编辑</el-button>
-          <el-button size="small" type="text" @click="this.handleEdit(scoped.row)">删除</el-button>
-        </div>
-        <div v-else>
-          <el-button size="small" type="text" @click="this.handleEdit(scoped.row)">详情</el-button>
-        </div>
+          <el-button size="small" type="text" @click="handleEdit(scoped.row)">编辑</el-button>
+          <el-button size="small" type="text" @click="handleEdit(scoped.row)">删除</el-button>
+          <el-button size="small" type="text" @click="handleEdit(scoped.row)">详情</el-button>
       </template>
     </table-page>
   </div>
@@ -295,7 +291,7 @@ export default {
   },
   methods: {
     handleEdit(row) {
-      console.log(row)
+      this.visible = true
     },
     getList() {
       // console.log(this.ruleForm)

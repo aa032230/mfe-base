@@ -58,7 +58,6 @@
     .tree {
       height: calc(100% - 101px);
       overflow-y: auto;
-      @include special-scroll();
     }
 
     &-title {
