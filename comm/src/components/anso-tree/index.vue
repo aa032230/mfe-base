@@ -59,6 +59,17 @@ export default {
       },
       deep: true,
       immediate: true
+    },
+    /**
+     * @description: currentNodeKey动态变化时，需要使用setCurrentKey设置选择效果
+     * @param {*} n
+     * @return {*}
+     */
+
+    currentNodeKey(n) {
+      setTimeout(() => {
+        this.setCurrentActive(n)
+      }, 1000)
     }
   },
   mounted() {
@@ -71,7 +82,6 @@ export default {
      * @param {*} cb
      * @return {*}
      */
-
     querySearch(queryString, cb) {
       const { treeConfig } = this
       if (!treeConfig.data) return
@@ -81,14 +91,14 @@ export default {
       // 调用 callback 返回建议列表的数据
       cb(results)
     },
+
     /**
      * @description: 过滤
      * @param {*} queryString
      * @return {*}
      */
-
     createFilter(queryString) {
-      return restaurant => {
+      return (restaurant) => {
         return restaurant[this.treeConfig?.props.label].toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
@@ -98,21 +108,27 @@ export default {
      * @param {*} node
      * @return {*}
      */
-
-    handleSelect(node) {
-      this.setCurrentActive(node.id)
-      this.$emit('select', node)
+    handleSelect(data) {
+      this.setCurrentActive(data.id)
+      let node = this.$refs.tree.getNode(data.id)
+      this.$emit('select', data, node)
     },
+    /**
+     * @description: 根据id设置节点高亮
+     * @param {*} id
+     * @return {*}
+     */
+
     setCurrentActive(id) {
       this.$refs.tree.setCurrentKey(id)
       this.treeNodes.push(id)
     },
+
     /**
      * @description:  编辑
      * @param {*} data
      * @return {*}
      */
-
     handleEdit(data) {
       this.$emit('update', data)
     },
@@ -123,9 +139,25 @@ export default {
      * @param {*} data
      * @return {*}
      */
-
     remove(node, data) {
       this.$emit('remove', data)
+    },
+    /**
+     * @description: 节点点击事件
+     * @param {*} node  当前节点数据
+     * @return {*}
+     */
+    handlerNodeClick(node, ...args) {
+      if (node.disabled) {
+        this.$nextTick(() => {
+          const ele = document.querySelector('.is-focusable')
+          if (!ele.classList.contains('is-current')) {
+            ele.classList.add('is-current')
+          }
+        })
+        return
+      }
+      this.treeEvent['node-click'](node, ...args)
     },
     /**
      * @description: 树结构重绘
@@ -134,43 +166,45 @@ export default {
      * @param {*} store
      * @return {*}
      */
-
     renderContent({ node, data, store }) {
       const { treeConfig } = this
       const _name = treeConfig.props.label
       return (
-        <div
-          class="custom-tree-node"
-        >
-          <span class="custom-tree-node-label" title={data[_name]}>{data[_name]}</span>
-          <span class="custom-tree-node-tool" style={{ display: data.isShow ? 'block' : 'none' }}>
-            {treeConfig.draggable ? <em class="el-icon-rank"></em> : ''}
-            {treeConfig.edit ? (
-              <em
-                class="el-icon-edit-outline"
-                on-click={e => {
-                  e.stopPropagation()
-                  this.handleEdit(data)
-                }}
-              ></em>
-            ) : (
-              ''
-            )}
-            {treeConfig.delete ? (
-              <em
-                class="el-icon-delete"
-                on-click={e => {
-                  e.stopPropagation()
-                  this.remove(node, data)
-                }}
-              ></em>
-            ) : (
-              ''
-            )}
-          </span>
+        <div class={['custom-tree-node', !data.disabled ? '' : 'is_disabled']}>
+          <span class="custom-tree-node-label">{data[_name]}</span>
+          {!data.disabled ? (
+            <span class="custom-tree-node-tool">
+              {treeConfig.draggable ? <em class="el-icon-rank"></em> : ''}
+              {treeConfig.edit ? (
+                <em
+                  class="el-icon-edit-outline"
+                  on-click={(e) => {
+                    e.stopPropagation()
+                    this.handleEdit(data)
+                  }}
+                ></em>
+              ) : (
+                ''
+              )}
+              {treeConfig.delete ? (
+                <em
+                  class="el-icon-delete"
+                  on-click={(e) => {
+                    e.stopPropagation()
+                    this.remove(node, data)
+                  }}
+                ></em>
+              ) : (
+                ''
+              )}
+            </span>
+          ) : (
+            ''
+          )}
         </div>
       )
     },
+
     /**
      * @description:  校验是否同级拖拽
      * @param {*} draggingNode
@@ -178,7 +212,6 @@ export default {
      * @param {*} type
      * @return {*}
      */
-
     allowDrop(draggingNode, dropNode, type) {
       if (draggingNode.level === dropNode.level) {
         if (draggingNode.parent.id === dropNode.parent.id) {
@@ -247,7 +280,10 @@ export default {
               'render-content': (h, options) => this.renderContent(options),
               'default-expanded-keys': treeNodes
             }}
-            on={treeEvent}
+            on={{
+              ...treeEvent,
+              'node-click': this.handlerNodeClick
+            }}
           ></el-tree>
         </div>
         {/* 伸展/收缩按钮 */}

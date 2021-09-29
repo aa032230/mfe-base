@@ -58,13 +58,14 @@
     .tree {
       height: calc(100% - 101px);
       overflow-y: auto;
+      // @include special-scroll();
     }
 
     &-title {
       padding: 16px;
     }
 
-    .custom-tree-node:hover>.custom-tree-node-tool {
+    .custom-tree-node:hover > .custom-tree-node-tool {
       display: block !important;
     }
 
@@ -77,13 +78,16 @@
       font-family: PingFangSC, PingFangSC-Regular;
       font-size: 14px;
       color: #8c8c8c;
-
       &-label {
         display: block;
         width: 70% !important;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+      }
+      &.is_disabled {
+        cursor: not-allowed;
+        color: #ccc;
       }
 
       &-tool {
@@ -94,7 +98,6 @@
 
         em {
           margin-left: 5px;
-
           &:hover {
             color: #3f71f2;
           }
@@ -102,7 +105,7 @@
       }
 
       &:target {
-        color: #3f71f2;
+        color: #4981f4;
       }
     }
   }
@@ -113,5 +116,9 @@
 }
 
 /deep/.el-tree-node.is-current>.el-tree-node__content>.custom-tree-node {
-  color: #3f71f2 !important;
+  color: #4981f4 !important;
+}
+
+/deep/.el-tree-node.is-current>.el-tree-node__content>.custom-tree-node.is_disabled {
+  color: #ccc !important;
 }
