@@ -33,9 +33,9 @@
         ></anso-form>
       </anso-modal>
       <template slot-scope="scoped">
-          <el-button size="small" type="text" @click="handleEdit(scoped.row)">编辑</el-button>
-          <el-button size="small" type="text" @click="handleEdit(scoped.row)">删除</el-button>
-          <el-button size="small" type="text" @click="handleEdit(scoped.row)">详情</el-button>
+        <el-button size="small" type="text" @click="handleEdit(scoped.row)">编辑</el-button>
+        <el-button size="small" type="text" @click="handleEdit(scoped.row)">删除</el-button>
+        <el-button size="small" type="text" @click="handleEdit(scoped.row)">详情</el-button>
       </template>
     </table-page>
   </div>
@@ -43,6 +43,7 @@
 
 <script>
 import { tablePage, ansoModal, ansoForm } from 'comm/src/components'
+import { formValidateGene } from 'comm/src/utils'
 export default {
   name: 'user',
   components: { tablePage, ansoModal, ansoForm },
@@ -68,7 +69,18 @@ export default {
       isEdit: false,
       tableConfig: {},
       rules: {
-        a1: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
+        a1: [
+          { required: true, message: '请输入活动名称', trigger: 'blur' },
+          {
+            validator: formValidateGene([
+              {
+                strategy: 'UpperCase',
+                msg: '请输入大写字母'
+              }
+            ]),
+            trigger: 'blur'
+          }
+        ],
         a2: [{ required: true, message: '请输入活动名称', trigger: 'change' }]
       },
       headerConfig: {
