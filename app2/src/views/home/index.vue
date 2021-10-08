@@ -108,7 +108,7 @@ export default {
             ]
           }
         ],
-        defaultProps: {
+        props: {
           children: 'children',
           label: 'menuName'
         }
