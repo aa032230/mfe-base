@@ -232,9 +232,9 @@ export default {
             height: 'calc(100% - 56px)',
             'header-cell-style': { background: '#f9f9f9' },
             'tooltip-effect': 'light',
-            ...this.tableConfig
+            ...this.$attrs
           }}
-          on={this.tableEvent}
+          on={{ ...this.$listeners }}
         >
           {/* column渲染 */}
           {createColumsFragment(columns)}

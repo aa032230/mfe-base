@@ -35,7 +35,8 @@
       'el-date-editor--' + type,
       pickerSize ? `el-range-editor--${pickerSize}` : '',
       pickerDisabled ? 'is-disabled' : '',
-      pickerVisible ? 'is-active' : ''
+      pickerVisible ? 'is-active' : '',
+      prefixText ? 'el-prefix-text' : ''
     ]"
     @click="handleRangeClick"
     @mouseenter="handleMouseEnter"
@@ -45,40 +46,43 @@
     v-clickoutside="handleClose"
     v-else
   >
-    <div style="font-size: 12px; height: 24px; line-height: 24px" v-show="prefixText">
-      <span style="padding-right: 3px">{{ prefixText }}</span>
-      <span style="padding: 0 2px">|</span>
+  <i :class="['el-input__icon', 'el-range__icon', triggerClass]"></i>
+    <div class="prefixText-wrap" v-show="prefixText">
+      <span class="prefixText">{{ prefixText }}</span>
+      <span class="prefixText-line">|</span>
     </div>
-    <div style="display: flex; align-items: center; flex: 1">
-      <input
-        autocomplete="off"
-        :placeholder="startPlaceholder"
-        :value="displayValue && displayValue[0]"
-        :disabled="pickerDisabled"
-        v-bind="firstInputId"
-        :readonly="!editable || readonly"
-        :name="name && name[0]"
-        @input="handleStartInput"
-        @change="handleStartChange"
-        @focus="handleFocus"
-        class="el-range-input"
-      />
-      <slot name="range-separator">
-        <span class="el-range-separator">{{ rangeSeparator }}</span>
-      </slot>
-      <input
-        autocomplete="off"
-        :placeholder="endPlaceholder"
-        :value="displayValue && displayValue[1]"
-        :disabled="pickerDisabled"
-        v-bind="secondInputId"
-        :readonly="!editable || readonly"
-        :name="name && name[1]"
-        @input="handleEndInput"
-        @change="handleEndChange"
-        @focus="handleFocus"
-        class="el-range-input"
-      />
+    <div class="datepicker-wrap">
+      <div class="datepicker-main">
+        <input
+          autocomplete="off"
+          :placeholder="startPlaceholder"
+          :value="displayValue && displayValue[0]"
+          :disabled="pickerDisabled"
+          v-bind="firstInputId"
+          :readonly="!editable || readonly"
+          :name="name && name[0]"
+          @input="handleStartInput"
+          @change="handleStartChange"
+          @focus="handleFocus"
+          class="el-range-input"
+        />
+        <slot name="range-separator">
+          <span class="el-range-separator">{{ rangeSeparator }}</span>
+        </slot>
+        <input
+          autocomplete="off"
+          :placeholder="endPlaceholder"
+          :value="displayValue && displayValue[1]"
+          :disabled="pickerDisabled"
+          v-bind="secondInputId"
+          :readonly="!editable || readonly"
+          :name="name && name[1]"
+          @input="handleEndInput"
+          @change="handleEndChange"
+          @focus="handleFocus"
+          class="el-range-input"
+        />
+      </div>
       <i
         @click="handleClickIcon"
         v-if="haveTrigger"
@@ -442,7 +446,7 @@ export default {
 
   computed: {
     ranged() {
-      return this.type.indexOf('range') > -1
+      return this?.type.indexOf('range') > -1 
     },
 
     reference() {
@@ -927,10 +931,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.el-date-editor /deep/.el-range__close-icon {
-  width: 20px !important;
-}
-::v-deep.el-input__inner {
-  padding-right: 3px !important;
-}
+@import './picker';
 </style>

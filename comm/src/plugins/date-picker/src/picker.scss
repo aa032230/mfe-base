@@ -1,0 +1,62 @@
+.el-date-editor {
+  width: auto !important;
+  display: inline-flex !important;
+  overflow: hidden;
+}
+::v-deep.el-date-editor--daterange {
+  width: 225px !important;
+}
+::v-deep.el-date-editor--daterange.el-prefix-text {
+  width: 300px !important;
+}
+::v-deep.el-date-editor--datetimerange {
+  width: 336px !important;
+}
+::v-deep.el-date-editor--datetimerange.el-prefix-text {
+  width: 410px !important;
+}
+.el-date-editor /deep/.el-range__close-icon {
+  width: 30px !important;
+}
+::v-deep.el-input__icon.el-range__icon{
+  padding: 0;
+}
+::v-deep.el-input__inner {
+  padding-right: 3px !important;
+}
+.prefixText-wrap {
+  font-size: 12px;
+  height: 24px;
+  line-height: 23px;
+  .prefixText {
+    padding-right: 3px;
+  }
+  .prefixText-line {
+    padding: 0 2px;
+  }
+}
+.datepicker-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex: 1;
+}
+/deep/.el-range-input {
+  text-align: left !important;
+  padding-left: 3px !important;
+  flex: 1;
+  &:nth-of-type(2) {
+    text-align: right !important;
+  }
+}
+.el-input__icon {
+  padding: 0 5px;
+}
+
+.datepicker-main {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -2,8 +2,6 @@
   <div class="home">
     <table-page
       :toolsConfig="toolsConfig"
-      :tableEvent="tableEvent"
-      :tableConfig="tableConfig"
       :form-list="formList"
       :form-data="ruleForm"
       title="用户管理列表"
@@ -67,7 +65,6 @@ export default {
     ]
     return {
       isEdit: false,
-      tableConfig: {},
       rules: {
         a1: [
           { required: true, message: '请输入活动名称', trigger: 'blur' },
@@ -109,9 +106,6 @@ export default {
       modalConfig: {
         title: '标题',
         width: '30%'
-      },
-      tableEvent: {
-        selectionChange: this.selectionChange
       },
       operates: {
         data: [

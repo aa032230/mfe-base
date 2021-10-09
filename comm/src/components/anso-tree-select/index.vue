@@ -48,8 +48,7 @@
       :filter-node-method="filterNode"
       @node-click="handleNodeClick"
       @check-change="handleCheckChange"
-    >
-    </el-tree>
+    ></el-tree>
   </el-select>
 </template>
 
@@ -170,12 +169,12 @@ export default {
           throw new Error('anso-tree-select当前为单选， v-model不能传数组')
         }
         if (this.defaultValue !== '') {
-          console.log('this.defaultValue', this.defaultValue)
           this.checkSelectedNode(this.defaultValue)
         } else {
           this.clearSelectedNode()
         }
       }
+      this.selectData = this.defaultValue || ''
       this.initScroll()
     },
     // 初始化滚动条
@@ -184,7 +183,7 @@ export default {
         let scrollWrap = document.querySelectorAll('.el-scrollbar .el-select-dropdown__wrap')[0]
         let scrollBar = document.querySelectorAll('.el-scrollbar .el-scrollbar__bar')
         scrollWrap.style.cssText = 'margin: 0px; max-height: none; overflow: hidden;'
-        scrollBar.forEach(ele => (ele.style.width = 0))
+        scrollBar.forEach((ele) => (ele.style.width = 0))
       })
     },
     // 单选，节点被点击时的回调,返回被点击的节点数据
@@ -207,7 +206,7 @@ export default {
     /* 清空选中样式 */
     clearSelected() {
       let allNode = document.querySelectorAll('#tree-option .el-tree-node')
-      allNode.forEach(element => element.classList.remove('is-current'))
+      allNode.forEach((element) => element.classList.remove('is-current'))
     },
     // 单选时点击tree节点，设置select选项
     setSelectOption(node) {
@@ -228,14 +227,14 @@ export default {
     // 多选，节点勾选状态发生变化时的回调
     handleCheckChange() {
       let checkedKeys = this.$refs.selectTree.getCheckedKeys() // 所有被选中的节点的 key 所组成的数组数据
-      this.options = checkedKeys.map(item => {
+      this.options = checkedKeys.map((item) => {
         let node = this.$refs.selectTree.getNode(item) // 所有被选中的节点对应的node
         let tmpMap = {}
         tmpMap.value = node.key
         tmpMap.label = node.label
         return tmpMap
       })
-      this.selectData = this.options.map(item => {
+      this.selectData = this.options.map((item) => {
         return item.value
       })
       this.$emit('change', this.selectData, this.options)

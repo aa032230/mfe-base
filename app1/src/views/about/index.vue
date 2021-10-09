@@ -2,7 +2,7 @@
   <div class="about">
     <anso-date-picker
       v-model="value"
-      :type="'datetimerange'"
+      :type="'daterange'"
       :picker-options="pickerOptions"
       range-separator="至"
       size="small"
