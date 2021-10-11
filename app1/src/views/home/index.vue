@@ -40,11 +40,11 @@
 </template>
 
 <script>
-import { tablePage, ansoModal, ansoForm } from 'comm/src/components'
+// import { tablePage, ansoModal, ansoForm } from 'comm/src/components'
 import { formValidateGene } from 'comm/src/utils'
 export default {
   name: 'user',
-  components: { tablePage, ansoModal, ansoForm },
+  // components: { tablePage, ansoModal, ansoForm },
   data() {
     const tData = [
       {
@@ -141,13 +141,12 @@ export default {
       toolsConfig: ['refresh', 'print', 'export', 'space', 'setting'],
       formList: [
         {
-          name: '系统模块',
+          name: '日期',
           field: 'a1',
           model: '',
-          width: '150px',
-          input(val) {
-            console.log(val)
-          }
+          type: 'datePicker',
+          dateType: 'daterange',
+          isCycleAlive: true,
         },
         {
           name: '系统模块11',

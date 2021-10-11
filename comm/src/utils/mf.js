@@ -1,5 +1,6 @@
 import actions from './actions'
-import { ansoPrompt, ansoDatePick, ansoDialog } from '../plugins'
+import { ansoPrompt, ansoDialog } from '../plugins'
+import * as pendingRegisteredComponents from '../components'
 if (isLoadInSubAppContainer()) {
   /* eslint no-undef: "off" */
   __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__
@@ -25,10 +26,12 @@ export function wrapStartup(startup) {
         {
           install: function (v) {
             v.prototype.__CONTEXT__ = window.__CONTEXT__
+            Object.values(pendingRegisteredComponents).forEach((c) => {
+              v.component(c.name, c)
+            })
           }
         },
         ansoPrompt,
-        ansoDatePick,
         ansoDialog
       )
       actions.setActions(props)

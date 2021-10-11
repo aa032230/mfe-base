@@ -186,6 +186,8 @@ export default {
           )
       }
     },
+    // 校验select options字段，针对不同情况进行不同处理
+    checkOptions(options) {},
     // 属性和事件导入
     createFormAttrs(formOptions) {
       const _props = {}
