@@ -144,7 +144,7 @@ export default {
           name: '日期',
           field: 'a1',
           model: '',
-          type: 'datePicker',
+          type: 'date',
           dateType: 'daterange',
           isCycleAlive: true,
         },
