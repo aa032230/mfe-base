@@ -1,6 +1,7 @@
 import actions from './actions'
 import { ansoPrompt, ansoDialog } from '../plugins'
 import * as pendingRegisteredComponents from '../components'
+import { showFullScreenLoading, hideFullScreenLoading } from './loading'
 if (isLoadInSubAppContainer()) {
   /* eslint no-undef: "off" */
   __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__
@@ -26,6 +27,8 @@ export function wrapStartup(startup) {
         {
           install: function (v) {
             v.prototype.__CONTEXT__ = window.__CONTEXT__
+            v.prototype.startLoading = showFullScreenLoading
+            v.prototype.closeLoading = hideFullScreenLoading
             Object.values(pendingRegisteredComponents).forEach((c) => {
               v.component(c.name, c)
             })
