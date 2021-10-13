@@ -224,6 +224,7 @@ export default {
     return (
       <div class="table-wrap">
         <el-table
+          v-loading={this.tableData.length ? false : true}
           class="v-table"
           data={tableData}
           style="width: 100%;"

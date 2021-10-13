@@ -11,37 +11,37 @@ export default {
           {
             text: '本周',
             onClick(picker) {
-              useIntervalPeriod(picker,0, 'week')
+              useIntervalPeriod(picker, 0, 'week')
             }
           },
           {
             text: '上周',
             onClick(picker) {
-              useIntervalPeriod(picker,1, 'week')
+              useIntervalPeriod(picker, 1, 'week')
             }
           },
           {
             text: '本月',
             onClick(picker) {
-              useIntervalPeriod(picker,0, 'month')
+              useIntervalPeriod(picker, 0, 'month')
             }
           },
           {
             text: '上月',
             onClick(picker) {
-              useIntervalPeriod(picker,1, 'month')
+              useIntervalPeriod(picker, 1, 'month')
             }
           },
           {
             text: '本年',
             onClick(picker) {
-              useIntervalPeriod(picker,0, 'year')
+              useIntervalPeriod(picker, 0, 'year')
             }
           },
           {
             text: '上年',
             onClick(picker) {
-              useIntervalPeriod(picker,1, 'year')
+              useIntervalPeriod(picker, 1, 'year')
             }
           },
           {
@@ -92,11 +92,14 @@ export default {
     }
   },
   render(h) {
-    const { isCycleAlive } = this.$attrs
+    const { isCycleAlive, pickerOptions } = this.$attrs
+    if (isCycleAlive && pickerOptions) {
+      Object.assign(this.pickerOptions, pickerOptions)
+    }
     return (
       <DatePicker
         v-model={this.pickValue}
-        picker-options={isCycleAlive ? this.pickerOptions : {}}
+        picker-options={isCycleAlive ? this.pickerOptions : this.$attrs.pickerOptions}
         attrs={{
           size: 'small',
           placeholder: '选择日期',
