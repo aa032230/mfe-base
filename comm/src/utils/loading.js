@@ -1,6 +1,6 @@
 /**
  * @description: loading类
- * @param {*} context 当前实例
+ * @param {*} context 当前vue实例
  * @return {*}
  */
 export class ChangeLoading {
