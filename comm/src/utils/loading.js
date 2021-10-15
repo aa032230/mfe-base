@@ -1,4 +1,3 @@
-import { Loading } from 'element-ui'
 /**
  * @description: loading类
  * @param {*} context 当前vue实例
@@ -6,11 +5,13 @@ import { Loading } from 'element-ui'
  */
 export class ChangeLoading {
   constructor(context) {
-    // 用于存储请求个数
     this.vm = context
+    // 用于存储请求个数
     this.needLoadingRequestCount = 0
-    this.el = 'body' // 挂载对象
-    this.init()
+    // 挂载对象
+    this.el = 'body'
+    // 实例存在执行
+    this.vm && this.init()
   }
   /**
    * @description: 初始化
@@ -22,37 +23,14 @@ export class ChangeLoading {
     vm.prototype.startLoading = showFullScreenLoading.bind(this)
     vm.prototype.closeLoading = hideFullScreenLoading.bind(this)
   }
-
   /**
-   * @description:  开启
-   * @param {*} el  loading挂载元素
-   * @return {*}
-   */
-  static startLoading(el) {
-    this.loading = Loading.service({
-      lock: true,
-      text: '努力加载中...',
-      background: 'rgba(255,255,255,1)',
-      target: document.querySelector(el) // 设置加载动画区域
-    })
-  }
-  /**
-   * @description:  关闭
-   * @param {*}
-   * @return {*}
-   */
-  static endLoading() {
-    this.loading.close()
-  }
-  /**
-   * @description: 开启loading
+   * @description: 加载loading
    * @param {*} el loading挂载元素
    * @return {*}
    */
-  showFullScreenLoading(el) {
-    el ? (this.el = el) : this.el
+  showFullScreenLoading(el, options) {
     if (this.needLoadingRequestCount === 0) {
-      ChangeLoading.startLoading(this.el)
+      ChangeLoading.startLoading.call(this, el, options)
     }
     this.needLoadingRequestCount++
   }
@@ -65,7 +43,35 @@ export class ChangeLoading {
     if (this.needLoadingRequestCount <= 0) return
     this.needLoadingRequestCount--
     if (this.needLoadingRequestCount === 0) {
-      ChangeLoading.endLoading()
+      ChangeLoading.endLoading.call(this)
     }
+  }
+  /**
+   * @description:  开启
+   * @param {*} el  loading挂载元素
+   * @return {*}
+   */
+  static startLoading(el, options) {
+    const loading = this.vm.prototype.$loading
+    this.el = el ? el : this.el
+    
+    let loadOption = {
+      fullscreen: false,
+      lock: true,
+      text: '努力加载中...',
+      target: this.el // 设置加载动画区域
+    }
+    loadOption = options ? (loadOption = options) : loadOption
+    process.nextTick(() => {
+      this.loading = loading(loadOption)
+    })
+  }
+  /**
+   * @description:  关闭
+   * @param {*}
+   * @return {*}
+   */
+  static endLoading() {
+    this.loading.close()
   }
 }

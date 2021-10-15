@@ -146,7 +146,7 @@ export default {
           model: '',
           type: 'date',
           dateType: 'daterange',
-          isCycleAlive: true,
+          isCycleAlive: true
         },
         {
           name: '系统模块11',
@@ -293,6 +293,12 @@ export default {
       ],
       tableData: tData
     }
+  },
+  created() {
+    this.startLoading('.table-page-main-table')
+    setTimeout(() => {
+      this.closeLoading()
+    }, 2000)
   },
   methods: {
     handleEdit(row) {
