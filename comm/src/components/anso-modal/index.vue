@@ -77,7 +77,6 @@ export default {
     },
     // 打开重置列表
     handleOpen() {
-      DataBus.emit('reset', true)
       this.$emit('open')
     },
     // 获取实例

@@ -1,5 +1,4 @@
 <script>
-import { DataBus } from '../../utils/'
 import { ansoTreeSelect, ansoDatePicker } from '../'
 export default {
   name: 'anso-form',
@@ -50,7 +49,6 @@ export default {
   },
   mounted() {
     this.initForm()
-    DataBus.on('reset', (res) => res && this.initForm())
     // 渲染完后再调异步数据
     this.$nextTick(() => {
       this.formList.forEach((item) => {
@@ -59,14 +57,6 @@ export default {
         }
       })
     })
-  },
-  watch: {
-    formList: {
-      handler() {
-        this.initForm()
-      },
-      deep: true
-    }
   },
   methods: {
     // 初始化表单
