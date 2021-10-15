@@ -1,6 +1,6 @@
 /**
  * @description: loading类
- * @param {*} context 当前vue实例
+ * @param {*} context 当前实例
  * @return {*}
  */
 export class ChangeLoading {
@@ -54,7 +54,7 @@ export class ChangeLoading {
   static startLoading(el, options) {
     const loading = this.vm.prototype.$loading
     this.el = el ? el : this.el
-    
+
     let loadOption = {
       fullscreen: false,
       lock: true,
