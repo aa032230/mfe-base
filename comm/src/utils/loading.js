@@ -54,7 +54,7 @@ export class ChangeLoading {
   static startLoading(el, options) {
     const loading = this.vm.prototype.$loading
     this.el = el ? el : this.el
-    
+
     let loadOption = {
       fullscreen: false,
       lock: true,
