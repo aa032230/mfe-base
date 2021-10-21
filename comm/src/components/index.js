@@ -2,6 +2,7 @@
 // export { default as vTree } from './v-tree'
 export { default as ansoTreeSelect } from './anso-tree-select'
 export { default as ansoDatePicker } from './anso-date-picker'
+export { default as ansoButton } from './anso-button'
 export { default as ansoTree } from './anso-tree'
 export { default as ansoSidebar } from './anso-sidebar'
 export { default as ansoForm } from './anso-form'

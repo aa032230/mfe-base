@@ -1,8 +1,7 @@
 <script>
 import { modalDrag } from '../../directives'
-import { DataBus } from '../../utils/'
 export default {
-  name: 'anso-modal',
+  name: 'AnsoModal',
   props: {
     visible: {
       type: Boolean,
@@ -14,6 +13,10 @@ export default {
       default() {
         return {}
       }
+    },
+    size: {
+      type: String,
+      default: 'small'
     },
     // 按钮
     buttonConfig: {
@@ -31,6 +34,11 @@ export default {
           }
         ]
       }
+    },
+    // 是否显示底部插槽
+    isFooter: {
+      type: Boolean,
+      default: true
     }
   },
   directives: {
@@ -47,17 +55,28 @@ export default {
     }
   },
   watch: {
-    // 重新打开还原位置
+    /**
+     * @description:  重新打开还原位置
+     * @param {*} val
+     * @return {*}
+     */
     dialogVisible(val) {
       if (val) {
-        const el = this.$el.querySelector('.el-dialog')
-        el.style.left = 0
-        el.style.top = 0
+        console.log(this)
+        this.$nextTick(() => {
+          const el = this.$children[0].$refs.dialog
+          el.style.left = 0
+          el.style.top = 0
+        })
       }
     }
   },
   methods: {
-    // 重置表单
+    /**
+     * @description: 表单重置
+     * @param {*}
+     * @return {*}
+     */
     resetForm() {
       this.dialogVisible = false
       const _instance = this.getInstance()
@@ -65,78 +84,120 @@ export default {
       const { ruleForm } = _instance
       ruleForm.resetFields()
     },
-    // 取消
+
+    /**
+     * @description:  取消
+     * @param {*}
+     * @return {*}
+     */
     handleCancle() {
       this.resetForm()
       this.$emit('cancel')
     },
-    // 关闭
+
+    /**
+     * @description:  关闭
+     * @param {*}
+     * @return {*}
+     */
     handleClose() {
-      this.resetForm()
       this.$emit('close')
+      this.resetForm()
     },
-    // 打开重置列表
+
+    /**
+     * @description:  打开重置列表
+     * @param {*}
+     * @return {*}
+     */
     handleOpen() {
       this.$emit('open')
     },
-    // 获取实例
+
+    /**
+     * @description:  获取实例
+     * @param {*}
+     * @return {*}
+     */
     getInstance() {
       if (!this.$slots.default[0].componentInstance?.$refs?.ruleForm) return
-      const { $refs, value } = this.$slots.default[0].componentInstance
+      const { $refs, value } = this.$slots.default[0]?.componentInstance
       return {
         ruleForm: $refs.ruleForm,
         form: value
       }
     },
-    // 确定
+
+    /**
+     * @description:  确定
+     * @param {*}
+     * @return {*}
+     */
     handleSubmit() {
       const _instance = this.getInstance()
-      if (!_instance) return
+      if (!_instance) {
+        return this.$emit('submit')
+      }
       const { ruleForm, form } = _instance
-      ruleForm.validate((valid) => {
+      ruleForm.validate(valid => {
         if (valid) {
           this.$emit('submit', form)
-          this.dialogVisible = false
         } else {
           console.log('error submit!!')
         }
       })
     }
   },
+
+  /**
+   * @description: DOM渲染
+   * @param {*}
+   * @return {*}
+   */
   render() {
-    return (
+    return this.dialogVisible ? (
       <el-dialog
         close-on-click-modal={false}
         v-modal-drag
-        attrs={{ ...this.modalConfig }}
+        attrs={{
+          width: this.size === 'lg' ? '900px' : this.size === 'small' ? '484px' : 'auto',
+          ...this.modalConfig
+        }}
         visible={this.dialogVisible}
         onOpen={this.handleOpen}
         onClose={this.handleClose}
-        on={{ 'update:visible': (val) => (this.dialogVisible = val) }}
+        on={{ 'update:visible': val => (this.dialogVisible = val) }}
       >
+        {this.$slots.title ? <template slot="title">{this.$slots.title}</template> : ''}
         <div class="v-modal-body">{this.$slots.default}</div>
         {this.buttonConfig.length ? (
-          <span slot="footer" class="dialog-footer">
-            {this.buttonConfig.map((item) => {
+          <span class="dialog-footer" slot="footer">
+            {this.buttonConfig.map(item => {
               switch (item.name) {
                 case 'cancel':
                   return (
-                    <el-button size={item.size ? item.size : 'mini'} type={item.type} nativeOnClick={this.handleCancle}>
+                    <el-button
+                      size={item.size ? item.size : 'small'}
+                      type={item.type}
+                      nativeOnClick={this.handleCancle}
+                    >
                       {item.text}
                     </el-button>
                   )
                 case 'confirm':
                   return (
-                    <el-button type={item.type} size={item.size ? item.size : 'mini'} onClick={this.handleSubmit}>
+                    <el-button type={item.type} size={item.size ? item.size : 'small'} onClick={this.handleSubmit}>
                       {item.text}
                     </el-button>
                   )
+                case 'custom':
+                  return item.custom()
                 default:
                   return (
                     <el-button
-                      size={item.size ? item.size : 'mini'}
+                      size={item.size ? item.size : 'small'}
                       type={item.type}
-                      nativeOnClick={(e) => {
+                      nativeOnClick={e => {
                         e.preventDefault()
                         item.method()
                       }}
@@ -151,6 +212,8 @@ export default {
           ''
         )}
       </el-dialog>
+    ) : (
+      ''
     )
   }
 }

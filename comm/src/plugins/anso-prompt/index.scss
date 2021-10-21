@@ -1,46 +1,52 @@
-.el-message-box--center .el-message-box__header {
-  padding: 0 !important;
-  display: flex;
-  justify-content: space-between;
 
-  >.el-message-box__headerbtn {
-    position: static;
+/** 消息提示框样式 */
+.el-message-box {
+  width: 416px;
+  .el-message-box__header {
+    padding: 24px 12px 6px 0;
+    .el-message-box__title {
+      margin-left: 12px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #262626;
+      margin-top: -10px;
+
+      span {
+        padding-left: 27px;
+      }
+    }
   }
-
-}
-
-.el-message-box--center {
-  padding: 15px !important;
-  text-align: right;
-
   .el-message-box__content {
-    text-align: left !important;
-    padding-left: 30px !important;
+    color: #626262;
+    .el-message-box__status {
+      top: -24px;
+    }
   }
-
-  .el-message-box__btns {
-    text-align: right !important;
+  .el-button--small {
+    font-size: 14px !important;
+  }
+  .el-message-box__btns button:nth-child(2) {
+    margin-left: 8px;
   }
 }
-.el-message-box__title{
+
+.el-message-box__status {
+  top: -29px;
+  font-size: 18px !important;
+}
+
+.el-message-box__title {
+  padding-left: 6px;
   font-size: 16px;
-}
-.btn-primary {
-  background-color: #3171f2 !important;
-  border-color: #3171f2 !important;
-}
-
-.btn-error {
-  background-color: #ff4d4f !important;
-  border-color: #ff4d4f !important;
+  font-weight: 500;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.85);
 }
 
-
+.el-message-box__status+.el-message-box__message {
+  padding-left: 31px;
+}
 .anso-confirm {
-  .el-message-box__content {
-    text-align: left !important;
-  }
-
   .el-message-box__status::before {
     color: #3171f2;
     padding-right: 10px !important;

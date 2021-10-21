@@ -9,6 +9,7 @@
       start-placeholder="开始日期"
       end-placeholder="结束日期"
     ></anso-date-picker>
+    <anso-button type="primary" @click="handleChange" size="small" :permission="permission">我是按钮</anso-button>
   </div>
 </template>
 <script>
@@ -16,6 +17,7 @@ export default {
   name: 'about',
   data() {
     return {
+      permission: {},
       pickerOptions: {
         shortcuts: [
           {
@@ -48,6 +50,11 @@ export default {
         ]
       },
       value: ''
+    }
+  },
+  methods: {
+    handleChange() {
+      console.log(121321312)
     }
   }
 }

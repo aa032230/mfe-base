@@ -24,6 +24,7 @@
     :collapse-tags="collapseTags"
     :clearable="clearable"
     :placeholder="selectPlaceHolder"
+    :disabled="disabled"
     @clear="clearHandle"
     class="tree-select"
   >
@@ -36,14 +37,13 @@
       id="tree-option"
       ref="selectTree"
       :accordion="accordion"
-      :data="data"
+      :data="treeData"
       :props="props"
       :show-checkbox="multiple"
       :check-on-click-node="multiple"
       :check-strictly="checkStrictly"
       :node-key="props.value"
       :default-expanded-keys="defaultExpandedKey"
-      default-expand-all
       :highlight-current="true"
       :filter-node-method="filterNode"
       @node-click="handleNodeClick"
@@ -53,8 +53,9 @@
 </template>
 
 <script>
+import { cloneDeep } from 'lodash'
 export default {
-  name: 'anso-tree-select',
+  name: 'AnsoTreeSelect',
   props: {
     /* 配置项 */
     props: {
@@ -70,7 +71,7 @@ export default {
     /* 选项列表数据(树形结构的对象数组) */
     data: {
       type: Array,
-      default: () => {
+      default() {
         return []
       }
     },
@@ -101,6 +102,15 @@ export default {
         return false
       }
     },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    nothave: {
+      // 是否展示无
+      type: Boolean,
+      default: false
+    },
     /* 是否可多选 */
     multiple: {
       type: Boolean,
@@ -117,9 +127,7 @@ export default {
     },
     size: {
       type: String,
-      default() {
-        return 'small'
-      }
+      default: 'small'
     },
     placeholder: {
       type: String,
@@ -140,6 +148,7 @@ export default {
       selectData: undefined, // 选中的节点
       defaultValue: this.value, // 初始值
       defaultExpandedKey: [],
+      treeData: [],
       options: [
         {
           value: '',
@@ -150,34 +159,64 @@ export default {
   },
   mounted() {
     this.initCheckedData()
+    console.log(this.selectData)
   },
   methods: {
+    /**
+     * @description: 初始化选中数据
+     * @param {*}
+     * @return {*}
+     */
+
     initCheckedData() {
-      if (this.multiple) {
-        // 多选
-        if (!Array.isArray(this.defaultValue)) {
-          throw new Error('anso-tree-select当前为多选， v-model请传数组')
-        }
-        if (this.defaultValue.length > 0) {
-          this.checkSelectedNodes(this.defaultValue)
-        } else {
-          this.clearSelectedNodes()
-        }
-      } else {
-        // 单选
-        if (Array.isArray(this.defaultValue)) {
-          throw new Error('anso-tree-select当前为单选， v-model不能传数组')
-        }
-        if (this.defaultValue !== '') {
-          this.checkSelectedNode(this.defaultValue)
-        } else {
-          this.clearSelectedNode()
-        }
+      this.treeData = []
+      if (!this.nothave) {
+        this.treeData = [
+          {
+            id: '9999999',
+            parentId: '',
+            [this.props.value]: '0',
+            [this.props.label]: '---无---'
+          }
+        ]
       }
-      this.selectData = this.defaultValue || ''
+      const _data = cloneDeep(this.data)
+      if (_data.length) {
+        this.treeData.push(..._data)
+      }
+      process.nextTick(() => {
+        if (this.multiple) {
+          // 多选
+          if (!Array.isArray(this.defaultValue)) {
+            throw new Error('anso-tree-select当前为多选， v-model请传数组')
+          }
+          if (this.defaultValue.length > 0) {
+            this.checkSelectedNodes(this.defaultValue)
+            this.handleCheckChange()
+          } else {
+            this.clearSelectedNodes()
+          }
+        } else {
+          // 单选
+          if (Array.isArray(this.defaultValue)) {
+            throw new Error('anso-tree-select当前为单选， v-model不能传数组')
+          }
+          if (this.defaultValue !== '') {
+            this.checkSelectedNode(this.defaultValue)
+          } else {
+            this.clearSelectedNode()
+          }
+        }
+        this.selectData = this.defaultValue
+      })
       this.initScroll()
     },
-    // 初始化滚动条
+    /**
+     * @description: 初始化滚动条
+     * @param {*}
+     * @return {*}
+     */
+
     initScroll() {
       this.$nextTick(() => {
         let scrollWrap = document.querySelectorAll('.el-scrollbar .el-select-dropdown__wrap')[0]
@@ -186,14 +225,25 @@ export default {
         scrollBar.forEach((ele) => (ele.style.width = 0))
       })
     },
-    // 单选，节点被点击时的回调,返回被点击的节点数据
+    /**
+     * @description:  单选，节点被点击时的回调,返回被点击的节点数据
+     * @param {*} data
+     * @param {*} node
+     * @return {*}
+     */
+
     handleNodeClick(data, node) {
       if (!this.multiple) {
         this.setSelectOption(node)
         this.$emit('change', this.selectData, data)
       }
     },
-    // 清除选中
+    /**
+     * @description: 清除选中
+     * @param {*}
+     * @return {*}
+     */
+
     clearHandle() {
       if (this.multiple) {
         this.selectData = []
@@ -203,12 +253,22 @@ export default {
       this.clearSelected()
       this.$emit('change', null)
     },
-    /* 清空选中样式 */
+    /**
+     * @description: 清空选中样式
+     * @param {*}
+     * @return {*}
+     */
+    /*  */
     clearSelected() {
       let allNode = document.querySelectorAll('#tree-option .el-tree-node')
       allNode.forEach((element) => element.classList.remove('is-current'))
     },
-    // 单选时点击tree节点，设置select选项
+    /**
+     * @description: 单选时点击tree节点，设置select选项
+     * @param {*} node
+     * @return {*}
+     */
+
     setSelectOption(node) {
       let tmpMap = {}
       tmpMap.value = node?.key
@@ -218,13 +278,23 @@ export default {
       this.selectData = node?.key
       this.$refs.treeSelect.blur()
     },
-    // 单选，选中传进来的节点
+    /**
+     * @description:  单选，选中传进来的节点
+     * @param {*} checkedKey
+     * @return {*}
+     */
+
     checkSelectedNode(checkedKey) {
       this.$refs.selectTree.setCurrentKey(checkedKey)
       let node = this.$refs.selectTree.getNode(checkedKey)
       this.setSelectOption(node)
     },
-    // 多选，节点勾选状态发生变化时的回调
+    /**
+     * @description: 多选，节点勾选状态发生变化时的回调
+     * @param {*}
+     * @return {*}
+     */
+
     handleCheckChange() {
       let checkedKeys = this.$refs.selectTree.getCheckedKeys() // 所有被选中的节点的 key 所组成的数组数据
       this.options = checkedKeys.map((item) => {
@@ -239,35 +309,77 @@ export default {
       })
       this.$emit('change', this.selectData, this.options)
     },
-    // 多选，勾选上传进来的节点
+    /**
+     * @description: 多选，勾选上传进来的节点
+     * @param {*} checkedKeys
+     * @return {*}
+     */
+
     checkSelectedNodes(checkedKeys) {
       this.$refs.selectTree.setCheckedKeys(checkedKeys)
     },
-    // 单选，清空选中
+    /**
+     * @description: 单选，清空选中
+     * @param {*}
+     * @return {*}
+     */
+
     clearSelectedNode() {
       this.selectedData = ''
       this.$refs.selectTree.setCurrentKey(null)
     },
-    // 多选，清空所有勾选
+    /**
+     * @description:  多选，清空所有勾选
+     * @param {*}
+     * @return {*}
+     */
+
     clearSelectedNodes() {
       let checkedKeys = this.$refs.selectTree.getCheckedKeys() // 所有被选中的节点的 key 所组成的数组数据
       for (let i = 0; i < checkedKeys.length; i++) {
         this.$refs.selectTree.setChecked(checkedKeys[i], false)
       }
     },
+    /**
+     * @description: 节点过滤
+     * @param {*} value
+     * @param {*} data
+     * @return {*}
+     */
+
     filterNode(value, data) {
       if (!value) return true
       return data[this.props.label].indexOf(value) !== -1
     }
   },
   watch: {
-    value() {
-      this.defaultValue = this.value
-      this.initCheckedData()
+    /**
+     * @description:
+     * @param {*} val
+     * @return {*}
+     */
+
+    value(val) {
+      this.defaultValue = val
+      this.$nextTick(() => {
+        this.initCheckedData()
+      })
     },
+    /**
+     * @description:
+     * @param {*} val
+     * @return {*}
+     */
+
     filterText(val) {
       this.$refs.selectTree.filter(val)
     },
+    /**
+     * @description:
+     * @param {*}
+     * @return {*}
+     */
+
     selectData: {
       handler(val) {
         // 如果是多选
@@ -292,69 +404,28 @@ export default {
                 label: ''
               }
             ]
-            this.$refs.selectTree.setCurrentKey(val)
+            this.checkSelectedNode(val)
           }
         }
         this.$emit('input', val)
       }
+    },
+    /**
+     * @description:
+     * @param {*}
+     * @return {*}
+     */
+
+    data: {
+      handler(val) {
+        this.initCheckedData()
+      },
+      immediate: true
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/style/base.scss';
-// .el-scrollbar .el-scrollbar__view .el-select-dropdown__item {
-//   height: auto;
-//   max-height: 274px;
-//   padding: 0;
-//   overflow: hidden;
-//   overflow-y: auto;
-//   @include special-scroll();
-// }
-.el-tree {
-  height: auto;
-  max-height: 374px;
-  padding: 0;
-  overflow: hidden;
-  overflow-y: auto;
-  @include special-scroll();
-}
-.el-select-dropdown__item.selected {
-  font-weight: normal;
-}
-ul li >>> .el-tree .el-tree-node__content {
-  height: auto;
-  padding: 0 20px;
-}
-.el-tree-node__label {
-  font-weight: normal;
-}
-.el-tree >>> .is-current .el-tree-node__label {
-  color: #409eff;
-  font-weight: 700;
-}
-.el-tree >>> .is-current .el-tree-node__children .el-tree-node__label {
-  color: #606266;
-  font-weight: normal;
-}
-.selectInput {
-  padding: 0 5px;
-  box-sizing: border-box;
-}
-.tree-select {
-  /deep/ .el-tag {
-    .el-tag__close {
-      color: #fff;
-      &:hover {
-        background: $activeColor;
-      }
-    }
-  }
-  /deep/.el-icon-circle-close {
-    &:hover {
-      color: $activeColor;
-    }
-  }
-}
+@import './index';
 </style>

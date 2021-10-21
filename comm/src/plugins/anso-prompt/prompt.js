@@ -25,7 +25,6 @@ export default class ansoPrompt {
       this.vue
         .$confirm(message, title, {
           ...confirmAttrs,
-          center: true,
           ...this.withTypeSetClass(type),
           dangerouslyUseHTMLString: true
         })
@@ -44,7 +43,6 @@ export default class ansoPrompt {
     const { type, message } = confirmAttrs
     this.vue.$alert(message, title, {
       ...confirmAttrs,
-      center: true,
       ...this.withTypeSetClass(type),
       dangerouslyUseHTMLString: true
     })

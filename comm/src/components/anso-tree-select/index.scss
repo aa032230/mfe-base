@@ -1,0 +1,66 @@
+@import '../../assets/style/base.scss';
+// .el-scrollbar .el-scrollbar__view .el-select-dropdown__item {
+//   height: auto;
+//   max-height: 274px;
+//   padding: 0;
+//   overflow: hidden;
+//   overflow-y: auto;
+//   @include special-scroll();
+// }
+.el-tree {
+  height: auto;
+  max-height: 374px;
+  padding: 0;
+  overflow: hidden;
+  overflow-y: auto;
+  @include special-scroll();
+}
+.el-select-dropdown__item.selected {
+  font-weight: normal;
+}
+ul li >>> .el-tree .el-tree-node__content {
+  height: auto;
+  padding: 0 20px;
+  width: 100%;
+}
+/deep/ .el-tree-node__content {
+  width: 100%;
+  padding: 1px 0;
+}
+.el-tree-node__label {
+  font-weight: normal;
+}
+.el-tree >>> .is-current .el-tree-node__label {
+  color: #409eff;
+  font-weight: 700;
+}
+.el-tree >>> .is-current .el-tree-node__children .el-tree-node__label {
+  color: #606266;
+  font-weight: normal;
+}
+/deep/.el-tree-node__label {
+  display: block;
+  width: 70% !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.selectInput {
+  padding: 0 5px;
+  box-sizing: border-box;
+}
+.tree-select {
+  /deep/ .el-tag {
+    .el-tag__close {
+      color: #fff;
+      &:hover {
+        background: $activeColor;
+      }
+    }
+  }
+  /deep/.el-icon-circle-close {
+    &:hover {
+      color: $activeColor;
+    }
+  }
+}

@@ -72,6 +72,8 @@ export class ChangeLoading {
    * @return {*}
    */
   static endLoading() {
-    this.loading.close()
+    process.nextTick(() => {
+      this.loading.close()
+    })
   }
 }
