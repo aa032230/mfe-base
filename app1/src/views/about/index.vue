@@ -1,16 +1,16 @@
 <template>
   <div class="about">
-    <!-- <anso-date-picker
+    <anso-date-picker
       v-model="value"
       :type="'daterange'"
-      :picker-options="pickerOptions"
       range-separator="至"
       size="small"
+      :isCycleAlive="true"
       start-placeholder="开始日期"
       end-placeholder="结束日期"
     ></anso-date-picker>
-    <anso-button type="primary" @click="handleChange" size="small" :permission="permission">我是按钮</anso-button> -->
-    <anso-table
+    <anso-button type="primary" @click="handleChange" size="small" :permission="permission">我是按钮</anso-button>
+    <!-- <anso-table
       :columns="columns"
       :tableData="tableData"
       :operates="operates"
@@ -18,7 +18,7 @@
       @row-click="rowClick"
       @cell-click="cellClick"
       stripe
-    />
+    /> -->
   </div>
 </template>
 <script>
