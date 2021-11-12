@@ -227,6 +227,7 @@ export default {
     const { model, rules, labelWidth, labelPosition, formList, formConfig } = this
     return (
       <el-form
+        nativeOnSubmit={(e) => e.preventDefault()}
         props={{
           model: model ? model : this.value,
           rules,

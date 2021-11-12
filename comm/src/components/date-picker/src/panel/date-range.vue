@@ -748,3 +748,8 @@ export default {
   components: { TimePicker, DateTable, ElInput, ElButton }
 }
 </script>
+<style lang="scss" scoped>
+.el-picker-panel__shortcut{
+  text-align: center !important;
+}
+</style>

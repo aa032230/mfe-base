@@ -230,7 +230,7 @@ export default {
           style="width: 100%;"
           row-style={rowStyle}
           attrs={{
-            height: 'calc(100% - 56px)',
+            height: 'calc(100% - 67px)',
             'header-cell-style': { background: '#f9f9f9' },
             'tooltip-effect': 'light',
             ...this.$attrs

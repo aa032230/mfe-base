@@ -31,6 +31,15 @@ export default {
     return valid(str, regex)
   },
   /**
+   * @description: 只能输入数字,小数,负数
+   * @param {*} num
+   * @return {*}
+   */
+  checkInt(num) {
+    const regex = /^[+-]?\d*\.{0,1}\d+$/
+    return valid(num, regex)
+  },
+  /**
    * @description: 只能输入数字
    * @param {*} num
    * @return {*}

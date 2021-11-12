@@ -13,6 +13,7 @@
     "dayjs": "^1.10.7",
     "default-passive-events": "^2.0.0",
     "element-ui": "^2.15.6",
+    "lodash": "^4.17.21",
     "print-js": "^1.6.0",
     "resize-observer-polyfill": "^1.5.1",
     "vue": "^2.6.11",

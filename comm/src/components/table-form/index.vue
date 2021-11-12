@@ -45,10 +45,11 @@ export default {
     this.getElementRealTimeHeight()
     window.addEventListener('resize', this.getElementRealTimeHeight)
     // this.initForm()
+    this.$once('hook:beforeDestroy', () => {
+      window.removeEventListener('resize', this.getElementRealTimeHeight)
+    })
   },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.getElementRealTimeHeight)
-  },
+
   methods: {
     // 初始化表单字段
     initForm() {

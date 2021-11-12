@@ -1,6 +1,7 @@
 <script>
 import { modalDrag } from '../../../directives'
 const _dialog = {
+  name: 'AnsoDialog',
   data() {
     return {
       visible: false
@@ -42,6 +43,7 @@ const _dialog = {
           title: this.title,
           width: this.width || '30%',
           'before-close': this.handleClose,
+          open: this.$emit('open'),
           'close-on-click-modal': false
         },
         directives: [{ name: 'modal-drag' }]

@@ -25,7 +25,7 @@ export function onInput(el, binding, vnode) {
     // modifiers为修饰符对象，传入了float，则其float属性为true v-input-number.float="2"
     if (binding.modifiers.float) {
       // 清除"数字"和"."以外的字符
-      val = val.replace(/[^\d.]/g, '')
+      val = val.replace(/^[-]{0,1}\d.|[^\d.]/g, '')
       // 只保留第一个, 清除多余的
       val = val.replace(/\.{2,}/g, '.')
       // 第一个字符如果是.号，则补充前缀0

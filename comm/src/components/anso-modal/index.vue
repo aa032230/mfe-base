@@ -1,5 +1,6 @@
 <script>
 import { modalDrag } from '../../directives'
+import { debounce } from '../../utils'
 export default {
   name: 'AnsoModal',
   props: {
@@ -62,7 +63,6 @@ export default {
      */
     dialogVisible(val) {
       if (val) {
-        console.log(this)
         this.$nextTick(() => {
           const el = this.$children[0].$refs.dialog
           el.style.left = 0
@@ -133,7 +133,7 @@ export default {
      * @param {*}
      * @return {*}
      */
-    handleSubmit() {
+    handleSubmit: debounce(function(){
       const _instance = this.getInstance()
       if (!_instance) {
         return this.$emit('submit')
@@ -146,7 +146,7 @@ export default {
           console.log('error submit!!')
         }
       })
-    }
+    }, 300)
   },
 
   /**
@@ -158,13 +158,14 @@ export default {
     return this.dialogVisible ? (
       <el-dialog
         close-on-click-modal={false}
+        custom-class="anso-dialog"
         v-modal-drag
         attrs={{
           width: this.size === 'lg' ? '900px' : this.size === 'small' ? '484px' : 'auto',
           ...this.modalConfig
         }}
         visible={this.dialogVisible}
-        onOpen={this.handleOpen}
+        onOpened={this.handleOpen}
         onClose={this.handleClose}
         on={{ 'update:visible': val => (this.dialogVisible = val) }}
       >
@@ -176,17 +177,13 @@ export default {
               switch (item.name) {
                 case 'cancel':
                   return (
-                    <el-button
-                      size={item.size ? item.size : 'small'}
-                      type={item.type}
-                      nativeOnClick={this.handleCancle}
-                    >
+                    <el-button size={item.size} type={item.type} nativeOnClick={this.handleCancle}>
                       {item.text}
                     </el-button>
                   )
                 case 'confirm':
                   return (
-                    <el-button type={item.type} size={item.size ? item.size : 'small'} onClick={this.handleSubmit}>
+                    <el-button type={item.type} size={item.size} onClick={this.handleSubmit}>
                       {item.text}
                     </el-button>
                   )
@@ -195,7 +192,7 @@ export default {
                 default:
                   return (
                     <el-button
-                      size={item.size ? item.size : 'small'}
+                      size={item.size}
                       type={item.type}
                       nativeOnClick={e => {
                         e.preventDefault()

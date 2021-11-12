@@ -14,28 +14,28 @@
       @query="handleQuery"
       :headerConfig="headerConfig"
     >
-      <anso-modal
-        @cancel="handleCancel"
-        @open="handleOpen"
-        @submit="handleSubmit"
-        :visible.sync="visible"
-        :modalConfig="modalConfig"
-      >
-        <anso-form
-          label-position="top"
-          :model="ruleForm"
-          :rules="rules"
-          v-model="ruleForm"
-          :form-list="formList"
-          :item-row="2"
-        ></anso-form>
-      </anso-modal>
       <template slot-scope="scoped">
         <el-button size="small" type="text" @click="handleEdit(scoped.row)">编辑</el-button>
         <el-button size="small" type="text" @click="handleEdit(scoped.row)">删除</el-button>
         <el-button size="small" type="text" @click="handleEdit(scoped.row)">详情</el-button>
       </template>
     </table-page>
+    <anso-modal
+      @cancel="handleCancel"
+      @open="handleOpen"
+      @submit="handleSubmit"
+      :visible.sync="visible"
+      :modalConfig="modalConfig"
+    >
+      <anso-form
+        label-position="top"
+        :model="ruleForm"
+        :rules="rules"
+        v-model="ruleForm"
+        :form-list="formList"
+        :item-row="2"
+      ></anso-form>
+    </anso-modal>
   </div>
 </template>
 
@@ -64,6 +64,7 @@ export default {
       }
     ]
     return {
+      dialogVisible: false,
       isEdit: false,
       rules: {
         a1: [
@@ -161,9 +162,6 @@ export default {
           field: 'check',
           model: [1],
           type: 'checkboxs',
-          change: (val) => {
-            console.log(val)
-          },
           options: [
             {
               label: 1
