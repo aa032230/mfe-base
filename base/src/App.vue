@@ -43,7 +43,11 @@ export default {
     $route: 'getSubMenu'
   },
   methods: {
-    // 菜单获取
+    /**
+     * @description: 获取菜单注入qiankun 
+     * @param {*}
+     * @return {*}
+     */
     setMenus() {
       const apps = []
       this.navbarMenus.forEach((m) => {
@@ -54,7 +58,12 @@ export default {
       mf.registerAndStart(apps)
       this.getSubMenu()
     },
-
+    
+    /**
+     * @description: 根据父菜单获取子菜单
+     * @param {*}
+     * @return {*}
+     */    
     getSubMenu() {
       const currentPath = this.$route.path.split('/')[1]
       this.navbarMenus.forEach((m) => {
