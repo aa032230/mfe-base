@@ -159,6 +159,7 @@ export function onInput(el, binding, vnode) {
       vnode.elm.dispatchEvent(new CustomEvent('input', el.value))
     }
     let val = el.value
+    const t = val.charAt(0)
     // modifiers为修饰符对象，传入了float，则其float属性为true v-input-number.float="2"
     if (binding.modifiers.float) {
       // 清除"数字"和"."以外的字符
@@ -188,11 +189,16 @@ export function onInput(el, binding, vnode) {
           }
         }
       } else {
-        val = el.value.replace(/[^\d]/g, '')
+        val = val.replace(/[^\d]/g, '')
       }
-      el.value = val
     } else {
-      el.value = el.value.replace(/[^\d]/g, '')
+      val = val.replace(/[^\d]/g, '')
+    }
+    // 负数处理
+    if (t === '-') {
+      el.value = '-' + val
+    } else {
+      el.value = val
     }
   }
   return handle
