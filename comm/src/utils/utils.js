@@ -38,6 +38,12 @@ export function _import(file) {
   return require('@/views/' + file).default
 }
 
+/**
+ * @description: 检查指定的key是否存在于对象中
+ * @param {*} obj 对象
+ * @param {*} key 
+ * @return {*}
+ */
 export function hasOwn(obj, key) {
   const hasOwnProperty = Object.prototype.hasOwnProperty
   return hasOwnProperty.call(obj, key)
@@ -122,7 +128,6 @@ export function downloadFile(file) {
 export function flatArr(obj, key) {
   let temp = obj[key]
   let result = [obj]
-  console.log(result)
   if (temp && temp.constructor === Array) {
     // 1.将子级 push 到父级（造成二维数组 [obj, [children]]）
     // 2.递归子级的扁平化（清理子级中的第三维）
@@ -217,14 +222,14 @@ export function changeInput(e, type) {
     // 限制只能输入数字
     val = val.replace(/[^\d+]/g, '')
   } else {
-    // 先把非数字的都替换掉，除了数字和.
+    // 替换非数字，除了数字和.
     val = val.replace(/[^\d.]/g, '')
-    // 保证只有出现一个.而没有多个.
+    // 保证只有出现一个.
     val = val.replace(/\.{2,}/g, '.')
-    // 必须保证第一个为数字而不是.
-    val = val.replace(/^\./g, '')
-    // 保证.只出现一次，而不能出现两次以上
-    val = val.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.')
+    // 第一个数字是.补0
+    val = val.replace(/^\./g, '0.')
+    // 保证.只出现一次
+    val = val.replace(/(\.)(\d*)(\1*)/g, '$1$2')
   }
   // 负数处理
   if (t === '-') {

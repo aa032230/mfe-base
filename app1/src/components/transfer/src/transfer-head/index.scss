@@ -1,0 +1,12 @@
+.transfer-head{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &-left{
+    font-size: 14px;
+    color: #8c8c8c;
+    span{
+      color: #444;
+    }
+  }
+}

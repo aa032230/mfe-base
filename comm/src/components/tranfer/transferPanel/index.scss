@@ -1,0 +1,56 @@
+.transfer-panel{
+  width: 500px;
+  border: 1px solid #ebeef5;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  display: inline-block;
+  vertical-align: middle;
+  max-height: 100%;
+  box-sizing: border-box;
+  &-header{
+    height: 40px;
+    line-height: 40px;
+    background: #f5f7fa;
+    margin: 0;
+    padding: 0 15px;
+    border-bottom: 1px solid #ebeef5;
+    box-sizing: border-box;
+    color: #000;
+    display: flex;
+    justify-content: space-between;
+    &-summary{
+      font-size: 12px;
+    }
+  }
+  &-body{
+    min-height: 246px;
+    padding: 0 16px;
+    box-sizing: border-box;
+    &-filter{
+      margin: 15px 0;
+      text-align: center;
+      font-size: 13px;
+      box-sizing: border-box;
+      /deep/.el-input__suffix{
+        cursor: pointer;
+      }
+    }
+    &-empty{
+      text-align: center;
+      color: #999;
+      font-size: 14px;
+    }
+    &-list{
+      padding: 0;
+      &-item{
+        display: block;
+        box-sizing: border-box;
+        color: #606266;
+        height: 30px;
+        line-height: 30px;
+      }
+    }
+  }
+ 
+}
