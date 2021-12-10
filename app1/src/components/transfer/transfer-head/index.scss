@@ -1,24 +1,29 @@
-.transfer-head{
+.transfer-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 0 ;
-  &-left{
+  padding: 16px 0;
+
+  &-left {
     flex: 1;
     font-size: 12px;
     color: #8c8c8c;
-    span{
+
+    span {
       color: #444;
     }
   }
-  &-right{
-    width: 35%
+
+  &-right {
+    width: 45%
   }
 }
-/deep/ .el-input--mini .el-input__inner{
+
+/deep/ .el-input--mini .el-input__inner {
   height: 28px;
   line-height: 28px;
 }
-/deep/.el-input--mini .el-input__icon{
+
+/deep/.el-input--mini .el-input__icon {
   line-height: 28px;
 }

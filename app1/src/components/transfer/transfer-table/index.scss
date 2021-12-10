@@ -1,33 +1,53 @@
-.transfer-table{
+.transfer-table {
   width: 100%;
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
   padding-bottom: 20px;
-  &-main{
+
+  &-main {
     border: 1px solid #e5e5e5;
     padding-bottom: 20px;
     height: 352px;
+
+    &-del {
+      cursor: pointer;
+      text-align: center;
+      font-size: 16px;
+
+      &:hover {
+        color: #3171f2;
+      }
+    }
   }
-  &-clear{
+
+  &-clear {
     position: absolute;
     bottom: 20px;
     left: 20px;
   }
 }
-/deep/ .el-table td, .el-table th.is-leaf{
+
+/deep/ .el-table td,
+.el-table th.is-leaf {
   border: none;
 }
-/deep/ .el-table td, .el-table th{
+
+/deep/ .el-table td,
+.el-table th {
   padding: 0;
   height: 30px;
 }
-/deep/.el-table::before{
+
+/deep/.el-table::before {
   display: none;
 }
-/deep/ .el-table thead{
+
+/deep/ .el-table thead {
   color: #8c8c8c;
 }
-/deep/.el-table th.is-leaf{
+
+/deep/.el-table th.is-leaf {
   height: 32px;
   padding: 0;
 }
