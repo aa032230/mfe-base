@@ -1,38 +1,34 @@
 <template>
   <div class="about">
-    <transferPlain></transferPlain>
+    <aSelect v-model="value" :options="options" labelKey="label" valueKey="value"></aSelect>
   </div>
 </template>
 <script>
-import transferPlain from '@/components/transfer/src/transfer-plain'
+import aSelect from '@/components/aSelect/index.vue'
 export default {
   name: 'about',
   components: {
-    transferPlain
+    aSelect
   },
   data() {
-    const generateData = (_) => {
-      const data = []
-      for (let i = 1; i <= 15; i++) {
-        data.push({
-          key: i,
-          label: `备选项 ${i}`,
-          disabled: i % 4 === 0
-        })
-      }
-      return data
-    }
     return {
-      data: generateData(),
-      value: [1],
-      value4: [1],
-      renderFunc(h, option) {
-        return (
-          <span>
-            {option.key} - {option.label}
-          </span>
-        )
-      }
+      value: [],
+      options: [{
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶'
+        }, {
+          value: '选项3',
+          label: '蚵仔煎'
+        }, {
+          value: '选项4',
+          label: '龙须面'
+        }, {
+          value: '选项5',
+          label: '北京烤鸭'
+        }]
     }
   },
   methods: {

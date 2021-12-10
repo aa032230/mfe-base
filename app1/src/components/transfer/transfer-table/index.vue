@@ -28,6 +28,11 @@ export default {
     return {
       config: useTableConfig(this)
     }
+  },
+  created() {
+    if (!this.isChecked) {
+      this.config.columns = [{ type: 'selection' }, ...this.config.columns]
+    }
   }
 }
 </script>

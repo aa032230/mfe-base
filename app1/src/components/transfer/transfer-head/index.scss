@@ -12,13 +12,13 @@
     }
   }
   &-right{
-    width: 100px
+    width: 35%
   }
 }
 /deep/ .el-input--mini .el-input__inner{
-  height: 24px;
-  line-height: 24px;
+  height: 28px;
+  line-height: 28px;
 }
 /deep/.el-input--mini .el-input__icon{
-  line-height: 24px;
+  line-height: 28px;
 }

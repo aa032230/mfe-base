@@ -1,0 +1,33 @@
+.transfer-table{
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 20px;
+  &-main{
+    border: 1px solid #e5e5e5;
+    padding-bottom: 20px;
+    height: 352px;
+  }
+  &-clear{
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+  }
+}
+/deep/ .el-table td, .el-table th.is-leaf{
+  border: none;
+}
+/deep/ .el-table td, .el-table th{
+  padding: 0;
+  height: 30px;
+}
+/deep/.el-table::before{
+  display: none;
+}
+/deep/ .el-table thead{
+  color: #8c8c8c;
+}
+/deep/.el-table th.is-leaf{
+  height: 32px;
+  padding: 0;
+}
