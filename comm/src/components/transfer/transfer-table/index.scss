@@ -1,0 +1,60 @@
+.transfer-table {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  &-main {
+    border: 1px solid #e5e5e5;
+    @include border-radius();
+    padding-bottom: 20px;
+    height: 332px;
+
+    &-del {
+      cursor: pointer;
+      text-align: center;
+      font-size: 16px;
+
+      &:hover {
+        color: #3171f2;
+      }
+    }
+  }
+
+  &-clear {
+    position: absolute;
+    bottom: 8px;
+    left: 20px;
+  }
+}
+
+/deep/ .el-table td,
+.el-table th.is-leaf {
+  border: none;
+}
+
+/deep/ .el-table td,
+.el-table th {
+  padding: 0;
+  height: 30px;
+}
+
+/deep/.el-table::before {
+  // display: none;
+  width: 94%;
+  left: 3%;
+}
+
+/deep/ .el-table thead {
+  color: #8c8c8c;
+}
+
+/deep/.el-table th.is-leaf {
+  height: 32px;
+  padding: 0;
+}
+
+/deep/.el-table {
+  height: calc(100% - 25px) !important;
+  box-sizing: border-box;
+}

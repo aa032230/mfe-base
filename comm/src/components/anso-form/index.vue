@@ -182,7 +182,7 @@ export default {
       const _event = {}
       const _native = {}
       // todo: 没加上的方法自己加入数组
-      const _methods = ['change', 'select', 'input', 'clear', 'focus', 'blur', 'click']
+      const _methods = ['change', 'select', 'input', 'clear', 'focus', 'blur', 'click', 'visible-change']
       Object.keys(formOptions).forEach((m) => {
         if (_methods.includes(m)) {
           Object.assign(_event, { [m]: formOptions[m] })

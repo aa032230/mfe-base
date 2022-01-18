@@ -1,7 +1,7 @@
 import {
   Autocomplete, Avatar, Button, Breadcrumb, BreadcrumbItem, Backtop,
   Checkbox, Dropdown, DropdownMenu, DropdownItem, Icon, Input, Loading,
-  Menu, MenuItem, Submenu, Select, Option, Tooltip, Tag, Tree, MessageBox,
+  Menu, MenuItem, Submenu, Select, Option, Tooltip, Tag, MessageBox,
   Notification, Message, Container, Header, Aside, Main, Row, Col, scrollbar
 } from 'element-ui'
 export default {
@@ -26,7 +26,6 @@ export default {
     Option,
     Tooltip,
     Tag,
-    Tree,
     Container,
     Header,
     Aside,

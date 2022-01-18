@@ -1,34 +1,42 @@
 <template>
   <div class="about">
-    <aSelect v-model="value" :options="options" labelKey="label" valueKey="value"></aSelect>
+    <!-- <aSelect v-model="value" :options="options" labelKey="label" valueKey="value"></aSelect> -->
+    1212121
+    <!-- <aTree :data="data1" nodeKey="key" :props="defaultProps" default-expand-all :height="300" show-checkbox /> -->
+    <!-- <transfer1></transfer1> -->
   </div>
 </template>
 <script>
-import aSelect from '@/components/aSelect/index.vue'
+import transfer1 from '@/components/transfer'
 export default {
   name: 'about',
-  components: {
-    aSelect
-  },
+  // components: {
+  //   transfer1
+  // },
   data() {
+    function dig(path = '0', level = 3) {
+      const list = []
+      for (let i = 0; i < 10; i += 1) {
+        const key = `${path}-${i}`
+        const treeNode = {
+          title: key,
+          key
+        }
+
+        if (level > 0) {
+          treeNode.children = dig(key, level - 1)
+        }
+
+        list.push(treeNode)
+      }
+      return list
+    }
     return {
-      value: [],
-      options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }]
+      data1: dig(),
+      defaultProps: {
+        children: 'children',
+        label: 'title'
+      }
     }
   },
   methods: {

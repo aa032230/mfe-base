@@ -19,7 +19,6 @@ import {
   Option,
   Tooltip,
   Tag,
-  Tree,
   MessageBox,
   Notification,
   Message,
@@ -39,7 +38,8 @@ import {
   Col,
   Row,
   DatePicker,
-  Scrollbar
+  Scrollbar,
+  Empty
 } from 'element-ui'
 export default {
   components: [
@@ -62,7 +62,6 @@ export default {
     Option,
     Tooltip,
     Tag,
-    Tree,
     Switch,
     Form,
     FormItem,
@@ -81,7 +80,7 @@ export default {
     Row,
     Col,
     DatePicker,
-    
+    Empty
   ],
   install(Vue) {
     Vue.prototype.$alert = MessageBox.alert

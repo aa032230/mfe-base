@@ -40,11 +40,11 @@
 </template>
 
 <script>
-// import { tablePage, ansoModal, ansoForm } from 'comm/src/components'
+import { tablePage, ansoModal, ansoForm } from 'comm/src/components'
 import { formValidateGene } from 'comm/src/utils'
 export default {
   name: 'user',
-  // components: { tablePage, ansoModal, ansoForm },
+  components: { tablePage, ansoModal, ansoForm },
   data() {
     const tData = [
       {
@@ -141,14 +141,7 @@ export default {
       },
       toolsConfig: ['refresh', 'print', 'export', 'space', 'setting'],
       formList: [
-        {
-          name: '日期',
-          field: 'a1',
-          model: '',
-          type: 'date',
-          dateType: 'daterange',
-          isCycleAlive: true
-        },
+
         {
           name: '系统模块11',
           field: 'a13',
@@ -158,86 +151,21 @@ export default {
           }
         },
         {
-          name: '系统模块',
-          field: 'check',
-          model: [1],
-          type: 'checkboxs',
-          options: [
-            {
-              label: 1
-            },
-            {
-              label: 2
-            }
-          ]
-        },
-        {
-          name: '系统模块系统模块',
-          field: 'a2',
-          type: 'treeSelect',
-          data: tData,
-          props: {
-            value: 'id', // ID字段名
-            label: 'name', // 显示名称
-            children: 'children'
+          name: '系统模块12',
+          field: 'a14',
+          model: '',
+          enter(val) {
+            console.log(val)
           }
         },
         {
-          name: '系统模块2',
-          field: 'a3',
-          width: '100%',
-          type: 'switch'
-        },
-        {
-          name: '系统模块',
-          field: 'a4',
-          model: 1,
-          type: 'radios',
-          options: [
-            {
-              label: 1,
-              text: 'radio1'
-            },
-            {
-              label: 2,
-              text: 'radio2'
-            }
-          ]
-        },
-        {
-          name: '系统模块4',
-          field: 'a5'
-        },
-        {
-          name: '系统模块2',
-          field: 'a6',
-          type: 'switch'
-        },
-        {
-          name: '系统模块3',
-          field: 'a7'
-        },
-        {
-          name: '系统模块4',
-          field: 'a8'
-        },
-        {
-          name: '系统模块系统模块',
-          field: 'a9',
-          type: 'select',
-          options: () => {
-            return [
-              {
-                value: 0,
-                label: '小籠包'
-              },
-              {
-                value: 1,
-                label: '叉烧包'
-              }
-            ]
+          name: '系统模块13',
+          field: 'a15',
+          model: '',
+          enter(val) {
+            console.log(val)
           }
-        }
+        },
       ],
       columns: [
         {

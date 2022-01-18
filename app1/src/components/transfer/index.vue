@@ -2,130 +2,116 @@
   <div class="transfer">
     <div class="transfer-body">
       <div class="transfer-body-left">
-        <transferTable
-          :columns="columns"
-          :tableData="sourceData"
-          ref="transferTable"
-          :title="titles[0]"
-          :placeholder="placeholder"
-          :props="props"
-          :total="leftTotal"
-          :tableEvent="{ 'selection-change': handleSelectionChange }"
-        ></transferTable>
+        <el-input v-model="leftQuery"></el-input>
+        <anso-table
+          :columns="sourceColumns"
+          :tableData="leftFilteredData"
+          @selection-change="handleSelectionChange"
+          :reserve-selection="true"
+          row-key="id"
+        ></anso-table>
       </div>
       <div class="transfer-body-right">
-        <transferTable
-          :isChecked="true"
-          :columns="columns"
-          :tableData="targetData"
-          @delete="handleDelete"
-          @clear="clear"
-          :title="titles[1]"
-          :placeholder="placeholder"
-          :props="props"
-          :total="rightTotal"
-          :tableEvent="tableEvent"
-        ></transferTable>
+        <el-input v-model="rightQuery"></el-input>
+        <anso-table :columns="targetcolumns" :tableData="rightFilteredData"></anso-table>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import transferTable from './transfer-table'
-import { DataBus } from 'comm/src/utils'
-import { cloneDeep } from '../../../../comm/src/utils'
 export default {
-  components: {
-    transferTable
-  },
-  props: {
-    tableData: {
-      type: Array,
-      default: () => []
-    },
-    columns: {
-      type: Array,
-      default: () => []
-    },
-    titles: {
-      type: Array,
-      default: () => ['标题1', '标题2']
-    },
-    placeholder: {
-      type: String,
-      default: '请输入搜索内容'
-    },
-    props: {
-      type: Object,
-      default() {
-        return {
-          label: 'name',
-          key: 'key',
-          disabled: 'disabled'
-        }
-      }
-    }
-  },
+  props: {},
   data() {
     return {
       targetData: [],
-      sourceData: this.tableData,
-      tableEvent: {
-        'cell-mouse-enter': this.cellMouseEnter,
-        'cell-mouse-leave': r => (r.show = false)
-      }
+      sourceColumns: [
+        {
+          type: 'selection',
+          width: '55',
+          'reserve-selection': true
+        },
+        {
+          prop: 'date',
+          label: '日期'
+        },
+        {
+          prop: 'name',
+          label: '姓名'
+        },
+        {
+          prop: 'address',
+          label: '地址'
+        }
+      ],
+      targetcolumns: [
+        {
+          prop: 'date',
+          label: '日期'
+        },
+        {
+          prop: 'name',
+          label: '姓名'
+        },
+        {
+          prop: 'address',
+          label: '地址'
+        }
+      ],
+      sourceData: [
+        {
+          id: 1,
+          date: '2016-05-02',
+          name: '王小虎1',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          id: 2,
+          date: '2016-05-04',
+          name: '王小虎2',
+          address: '上海市普陀区金沙江路 1517 弄'
+        },
+        {
+          id: 3,
+          date: '2016-05-01',
+          name: '王小虎3',
+          address: '上海市普陀区金沙江路 1519 弄'
+        },
+        {
+          id: 4,
+          date: '2016-05-03',
+          name: '王小虎4',
+          address: '上海市普陀区金沙江路 1516 弄'
+        }
+      ],
+      leftQuery: '',
+      rightQuery: ''
     }
   },
   computed: {
-    leftTotal() {
-      return this.tableData.length - this.targetData.length
+    leftFilteredData() {
+      return this.sourceData.filter((item) => {
+        const label = item['name']
+        return label.toLowerCase().indexOf(this.leftQuery.toLowerCase()) > -1
+      })
     },
-    rightTotal() {
-      return this.targetData.length
-    }
+    rightFilteredData() {
+      return this.targetData.filter((item) => {
+        const label = item['name']
+        return label.toLowerCase().indexOf(this.rightQuery.toLowerCase()) > -1
+      })
+    },
   },
   methods: {
-    /**
-     * @description: 全选
-     * @param {*} val 被选中数据
-     * @return {*}
-     */
     handleSelectionChange(val) {
-      this.targetData = cloneDeep(val)
+      const data = JSON.parse(JSON.stringify(val))
+      this.targetData = data
     },
-    /**
-     * @description: 鼠标移入
-     * @param {*} r 当前行数据
-     * @return {*}
-     */
-    cellMouseEnter(r) {
-      this.$set(r, 'show', true)
-      // r.show = true
+    leftFilter(query) {
+      this.leftQuery = query
     },
-    /**
-     * @description: 删除
-     * @param {*} row 当前行信息
-     * @return {*}
-     */
-    handleDelete(row) {
-      // toggleRowSelection
-      const transferTable = this.$refs.transferTable
-      if (transferTable) {
-        const ansoTabel = transferTable.$refs.multipleTable.$refs.ansoTabel
-        const data = this.tableData.filter(item => item.id === row.id)[0]
-        ansoTabel.toggleRowSelection(data)
-      }
-      this.targetData = this.targetData.filter(item => item.id !== row.id)
-    },
-    /**
-     * @description: 清空数据
-     * @param {*}
-     * @return {*}
-     */
-    clear() {
-      this.targetData = []
-      DataBus.emit('clearSelector')
+    rightFilter(query) {
+      this.rightQuery = query
     }
   }
 }
