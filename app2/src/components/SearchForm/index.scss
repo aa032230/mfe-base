@@ -1,0 +1,24 @@
+.searchForm {
+  padding: 24px;
+  left: 0;
+  height: 150px;
+}
+
+.page-tool {
+  position: absolute;
+  left: 0px;
+  top: 95px;
+  background-color: #fff;
+  width: 130px;
+  padding: 3px 20px;
+  font-size: 14px;
+  a {
+    cursor: pointer;
+    color: #1890ff;
+  }
+}
+
+/deep/.el-input__inner {
+  height: 24px;
+  line-height: 24px;
+}

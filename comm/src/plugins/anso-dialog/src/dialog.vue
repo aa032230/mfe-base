@@ -12,11 +12,14 @@ const _dialog = {
   },
   methods: {
     handleClose() {
-      const context = this.$refs.child.$children[0]
-      if (context.$el.classList.contains('el-form')) {
+      const context = this.$refs.child?.$children[0]
+      if (context && context.$el.classList.contains('el-form')) {
         context.resetFields()
       }
+      this.$destroy()
+      this.$el.parentNode.removeChild(this.$el)
       this.visible = false
+      this.$options.data()?.close && this.$options.data()?.close()
     },
     handleSubmit() {
       const instace = this.$refs.child

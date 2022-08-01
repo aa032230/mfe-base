@@ -33,10 +33,14 @@ import {
   Dialog,
   Popconfirm,
   Scrollbar,
-  Link
+  Link,
+  Row,
+  Col
 } from 'element-ui'
 export default {
   components: [
+    Row,
+    Col,
     Autocomplete,
     Avatar,
     Button,

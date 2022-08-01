@@ -1,6 +1,6 @@
 // 公共组件导出总线
 // export { default as vTree } from './v-tree'
-export { default as tranfer } from './tranfer'
+// export const tranfer = require('./tranfer').default
 export { default as ansoTreeSelect } from './anso-tree-select'
 export { default as ansoDatePicker } from './anso-date-picker'
 export { default as ansoButton } from './anso-button'

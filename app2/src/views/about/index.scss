@@ -1,10 +1,40 @@
-.form-wrap{
+.container {
   display: flex;
-  &-item{
-    width: 50%;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  .scm-search-form,
+  .scm-top-tools {
+    background-color: #f0f0f0;
+    width: 100%;
+    .ant-form-inline .ant-form-item-with-help {
+      margin-bottom: 0;
+    }
   }
-  &-params{
+  .scm-top-tools {
+    position: relative;
+    margin-top: -7px;
+    margin-left: 170px;
+    width: auto;
+    height: 25px;
+  }
+  .content-container {
     flex: 1;
-    margin-left: 20px;
+    position: relative;
+    overflow: auto;
+    &[data-loading='true'] {
+      &::after {
+        content: '';
+        text-align: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.5);
+      }
+    }
   }
 }
