@@ -5,7 +5,8 @@ import 'plugins/styles'
 import App from '../App.vue'
 import router from '../router'
 import Vue from 'vue'
-
+import VXETable from 'vxe-table'
+import 'vxe-table/lib/style.css'
 export default {
   render: renderApp,
   App,
@@ -15,7 +16,7 @@ export default {
     el: '#app',
     plugins: [ele],
     init: (Vue) => {
-      // Vue.prototype.$echarts = echarts
+      Vue.use(VXETable)
     }
   }
 }

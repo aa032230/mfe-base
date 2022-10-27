@@ -1,4 +1,16 @@
 .about {
     background-color: #fff;
     padding: 20px;
+    height: calc(100vh - 160px);
+    .table-warp{
+        height: calc(100% - 44px);
+        .table{
+            height: 100%;
+            overflow: scroll;
+            /deep/ .vxe-table{
+                // height: calc(100% - 99px);
+                overflow: scroll;
+            }
+        }
+    }
 }

@@ -1,0 +1,63 @@
+@import '../../styles/config.less';
+
+.timeline {
+  white-space: nowrap;
+  padding: 24px;
+  padding-top: 40px;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  color: #999;
+  z-index: 1;
+  display: inline-block;
+  &::after {
+    content: '';
+    clear: both;
+  }
+  &[data-size='lg'] {
+    :global {
+      .timeline-item {
+        width: @lineBigWidth;
+        span {
+          transform: scale(0.8) translateY(-120%) translateX(-32px);
+        }
+        .fligh-ico {
+          transform: scale(0.8) translateY(-280%) translateX(-30px) !important;
+        }
+        .weektag {
+          transform: scale(0.8) translateX(72px) translateY(-10px) !important;
+        }
+      }
+    }
+  }
+  :global {
+    .timeline-item {
+      font-size: 10px;
+      border-top: 1px solid #aaa;
+      border-left: 1px solid #aaa;
+      display: inline-block;
+      transition: width 0.3s;
+      width: @lineWidth;
+      height: 10px;
+      vertical-align: top;
+      &.week-begin {
+        height: 20px;
+      }
+      span {
+        text-align: center;
+        display: block;
+        transform: scale(0.8) translateY(-120%) translateX(-18px);
+      }
+      .fligh-ico {
+        color: @red;
+        transform: scale(0.8) translateY(-280%) translateX(-24px) !important;
+        &.icon-chuanzhi {
+          color: @green;
+        }
+      }
+      .weektag {
+        transform: scale(0.8) translateX(46px) translateY(-10px);
+      }
+    }
+  }
+}

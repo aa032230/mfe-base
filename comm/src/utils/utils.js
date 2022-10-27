@@ -155,56 +155,51 @@ export function flatten(arr) {
  * @param {*} binding 指令对象
  * @param {*} vnode vue DIFF 生成的虚拟节点
  */
-export function onInput(el, binding, vnode) {
+ export function onInput(ele, binding, vnode) {
   function handle() {
-    // 手动触发数据的双向绑定,解决表单验证问题
-    if (vnode.componentInstance) {
-      vnode.componentInstance.$emit('input', el.value)
-    } else {
-      vnode.elm.dispatchEvent(new CustomEvent('input', el.value))
-    }
-    let val = el.value
-    const t = val.charAt(0)
-    // modifiers为修饰符对象，传入了float，则其float属性为true v-input-number.float="2"
-    if (binding.modifiers.float) {
-      // 清除"数字"和"."以外的字符
-      val = val.replace(/^[-]{0,1}\d.|[^\d.]/g, '')
-      // 只保留第一个, 清除多余的
-      val = val.replace(/\.{2,}/g, '.')
-      // 第一个字符如果是.号，则补充前缀0
-      val = val.replace(/^\./g, '0.')
-      if (typeof binding.value !== 'undefined') {
-        // 期望保留的最大小数位数
-        let pointKeep = 0
-        if (typeof binding.value === 'string' || typeof binding.value === 'number') {
-          pointKeep = parseInt(binding.value)
-        }
-        if (!isNaN(pointKeep)) {
-          if (!Number.isInteger(pointKeep) || pointKeep < 0) {
-            pointKeep = 0
-          }
-          const str = '^(\\d+)\\.(\\d{' + pointKeep + '}).*$'
-          const reg = new RegExp(str)
-          if (pointKeep === 0) {
-            // 不需要小数点
-            val = val.replace(reg, '$1')
-          } else {
-            // 通过正则保留小数点后指定的位数
-            val = val.replace(reg, '$1.$2')
-          }
-        }
+      // 手动触发数据的双向绑定,解决表单验证问题
+      if (vnode.componentInstance) {
+          vnode.componentInstance.$emit('input', ele.value)
       } else {
-        val = val.replace(/[^\d]/g, '')
+          vnode.elm.dispatchEvent(new CustomEvent('input', ele.value))
       }
-    } else {
-      val = val.replace(/[^\d]/g, '')
-    }
-    // 负数处理
-    if (t === '-') {
-      el.value = '-' + val
-    } else {
-      el.value = val
-    }
+      let val = ele.value
+      // modifiers为修饰符对象，传入了float，则其float属性为true
+      if (binding.modifiers.float) {
+          // 清除"数字"和"."以外的字符
+          val = val.replace(/[^\d.]/g, '')
+          // 只保留第一个, 清除多余的
+          val = val.replace(/\.{2,}/g, '.')
+          val = val.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.')
+          // 第一个字符如果是.号，则补充前缀0
+          val = val.replace(/^\./g, '0.')
+          if (typeof binding.value !== 'undefined') {
+              // 期望保留的最大小数位数
+              let pointKeep = 0
+              if (typeof binding.value === 'string' || typeof binding.value === 'number') {
+                  pointKeep = parseInt(binding.value)
+              }
+              if (!isNaN(pointKeep)) {
+                  if (!Number.isInteger(pointKeep) || pointKeep < 0) {
+                      pointKeep = 0
+                  }
+                  const str = '^(\\d+)\\.(\\d{' + pointKeep + '}).*$'
+                  const reg = new RegExp(str)
+                  if (pointKeep === 0) {
+                      // 不需要小数点
+                      val = val.replace(reg, '$1')
+                  } else {
+                      // 通过正则保留小数点后指定的位数
+                      val = val.replace(reg, '$1.$2')
+                  }
+              }
+          } else {
+              val = ele.value.replace(/[^\d]/g, '')
+          }
+          ele.value = val
+      } else {
+          ele.value = ele.value.replace(/[^\d]/g, '')
+      }
   }
   return handle
 }
