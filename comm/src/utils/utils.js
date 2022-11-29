@@ -781,7 +781,8 @@ export function onInput(ele, binding, vnode) {
     } else {
       val = val.replace(/[^\d]/g, '')
     }
-    if (t === '-') {
+    const { minus } = vnode.data.attrs
+    if (t === '-' && minus) {
       val = '-' + val
     }
     ele.value = val
