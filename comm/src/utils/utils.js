@@ -745,7 +745,6 @@ export function onInput(ele, binding, vnode) {
   function handle() {
     let val = ele.value
     const t = val.charAt(0)
-    // const t = val.charAt(0)
     // modifiers为修饰符对象，传入了float，则其float属性为true
     if (binding.modifiers.float) {
       // 清除"数字"和"."以外的字符
@@ -753,7 +752,7 @@ export function onInput(ele, binding, vnode) {
       // 只保留第一个, 清除多余的
       val = val.replace(/\.{2,}/g, '.')
       val = val.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.')
-      val = val.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3')
+      val = val.replace(/^(\-)*(\d+)\.(\d+).*$/, '$1$2.$3')
       // 第一个字符如果是.号，则补充前缀0
       val = val.replace(/^\./g, '0.')
       if (typeof binding.value !== 'undefined') {
