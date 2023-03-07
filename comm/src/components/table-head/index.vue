@@ -12,13 +12,14 @@ export default {
       <div class="table-head">
         <div class="table-head-title">{title}</div>
         <div class="table-head-btns">
-          {Array.isArray(buttons) && buttons.map(btn => {
-            return (
-              <el-button size={btn.size ? btn.size : 'mini'} type={btn.type} onClick={btn.methods}>
-                {btn.name}
-              </el-button>
-            )
-          })}
+          {Array.isArray(buttons) &&
+            buttons.map((btn) => {
+              return (
+                <el-button size={btn.size ? btn.size : 'mini'} type={btn.type} onClick={btn.methods}>
+                  {btn.name}
+                </el-button>
+              )
+            })}
         </div>
       </div>
     )
